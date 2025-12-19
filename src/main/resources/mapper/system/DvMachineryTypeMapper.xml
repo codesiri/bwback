@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.system.mapper.DvMachineryTypeMapper">
+
+    <!-- 获取设备类型分页列表 -->
+    <select id="getDvMachineryTypePage" resultType="com.youlai.boot.system.model.vo.DvMachineryTypeVO">
+        SELECT
+        machinery_type_id,
+        machinery_type_code,
+        machinery_type_name,
+        parent_type_id,
+        ancestors,
+        enable_flag,
+        remark,
+        create_by,
+        create_time,
+        update_by,
+        update_time
+        FROM
+        dv_machinery_type
+        <where>
+        </where>
+    </select>
+
+    <resultMap type="com.youlai.boot.system.model.entity.DvMachineryType" id="DvMachineryTypeResult">
+        <result property="machineryTypeId" column="machinery_type_id"/>
+        <result property="machineryTypeCode" column="machinery_type_code"/>
+        <result property="machineryTypeName" column="machinery_type_name"/>
+        <result property="parentTypeId" column="parent_type_id"/>
+        <result property="ancestors" column="ancestors"/>
+        <result property="enableFlag" column="enable_flag"/>
+        <result property="remark" column="remark"/>
+        <result property="attr1" column="attr1"/>
+        <result property="attr2" column="attr2"/>
+        <result property="attr3" column="attr3"/>
+        <result property="attr4" column="attr4"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+    <select id="selectDvMachineryTypeList"
+            parameterType="com.youlai.boot.system.model.entity.DvMachineryType"
+            resultMap="DvMachineryTypeResult">
+        SELECT
+        machinery_type_id,
+        machinery_type_code,
+        machinery_type_name,
+        parent_type_id,
+        ancestors,
+        enable_flag,
+        remark,
+        create_by,
+        create_time,
+        update_by,
+        update_time
+        FROM
+        dv_machinery_type
+        <where>
+            <if test="machineryTypeCode != null  and machineryTypeCode != ''">and machinery_type_code =
+                #{machineryTypeCode}
+            </if>
+            <if test="machineryTypeName != null  and machineryTypeName != ''">and machinery_type_name like concat('%',
+                #{machineryTypeName}, '%')
+            </if>
+            <if test="parentTypeId != null ">and parent_type_id = #{parentTypeId}</if>
+            <if test="ancestors != null  and ancestors != ''">and ancestors = #{ancestors}</if>
+            <if test="enableFlag != null  and enableFlag != ''">and enable_flag = #{enableFlag}</if>
+        </where>
+    </select>
+
+    <select id="queryDvTypeByParams"
+            parameterType="com.youlai.boot.system.model.query.DvMachineryTypeQuery"
+            resultMap="DvMachineryTypeResult">
+        SELECT
+            machinery_type_id,
+            machinery_type_code,
+            machinery_type_name,
+            parent_type_id,
+            ancestors,
+            enable_flag,
+            remark,
+            create_by,
+            create_time,
+            update_by,
+            update_time
+        FROM
+            dv_machinery_type
+        <where>
+            <if test="machineryTypeCode != null  and machineryTypeCode != ''">and machinery_type_code =
+                #{machineryTypeCode}
+            </if>
+            <if test="machineryTypeName != null  and machineryTypeName != ''">and machinery_type_name like concat('%',
+                #{machineryTypeName}, '%')
+            </if>
+            <if test="parentTypeId != null ">and parent_type_id = #{parentTypeId}</if>
+            <if test="ancestors != null  and ancestors != ''">and ancestors = #{ancestors}</if>
+            <if test="enableFlag != null  and enableFlag != ''">and enable_flag = #{enableFlag}</if>
+        </where>
+    </select>
+</mapper>
