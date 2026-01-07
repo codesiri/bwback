@@ -2,6 +2,7 @@ package com.youlai.boot.system.service.impl;
 
 import cn.hutool.core.date.DateTime;
 import com.aliyuncs.utils.StringUtils;
+import com.youlai.boot.common.constant.DvTypeConstants;
 import com.youlai.boot.common.util.IDGenAdapterJDK;
 import com.youlai.boot.common.util.IDgenAdapterLeaf;
 import com.youlai.boot.common.util.adapter.IDgenAdapter;
@@ -104,7 +105,7 @@ public class DvMachineryTypeServiceImpl extends ServiceImpl<DvMachineryTypeMappe
         entity.setCreateBy(user.getNickname());
         entity.setCreateTime(DateTime.now().toLocalDateTime());
         //-------------------------------生成id------------------------------------------------
-        long id = iDgenAdapter.genID();
+        long id = iDgenAdapter.genID(DvTypeConstants.REQ_DV_TYPE_ID_URL);
         entity.setMachineryTypeId(id);
         entity.setMachineryTypeCode("M_TYPE_" + id);
         return this.save(entity);

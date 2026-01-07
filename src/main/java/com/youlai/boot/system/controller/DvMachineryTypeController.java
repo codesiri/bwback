@@ -46,9 +46,9 @@ public class DvMachineryTypeController  {
 
     @Deprecated
     @Operation(summary = "根据设备名称或者是否启用模糊查询设备类型")
+    @PreAuthorize("@ss.hasPerm('system:dv-machinery-type:query')")
     @GetMapping("/queryDvType")
     public Result<List<DvMachineryTypeVO>> queryDvTypeByParams(QueryDvTypeParams queryDvTypeParams){
-        System.out.println(queryDvTypeParams);
         dvMachineryTypeService.queryDvTypeByParams(queryDvTypeParams);
         return  Result.success();
     }
@@ -94,7 +94,7 @@ public class DvMachineryTypeController  {
 
     @Operation(summary = "查询所有设备类型注意，这个树形3结构在前端构建")
     @GetMapping("/list")
-    @PreAuthorize("@ss.hasPerm('system:dv-machinery-type:list')")
+    @PreAuthorize("@ss.hasPerm('system:dv-machinery-type:query')")
     public Result<List<DvMachineryTypeVO>> list(DvMachineryType dvMachineryType){
         List<DvMachineryTypeVO> dvMachineryTypeVOS = dvMachineryTypeService.selectDvMachineryTypeList(dvMachineryType);
         return Result.success(dvMachineryTypeVOS);

@@ -1,5 +1,5 @@
 package com.youlai.boot.common.util.adapter;
 
 public interface IDgenAdapter {
-    long genID();
+    long genID(String key);
 }

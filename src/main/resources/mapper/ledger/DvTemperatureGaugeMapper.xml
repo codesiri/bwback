@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.DvTemperatureGaugeMapper">
+
+    <!-- 获取温度分页列表 -->
+    <select id="getDvTemperatureGaugePage"
+            resultType="com.youlai.boot.ledger.model.vo.DvTemperatureGaugeVO">
+        SELECT
+        id,
+        device_name,
+        tag_number,
+        installation_location_and_purpose,
+        device_name_suffix,
+        index_number,
+        specification_model,
+        manufacturer,
+        measurement_range,
+        Insertion_depth,
+        connection_method_and_specifications,
+        `precision`,
+        casing_specifications_and_material,
+        interlocked,
+        interlock_set_value,
+        remark,
+        status,
+        dv_type,
+        factory
+        FROM
+        dv_temperature_gauge
+        <where>
+            <if test="tagNumber != null and tagNumber != ''">
+                and tag_number = #{tagNumber}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+<!--            <if test="factory!=null and factory != ''">-->
+<!--                and factory = #{factory}-->
+<!--            </if>-->
+        </where>
+    </select>
+
+</mapper>
