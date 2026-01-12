@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.PressureInstrumentMapper">
+
+    <!-- 获取压力分页列表 -->
+    <select id="getPressureInstrumentPage"
+            resultType="com.youlai.boot.ledger.model.vo.PressureInstrumentVO">
+        SELECT
+        id,
+        pressure_device,
+        pressure_tag,
+        pressure_location,
+        pressure_equip,
+        pressure_model,
+        pressure_manu,
+        pressure_range,
+        pressure_connection,
+        pressure_accuracy,
+        pressure_power,
+        pressure_output,
+        pressure_heat,
+        pressure_interlock,
+        pressure_interlock_val,
+        pressure_remark
+        FROM
+        pressure_instrument
+        <where>
+            <if test='queryParams.pressureTag != null and queryParams.pressureTag.trim() neq ""'>
+                AND pressure_tag LIKE CONCAT('%',#{queryParams.pressureTag},'%')
+            </if>
+            <if test='queryParams.pressureDevice != null and queryParams.pressureDevice.trim() neq ""'>
+                AND pressure_device LIKE CONCAT('%',#{queryParams.pressureDevice},'%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取用户导出列表 -->
+    <select id="listExportPressureInstruments" resultType="com.youlai.boot.ledger.model.dto.PressureInstrumentExportDTO">
+        SELECT
+        id,
+        pressure_device,
+        pressure_tag,
+        pressure_location,
+        pressure_equip,
+        pressure_model,
+        pressure_manu,
+        pressure_range,
+        pressure_connection,
+        pressure_accuracy,
+        pressure_power,
+        pressure_output,
+        pressure_heat,
+        pressure_interlock,
+        pressure_interlock_val,
+        pressure_remark
+        FROM
+        pressure_instrument
+        <where>
+            <if test='queryParams.pressureTag != null and queryParams.pressureTag.trim() neq ""'>
+                AND pressure_tag LIKE CONCAT('%',#{queryParams.pressureTag},'%')
+            </if>
+            <if test='queryParams.pressureDevice != null and queryParams.pressureDevice.trim() neq ""'>
+                AND pressure_device LIKE CONCAT('%',#{queryParams.pressureDevice},'%')
+            </if>
+        </where>
+    </select>
+
+
+
+</mapper>
+

@@ -2,7 +2,7 @@ package com.youlai.boot.ledger.model.vo;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,7 +53,10 @@ public class DvTemperatureGaugeVO implements Serializable {
     private String interlockSetValue;
     @Schema(description = "备注")
     private String remark;
-    private int dvType;
+    @Schema(description = "设备类型")
+    private String dvType;
+    @Schema(description = "设备状态")
     private int status;
+    @Schema(description = "所属工厂")
     private String factory;
 }

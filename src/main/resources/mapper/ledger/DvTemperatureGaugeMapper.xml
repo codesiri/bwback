@@ -29,15 +29,19 @@
         dv_temperature_gauge
         <where>
             <if test="tagNumber != null and tagNumber != ''">
-                and tag_number = #{tagNumber}
+                and tag_number like CONCAT( #{tagNumber}, '%')
             </if>
             <if test="status != null and status != ''">
                 and status = #{status}
             </if>
-<!--            <if test="factory!=null and factory != ''">-->
-<!--                and factory = #{factory}-->
-<!--            </if>-->
+            <if test="dvName != null and dvName != null">
+                and device_name like CONCAT ('%',#{dvName}, '%')
+            </if>
+            <!--            <if test="factory!=null and factory != ''">-->
+            <!--                and factory = #{factory}-->
+            <!--            </if>-->
         </where>
     </select>
+
 
 </mapper>

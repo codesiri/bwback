@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.controller;
 
+import com.youlai.boot.common.annotation.RepeatSubmit;
 import com.youlai.boot.ledger.model.query.DvTemperatureGaugeQueryPlus;
 import com.youlai.boot.ledger.service.DvTemperatureGaugeService;
 import lombok.RequiredArgsConstructor;
@@ -36,12 +37,13 @@ public class DvTemperatureGaugeController  {
     @Operation(summary = "温度分页列表")
     @GetMapping("/page")
     @PreAuthorize("@ss.hasPerm('ledger:dv-temperature-gauge:query')")
-    public PageResult<DvTemperatureGaugeVO> getDvTemperatureGaugePage(DvTemperatureGaugeQueryPlus queryParams,String tagNumber,String status ) {
+    public PageResult<DvTemperatureGaugeVO> getDvTemperatureGaugePage(DvTemperatureGaugeQueryPlus queryParams,String tagNumber,String status,String dvName ) {
         System.out.println(status);
-        IPage<DvTemperatureGaugeVO> result = dvTemperatureGaugeService.getDvTemperatureGaugePage(queryParams,tagNumber,status);
+        IPage<DvTemperatureGaugeVO> result = dvTemperatureGaugeService.getDvTemperatureGaugePage(queryParams,tagNumber,status,dvName);
         return PageResult.success(result);
     }
 
+    @RepeatSubmit
     @Operation(summary = "新增温度")
     @PostMapping
     @PreAuthorize("@ss.hasPerm('ledger:dv-temperature-gauge:add')")

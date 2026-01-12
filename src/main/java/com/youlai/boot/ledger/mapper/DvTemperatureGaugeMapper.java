@@ -23,6 +23,6 @@ public interface DvTemperatureGaugeMapper extends BaseMapper<DvTemperatureGauge>
      * @param page 分页对象
      * @return {@link Page<DvTemperatureGaugeVO>} 温度分页列表
      */
-    Page<DvTemperatureGaugeVO> getDvTemperatureGaugePage(Page<DvTemperatureGaugeVO> page, String tagNumber,String status);
+    Page<DvTemperatureGaugeVO> getDvTemperatureGaugePage(Page<DvTemperatureGaugeVO> page, String tagNumber,String status,String dvName);
 
 }

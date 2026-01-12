@@ -21,7 +21,7 @@ public interface DvTemperatureGaugeService extends IService<DvTemperatureGauge> 
      *
      * @return {@link IPage<DvTemperatureGaugeVO>} 温度分页列表
      */
-    IPage<DvTemperatureGaugeVO> getDvTemperatureGaugePage(DvTemperatureGaugeQueryPlus queryParams,String tagNumber,String status);
+    IPage<DvTemperatureGaugeVO> getDvTemperatureGaugePage(DvTemperatureGaugeQueryPlus queryParams,String tagNumber,String status,String dvName);
 
     /**
      * 获取温度表单数据

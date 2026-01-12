@@ -83,7 +83,7 @@ public class DvTemperatureGauge {
      * 备注
      */
     private String remark;
-    private int dvType;
+    private String dvType;
     private int status;
     //所属工厂
     private String factory;

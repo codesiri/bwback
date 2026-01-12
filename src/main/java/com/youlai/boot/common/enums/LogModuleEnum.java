@@ -22,7 +22,9 @@ public enum LogModuleEnum {
     MENU("菜单"),
     DICT("字典"),
     SETTING("系统配置"),
-    OTHER("其他");
+    OTHER("其他"),
+    PRESSURE_INSTRUMENT("压力仪表");;
+
 
     @JsonValue
     private final String moduleName;

@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youlai.boot.common.util.IDgenAdapterLeaf;
 import com.youlai.boot.common.util.adapter.IDgenAdapter;
 import com.youlai.boot.ledger.constant.DvLedgerConstants;
@@ -43,10 +44,10 @@ public class DvTemperatureGaugeServiceImpl extends ServiceImpl<DvTemperatureGaug
     * @return {@link IPage<DvTemperatureGaugeVO>} 温度分页列表
     */
     @Override
-    public IPage<DvTemperatureGaugeVO> getDvTemperatureGaugePage(DvTemperatureGaugeQueryPlus queryParams,String tagNumber,String status) {
+    public IPage<DvTemperatureGaugeVO> getDvTemperatureGaugePage(DvTemperatureGaugeQueryPlus queryParams,String tagNumber,String status,String dvName) {
         Page<DvTemperatureGaugeVO> pageVO = this.baseMapper.getDvTemperatureGaugePage(
                 new Page<>(queryParams.getPageNum(), queryParams.getPageSize()),
-                tagNumber,status
+                tagNumber,status,dvName
         );
         return pageVO;
     }
@@ -72,10 +73,13 @@ public class DvTemperatureGaugeServiceImpl extends ServiceImpl<DvTemperatureGaug
     @Override
     public boolean saveDvTemperatureGauge(DvTemperatureGaugeForm formData) {
         DvTemperatureGauge entity = dvTemperatureGaugeConverter.toEntity(formData);
+        long count = this.baseMapper.selectCount(new QueryWrapper<DvTemperatureGauge>().eq("tag_number",entity.getTagNumber()));
+        if(count > 0 ){
+            return false;
+        }
         IDgenAdapter iDgenAdapter = new IDgenAdapterLeaf();
         //生成id
         long id = iDgenAdapter.genID(DvLedgerConstants.DV_LEDGER_GEN_ID_URL);
-        System.out.println(id);
         entity.setId(id);
         return this.save(entity);
     }
