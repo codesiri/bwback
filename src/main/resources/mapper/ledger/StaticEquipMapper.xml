@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.StaticEquipMapper">
+
+    <!-- 获取静设备分页列表 -->
+    <select id="getStaticEquipPage" resultType="com.youlai.boot.ledger.model.vo.StaticEquipVO">
+        SELECT
+                id,
+                static_equip_name,
+                static_equip_tag,
+                static_equip_loc,
+                static_equip_op_temp,
+                static_equip_op_press,
+                static_equip_med,
+                static_equip_factory_no,
+                static_equip_category,
+                static_equip_weght,
+                static_equip_inspest_date,
+                static_equip_next_inspest_date,
+                status,
+                dv_code
+        FROM
+            static_equip
+        <where>
+            <if test="queryParams.staticEquipName != null and queryParams.staticEquipName != ''">
+                AND static_equip_name LIKE CONCAT('%', #{queryParams.staticEquipName}, '%')
+            </if>
+            <if test="queryParams.staticEquipTag != null and queryParams.staticEquipTag != ''">
+                AND static_equip_tag LIKE CONCAT('%', #{queryParams.staticEquipTag}, '%')
+            </if>
+            <if test="queryParams.status != null">
+                AND status = #{queryParams.status}
+            </if>
+            <if test="queryParams.dvCode != null and queryParams.dvCode != ''">
+                AND dv_code LIKE CONCAT('%', #{queryParams.dvCode}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

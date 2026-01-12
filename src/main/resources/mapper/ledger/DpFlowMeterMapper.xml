@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.DpFlowMeterMapper">
+
+    <!-- 获取差压流量计分页列表 -->
+    <select id="getDpFlowMeterPage" resultType="com.youlai.boot.ledger.model.vo.DpFlowMeterVO">
+        SELECT
+                id,
+                dp_flow_device,
+                dp_flow_tag,
+                dp_flow_location,
+                dp_flow_equip,
+                dp_flow_model,
+                dp_flow_manu,
+                dp_flow_range,
+                dp_flow_meas_range,
+                dp_flow_med_name,
+                dp_flow_med_temp,
+                dp_flow_med_press,
+                dp_flow_connection,
+                dp_flow_accuracy,
+                dp_flow_heat,
+                dp_flow_interlock,
+                dp_flow_interlock_val,
+                dp_flow_remark,
+                dv_code,
+                status,
+                dv_type
+        FROM
+            dp_flow_meter
+        <where>
+            <if test="queryParams.dpFlowTag != null and queryParams.dpFlowTag != ''">
+                AND dp_flow_tag = #{queryParams.dpFlowTag}
+            </if>
+            <if test="queryParams.dpFlowHeat != null">
+                AND dp_flow_heat = #{queryParams.dpFlowHeat}
+            </if>
+            <if test="queryParams.dpFlowInterlock != null">
+                AND dp_flow_interlock = #{queryParams.dpFlowInterlock}
+            </if>
+            <if test="queryParams.dvCode != null and queryParams.dvCode != ''">
+                AND dv_code LIKE CONCAT('%', #{queryParams.dvCode}, '%')
+            </if>
+            <if test="queryParams.status != null">
+                AND status = #{queryParams.status}
+            </if>
+            <if test="queryParams.dvType != null and queryParams.dvType != ''">
+                AND dv_type LIKE CONCAT('%', #{queryParams.dvType}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

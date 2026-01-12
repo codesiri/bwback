@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.DvFlowmetreInfoMapper">
+
+    <!-- 获取流量计分页列表 -->
+    <select id="getDvFlowmetreInfoPage" resultType="com.youlai.boot.ledger.model.vo.DvFlowmetreInfoVO">
+        SELECT
+                tag_number,
+                device,
+                purpose,
+                instrument_name,
+                measurement_range,
+                manufacturer,
+                medium,
+                medium_status,
+                medium_pressure,
+                medium_temperature,
+                factory_number,
+                remark,
+                status,
+                dv_type
+        FROM
+            dv_flowmetre_info
+        <where>
+            <if test="queryParams.tagNumber != null and queryParams.tagNumber != ''">
+                AND tag_number LIKE CONCAT('%', #{queryParams.tagNumber}, '%')
+            </if>
+            <if test="queryParams.instrumentName != null and queryParams.instrumentName != ''">
+                AND instrument_name LIKE CONCAT('%', #{queryParams.instrumentName}, '%')
+            </if>
+            <if test="queryParams.status != null">
+                AND status = #{queryParams.status}
+            </if>
+            <if test="queryParams.dvType != null and queryParams.dvType != ''">
+                AND dv_type LIKE CONCAT('%', #{queryParams.dvType}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
