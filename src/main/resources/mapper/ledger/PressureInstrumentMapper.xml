@@ -56,11 +56,11 @@
         FROM
         pressure_instrument
         <where>
-            <if test='queryParams.pressureTag != null and queryParams.pressureTag.trim() neq ""'>
-                AND pressure_tag LIKE CONCAT('%',#{queryParams.pressureTag},'%')
+            <if test='pressureTag != null and pressureTag.trim() neq ""'>
+                AND pressure_tag LIKE CONCAT('%',#{pressureTag},'%')
             </if>
-            <if test='queryParams.pressureDevice != null and queryParams.pressureDevice.trim() neq ""'>
-                AND pressure_device LIKE CONCAT('%',#{queryParams.pressureDevice},'%')
+            <if test='pressureDevice != null and pressureDevice.trim() neq ""'>
+                AND pressure_device LIKE CONCAT('%',#{pressureDevice},'%')
             </if>
         </where>
     </select>

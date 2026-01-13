@@ -18,9 +18,6 @@ import java.io.Serializable;
 @Setter
 @Schema( description = "压力视图对象")
 public class PressureInstrumentExportDTO  {
-
-    @ExcelProperty(value = "主键id")
-    private Long id;
     @ExcelProperty(value = "装置名称")
     private String pressureDevice;
     @ExcelProperty(value = "位号")
@@ -51,8 +48,6 @@ public class PressureInstrumentExportDTO  {
     private String pressureInterlockVal;
     @ExcelProperty(value = "备注")
     private String pressureRemark;
-
-
 
 }
 
