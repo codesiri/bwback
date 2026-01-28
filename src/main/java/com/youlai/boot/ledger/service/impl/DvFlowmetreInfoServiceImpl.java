@@ -1,9 +1,12 @@
 package com.youlai.boot.ledger.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youlai.boot.common.util.IDgenAdapterLeaf;
 import com.youlai.boot.common.util.adapter.IDgenAdapter;
 import com.youlai.boot.ledger.constant.DvLedgerConstants;
+import com.youlai.boot.ledger.model.dto.DvFlowmetreInfoExportDto;
+import com.youlai.boot.ledger.model.query.DvFlowmetreInfoQueryExport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -73,9 +76,7 @@ public class DvFlowmetreInfoServiceImpl extends ServiceImpl<DvFlowmetreInfoMappe
     public boolean saveDvFlowmetreInfo(DvFlowmetreInfoForm formData) {
         DvFlowmetreInfo entity = dvFlowmetreInfoConverter.toEntity(formData);
         long count = this.baseMapper.selectCount(new QueryWrapper<DvFlowmetreInfo>().eq("tag_number", entity.getTagNumber()));
-        if(count > 0){
-            return false;
-        }
+        Assert.isTrue((count == 0) , "位号已经存在");
         IDgenAdapter idgen = new IDgenAdapterLeaf();
         long id = idgen.genID(DvLedgerConstants.DV_LEDGER_GEN_ID_URL);
         entity.setId(id);
@@ -92,6 +93,7 @@ public class DvFlowmetreInfoServiceImpl extends ServiceImpl<DvFlowmetreInfoMappe
     @Override
     public boolean updateDvFlowmetreInfo(Long id,DvFlowmetreInfoForm formData) {
         DvFlowmetreInfo entity = dvFlowmetreInfoConverter.toEntity(formData);
+        entity.setId(id);
         return this.updateById(entity);
     }
     
@@ -109,6 +111,12 @@ public class DvFlowmetreInfoServiceImpl extends ServiceImpl<DvFlowmetreInfoMappe
                 .map(Long::parseLong)
                 .toList();
         return this.removeByIds(idList);
+    }
+
+    @Override
+    public List<DvFlowmetreInfoExportDto> listExportDvFlowmetreInfo(DvFlowmetreInfoQueryExport queryParams) {
+        List<DvFlowmetreInfoExportDto> listExportDvFlowmetreInfo = this.baseMapper.listExportDvFlowmetreInfo(queryParams);
+        return listExportDvFlowmetreInfo;
     }
 
 }

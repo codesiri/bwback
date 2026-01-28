@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.converter;
 
+import com.youlai.boot.ledger.model.dto.DvFlowmetreInfoExportDto;
 import org.mapstruct.Mapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youlai.boot.ledger.model.entity.DvFlowmetreInfo;
@@ -17,4 +18,5 @@ public interface DvFlowmetreInfoConverter{
     DvFlowmetreInfoForm toForm(DvFlowmetreInfo entity);
 
     DvFlowmetreInfo toEntity(DvFlowmetreInfoForm formData);
+    DvFlowmetreInfo toEntity(DvFlowmetreInfoExportDto exportDto);
 }

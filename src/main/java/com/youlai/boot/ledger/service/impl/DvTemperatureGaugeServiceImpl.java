@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youlai.boot.common.util.IDgenAdapterLeaf;
 import com.youlai.boot.common.util.adapter.IDgenAdapter;
 import com.youlai.boot.ledger.constant.DvLedgerConstants;
+import com.youlai.boot.ledger.model.dto.DvTemperatureGaugesExportDTO;
 import com.youlai.boot.ledger.model.query.DvTemperatureGaugeQueryPlus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -111,6 +112,11 @@ public class DvTemperatureGaugeServiceImpl extends ServiceImpl<DvTemperatureGaug
                 .map(Long::parseLong)
                 .toList();
         return this.removeByIds(idList);
+    }
+
+    @Override
+    public List<DvTemperatureGaugesExportDTO> listExportDvTemperatureGauge(DvTemperatureGaugeQuery queryParams) {
+        return this.baseMapper.listExportDvTemperatureGauge(queryParams);
     }
 
 }

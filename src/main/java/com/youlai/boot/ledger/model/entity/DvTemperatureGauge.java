@@ -36,7 +36,7 @@ public class DvTemperatureGauge {
      */
     private String installationLocationAndPurpose;
     /**
-     * 设备名称
+     * 装置名称
      */
     private String deviceNameSuffix;
     /**

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.TnkMeterMapper">
+
+    <!-- 获取罐区仪分页列表 -->
+    <select id="getTnkMeterPage" resultType="com.youlai.boot.ledger.model.vo.TnkMeterVO">
+        SELECT
+                id,
+                tnk_meter_tag,
+                tnk_meter_dev,
+                tnk_meter_purp,
+                tnk_meter_loop,
+                tnk_meter_name,
+                tnk_meter_model,
+                tnk_meter_spec,
+                tnk_meter_range,
+                tnk_meter_manu,
+                tnk_meter_meas,
+                tnk_meter_med_proc,
+                tnk_meter_med_stat,
+                tnk_meter_press,
+                tnk_meter_temp,
+                tnk_meter_nom_dia,
+                tnk_meter_fault_press,
+                tnk_meter_leak_stat,
+                tnk_meter_leak_lv,
+                tnk_meter_chk_time,
+                tnk_meter_chk_cycle,
+                tnk_meter_factory_no,
+                tnk_meter_remark,
+                status,
+                dv_type
+        FROM
+            tnk_meter
+        <where>
+            <if test="queryParams.tnkMeterTag != null and queryParams.tnkMeterTag != ''">
+                AND tnk_meter_tag LIKE CONCAT('%', #{queryParams.tnkMeterTag}, '%')
+            </if>
+            <if test="queryParams.status != null">
+                AND status = #{queryParams.status}
+            </if>
+            <if test="queryParams.dvType != null and queryParams.dvType != ''">
+                AND dv_type LIKE CONCAT('%', #{queryParams.dvType}, '%')
+            </if>
+        </where>
+    </select>
+    <!-- 获取罐区仪分页列表 -->
+    <select id="listExportTnkMeters" resultType="com.youlai.boot.ledger.model.dto.TnkMeterExportDto">
+        SELECT
+        tnk_meter_tag,
+        tnk_meter_dev,
+        tnk_meter_purp,
+        tnk_meter_loop,
+        tnk_meter_name,
+        tnk_meter_model,
+        tnk_meter_spec,
+        tnk_meter_range,
+        tnk_meter_manu,
+        tnk_meter_meas,
+        tnk_meter_med_proc,
+        tnk_meter_med_stat,
+        tnk_meter_press,
+        tnk_meter_temp,
+        tnk_meter_nom_dia,
+        tnk_meter_fault_press,
+        tnk_meter_leak_stat,
+        tnk_meter_leak_lv,
+        tnk_meter_chk_time,
+        tnk_meter_chk_cycle,
+        tnk_meter_factory_no,
+        tnk_meter_remark,
+        status,
+        dv_type
+        FROM
+        tnk_meter
+        <where>
+            <if test="tnkMeterTag != null and tnkMeterTag != ''">
+                AND tnk_meter_tag LIKE CONCAT('%', #{tnkMeterTag}, '%')
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="dvType != null and dvType != ''">
+                AND dv_type LIKE CONCAT('%', #{dvType}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

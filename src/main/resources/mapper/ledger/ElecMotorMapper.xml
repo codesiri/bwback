@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ElecMotorMapper">
+
+    <!-- 获取电器电动机分页列表 -->
+    <select id="getElecMotorPage" resultType="com.youlai.boot.ledger.model.vo.ElecMotorVO">
+        SELECT
+                elec_motor_tag,
+                elec_motor_process,
+                elec_motor_model,
+                elec_motor_rated_power,
+                elec_motor_rated_voltage,
+                elec_motor_rated_current,
+                elec_motor_rated_freq,
+                elec_motor_speed,
+                elec_motor_power_factor,
+                elec_motor_efficiency,
+                elec_motor_wiring_mode,
+                elec_motor_bearing_model,
+                elec_motor_explosion_mark,
+                elec_motor_insulation,
+                elec_motor_protection,
+                elec_motor_work_system,
+                elec_motor_factory_no,
+                elec_motor_weight,
+                elec_motor_prod_date,
+                elec_motor_manufacturer
+        FROM
+            elec_motor
+        <where>
+            <if test="queryParams.elecMotorTag != null and queryParams.elecMotorTag != ''">
+                AND elec_motor_tag LIKE CONCAT('%', #{queryParams.elecMotorTag}, '%')
+            </if>
+            <if test="queryParams.elecMotorProdDate != null">
+                <if test="queryParams.elecMotorProdDate[0] != null and queryParams.elecMotorProdDate[0] != ''">
+                    <bind name="startDate" value="queryParams.elecMotorProdDate[0].length() == 10 ? queryParams.elecMotorProdDate[0] + ' 00:00:00' : queryParams.elecMotorProdDate[0]"/>
+                    AND elec_motor_prod_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.elecMotorProdDate[1] != null and queryParams.elecMotorProdDate[1] != ''">
+                    <bind name="endDate" value="queryParams.elecMotorProdDate[1].length() == 10 ? queryParams.elecMotorProdDate[1] + ' 23:59:59' : queryParams.elecMotorProdDate[1]"/>
+                    AND elec_motor_prod_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.elecMotorManufacturer != null and queryParams.elecMotorManufacturer != ''">
+                AND elec_motor_manufacturer = #{queryParams.elecMotorManufacturer}
+            </if>
+        </where>
+    </select>
+
+</mapper>

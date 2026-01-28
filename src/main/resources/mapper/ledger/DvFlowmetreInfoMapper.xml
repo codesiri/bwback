@@ -5,6 +5,7 @@
     <!-- 获取流量计分页列表 -->
     <select id="getDvFlowmetreInfoPage" resultType="com.youlai.boot.ledger.model.vo.DvFlowmetreInfoVO">
         SELECT
+            id,
                 tag_number,
                 device,
                 purpose,
@@ -36,5 +37,39 @@
             </if>
         </where>
     </select>
-
+    <!-- 获取流量计分页列表 -->
+    <select id="listExportDvFlowmetreInfo" resultType="com.youlai.boot.ledger.model.dto.DvFlowmetreInfoExportDto">
+        SELECT
+        id,
+        tag_number,
+        device,
+        purpose,
+        instrument_name,
+        measurement_range,
+        manufacturer,
+        medium,
+        medium_status,
+        medium_pressure,
+        medium_temperature,
+        factory_number,
+        remark,
+        status,
+        dv_type
+        FROM
+        dv_flowmetre_info
+        <where>
+            <if test="tagNumber != null and tagNumber != ''">
+                AND tag_number LIKE CONCAT('%', #{tagNumber}, '%')
+            </if>
+            <if test="instrumentName != null and instrumentName != ''">
+                AND instrument_name LIKE CONCAT('%', #{instrumentName}, '%')
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="dvType != null and dvType != ''">
+                AND dv_type LIKE CONCAT('%', #{dvType}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>

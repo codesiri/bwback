@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.AnalyInstrumentMapper">
+
+    <!-- 获取分析仪分页列表 -->
+    <select id="getAnalyInstrumentPage" resultType="com.youlai.boot.ledger.model.vo.AnalyInstrumentVO">
+        SELECT
+                id,
+                analy_instrument_code,
+                analy_instrument_purpose,
+                analy_instrument_dept,
+                analy_instrument_type,
+                analy_instrument_big,
+                analy_instrument_status,
+                analy_instrument_plant,
+                analy_instrument_unit,
+                analy_instrument_monitor,
+                analy_instrument_lock,
+                analy_instrument_link_val,
+                analy_instrument_alarm_val,
+                analy_instrument_name,
+                analy_instrument_process,
+                analy_instrument_op_temp,
+                analy_instrument_op_press,
+                analy_instrument_range,
+                analy_instrument_meas_unit,
+                analy_instrument_set,
+                analy_instrument_circuit,
+                analy_instrument_supplier,
+                analy_instrument_prod_date,
+                analy_instrument_use_date,
+                analy_instrument_guarantee_date,
+                analy_instrument_maintain_flag,
+                analy_instrument_lube_period,
+                analy_instrument_lube_date,
+                analy_instrument_voltage,
+                analy_instrument_explosion,
+                analy_instrument_protection,
+                analy_instrument_manufacturer,
+                analy_instrument_spec,
+                analy_instrument_calib_date
+        FROM
+            analy_instrument
+        <where>
+            <if test="queryParams.analyInstrumentCode != null and queryParams.analyInstrumentCode != ''">
+                AND analy_instrument_code LIKE CONCAT('%', #{queryParams.analyInstrumentCode}, '%')
+            </if>
+            <if test="queryParams.analyInstrumentType != null and queryParams.analyInstrumentType != ''">
+                AND analy_instrument_type LIKE CONCAT('%', #{queryParams.analyInstrumentType}, '%')
+            </if>
+            <if test="queryParams.analyInstrumentBig != null and queryParams.analyInstrumentBig != ''">
+                AND analy_instrument_big LIKE CONCAT('%', #{queryParams.analyInstrumentBig}, '%')
+            </if>
+            <if test="queryParams.analyInstrumentStatus != null">
+                AND analy_instrument_status = #{queryParams.analyInstrumentStatus}
+            </if>
+            <if test="queryParams.analyInstrumentMonitor != null">
+                AND analy_instrument_monitor = #{queryParams.analyInstrumentMonitor}
+            </if>
+            <if test="queryParams.analyInstrumentLock != null and queryParams.analyInstrumentLock != ''">
+                AND analy_instrument_lock = #{queryParams.analyInstrumentLock}
+            </if>
+        </where>
+    </select>
+    <!-- 获取分析仪分页列表 -->
+    <select id="listExportAnalyInstrument" resultType="com.youlai.boot.ledger.model.dto.AnalyInstrumentExportDto">
+        SELECT
+        id,
+        analy_instrument_code,
+        analy_instrument_purpose,
+        analy_instrument_dept,
+        analy_instrument_type,
+        analy_instrument_big,
+        analy_instrument_status,
+        analy_instrument_plant,
+        analy_instrument_unit,
+        analy_instrument_monitor,
+        analy_instrument_lock,
+        analy_instrument_link_val,
+        analy_instrument_alarm_val,
+        analy_instrument_name,
+        analy_instrument_process,
+        analy_instrument_op_temp,
+        analy_instrument_op_press,
+        analy_instrument_range,
+        analy_instrument_meas_unit,
+        analy_instrument_set,
+        analy_instrument_circuit,
+        analy_instrument_supplier,
+        analy_instrument_prod_date,
+        analy_instrument_use_date,
+        analy_instrument_guarantee_date,
+        analy_instrument_maintain_flag,
+        analy_instrument_lube_period,
+        analy_instrument_lube_date,
+        analy_instrument_voltage,
+        analy_instrument_explosion,
+        analy_instrument_protection,
+        analy_instrument_manufacturer,
+        analy_instrument_spec,
+        analy_instrument_calib_date
+        FROM
+        analy_instrument
+        <where>
+            <if test="analyInstrumentCode != null and analyInstrumentCode != ''">
+                AND analy_instrument_code LIKE CONCAT('%', #{analyInstrumentCode}, '%')
+            </if>
+            <if test="analyInstrumentType != null and analyInstrumentType != ''">
+                AND analy_instrument_type LIKE CONCAT('%', #{analyInstrumentType}, '%')
+            </if>
+            <if test="analyInstrumentBig != null and analyInstrumentBig != ''">
+                AND analy_instrument_big LIKE CONCAT('%', #{analyInstrumentBig}, '%')
+            </if>
+            <if test="analyInstrumentStatus != null">
+                AND analy_instrument_status = #{analyInstrumentStatus}
+            </if>
+            <if test="analyInstrumentMonitor != null">
+                AND analy_instrument_monitor = #{analyInstrumentMonitor}
+            </if>
+            <if test="analyInstrumentLock != null and analyInstrumentLock != ''">
+                AND analy_instrument_lock = #{analyInstrumentLock}
+            </if>
+        </where>
+    </select>
+</mapper>

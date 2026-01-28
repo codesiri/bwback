@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SwitchValveMapper">
+
+    <!-- 获取开关阀分页列表 -->
+    <select id="getSwitchValvePage" resultType="com.youlai.boot.ledger.model.vo.SwitchValveVO">
+        SELECT
+                id,
+                switch_valve_device,
+                switch_valve_tag,
+                status,
+                switch_valve_name,
+                switch_valve_model,
+                switch_valve_manu,
+                switch_valve_location,
+                switch_valve_med_name,
+                switch_valve_med_temp,
+                switch_valve_med_press,
+                switch_valve_press_after,
+                switch_valve_material,
+                switch_valve_body_material,
+                switch_valve_seat_sn,
+                switch_valve_seat_material,
+                switch_valve_core_material,
+                switch_valve_stem_material,
+                switch_valve_flow_char,
+                switch_valve_leak_class,
+                switch_valve_actuator_type,
+                switch_valve_actuator_model,
+                switch_valve_actuator_manu,
+                switch_valve_actuator_action,
+                switch_valve_actuator_stroke,
+                switch_valve_spring_range,
+                switch_valve_air_press,
+                switch_valve_fault_pos,
+                switch_valve_close_time,
+                switch_valve_open_time,
+                switch_valve_remark,
+                dv_type,
+                factory
+        FROM
+            switch_valve
+        <where>
+            <if test="queryParams.switchValveTag != null and queryParams.switchValveTag != ''">
+                AND switch_valve_tag LIKE CONCAT('%', #{queryParams.switchValveTag}, '%')
+            </if>
+            <if test="queryParams.status != null and queryParams.status != ''">
+                AND status = #{queryParams.status}
+            </if>
+            <if test="queryParams.dvType != null and queryParams.dvType != ''">
+                AND dv_type LIKE CONCAT('%', #{queryParams.dvType}, '%')
+            </if>
+            <if test="queryParams.factory != null and queryParams.factory != ''">
+                AND factory LIKE CONCAT('%', #{queryParams.factory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 获取开关阀分页列表 -->
+    <select id="exportSwitchValveTable" resultType="com.youlai.boot.ledger.model.dto.SwitchValveExportDto">
+        SELECT
+        switch_valve_device,
+        switch_valve_tag,
+        status,
+        switch_valve_name,
+        switch_valve_model,
+        switch_valve_manu,
+        switch_valve_location,
+        switch_valve_med_name,
+        switch_valve_med_temp,
+        switch_valve_med_press,
+        switch_valve_press_after,
+        switch_valve_material,
+        switch_valve_body_material,
+        switch_valve_seat_sn,
+        switch_valve_seat_material,
+        switch_valve_core_material,
+        switch_valve_stem_material,
+        switch_valve_flow_char,
+        switch_valve_leak_class,
+        switch_valve_actuator_type,
+        switch_valve_actuator_model,
+        switch_valve_actuator_manu,
+        switch_valve_actuator_action,
+        switch_valve_actuator_stroke,
+        switch_valve_spring_range,
+        switch_valve_air_press,
+        switch_valve_fault_pos,
+        switch_valve_close_time,
+        switch_valve_open_time,
+        switch_valve_remark,
+        dv_type,
+        factory
+        FROM
+        switch_valve
+        <where>
+            <if test="switchValveTag != null and switchValveTag != ''">
+                AND switch_valve_tag LIKE CONCAT('%', #{switchValveTag}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="dvType != null and dvType != ''">
+                AND dv_type LIKE CONCAT('%', #{dvType}, '%')
+            </if>
+            <if test="factory != null and factory != ''">
+                AND factory LIKE CONCAT('%', #{factory}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

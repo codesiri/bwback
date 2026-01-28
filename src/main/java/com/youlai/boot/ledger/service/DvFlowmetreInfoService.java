@@ -1,11 +1,16 @@
 package com.youlai.boot.ledger.service;
 
+import com.youlai.boot.ledger.model.dto.DvFlowmetreInfoExportDto;
+import com.youlai.boot.ledger.model.dto.DvTemperatureGaugesExportDTO;
 import com.youlai.boot.ledger.model.entity.DvFlowmetreInfo;
 import com.youlai.boot.ledger.model.form.DvFlowmetreInfoForm;
 import com.youlai.boot.ledger.model.query.DvFlowmetreInfoQuery;
+import com.youlai.boot.ledger.model.query.DvFlowmetreInfoQueryExport;
 import com.youlai.boot.ledger.model.vo.DvFlowmetreInfoVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * 流量计服务类
@@ -55,4 +60,5 @@ public interface DvFlowmetreInfoService extends IService<DvFlowmetreInfo> {
      */
     boolean deleteDvFlowmetreInfos(String ids);
 
+    List<DvFlowmetreInfoExportDto> listExportDvFlowmetreInfo(DvFlowmetreInfoQueryExport queryParams);
 }

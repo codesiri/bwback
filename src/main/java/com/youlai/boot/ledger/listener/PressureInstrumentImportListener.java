@@ -107,8 +107,6 @@ public class PressureInstrumentImportListener extends AnalysisEventListener<Pres
             //生成id
             long id = iDgenAdapter.genID(DvLedgerConstants.DV_LEDGER_GEN_ID_URL);
             entity.setId(id);
-
-
             boolean saveResult = pressureInstrumentServices.save(entity);
             if (saveResult) {
                 excelResult.setValidCount(excelResult.getValidCount() + 1);
@@ -130,6 +128,7 @@ public class PressureInstrumentImportListener extends AnalysisEventListener<Pres
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
         log.info("所有数据解析完成！");
+
     }
 
 }

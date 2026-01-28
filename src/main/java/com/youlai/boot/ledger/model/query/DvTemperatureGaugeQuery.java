@@ -14,5 +14,9 @@ import lombok.Setter;
 @Schema(description ="温度查询对象")
 @Getter
 @Setter
-public class DvTemperatureGaugeQuery extends BasePageQuery {
+//导出xlsx的查询条件
+public class DvTemperatureGaugeQuery {
+    String tagNumber;
+    String status;
+    String dvName;
 }

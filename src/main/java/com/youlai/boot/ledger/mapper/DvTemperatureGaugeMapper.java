@@ -1,12 +1,15 @@
 package com.youlai.boot.ledger.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.youlai.boot.ledger.model.dto.DvTemperatureGaugesExportDTO;
 import com.youlai.boot.ledger.model.entity.DvTemperatureGauge;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youlai.boot.ledger.model.query.DvTemperatureGaugeQuery;
 import com.youlai.boot.ledger.model.query.DvTemperatureGaugeQueryPlus;
 import com.youlai.boot.ledger.model.vo.DvTemperatureGaugeVO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 温度Mapper接口
@@ -24,5 +27,5 @@ public interface DvTemperatureGaugeMapper extends BaseMapper<DvTemperatureGauge>
      * @return {@link Page<DvTemperatureGaugeVO>} 温度分页列表
      */
     Page<DvTemperatureGaugeVO> getDvTemperatureGaugePage(Page<DvTemperatureGaugeVO> page, String tagNumber,String status,String dvName);
-
+    List<DvTemperatureGaugesExportDTO> listExportDvTemperatureGauge(DvTemperatureGaugeQuery queryPlus);
 }

@@ -44,4 +44,40 @@
     </select>
 
 
+    <select id="listExportDvTemperatureGauge"
+            resultType="com.youlai.boot.ledger.model.dto.DvTemperatureGaugesExportDTO">
+        SELECT
+        device_name,
+        tag_number,
+        installation_location_and_purpose,
+        device_name_suffix,
+        index_number,
+        specification_model,
+        manufacturer,
+        measurement_range,
+        Insertion_depth,
+        connection_method_and_specifications,
+        `precision`,
+        casing_specifications_and_material,
+        interlocked,
+        interlock_set_value,
+        remark,
+        status,
+        dv_type,
+        factory
+        FROM
+        dv_temperature_gauge
+        <where>
+            <if test="tagNumber != null and tagNumber != ''">
+                and tag_number like CONCAT( #{tagNumber}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="dvName != null and dvName != null">
+                and device_name like CONCAT ('%',#{dvName}, '%')
+            </if>
+        </where>
+    </select>
+
 </mapper>

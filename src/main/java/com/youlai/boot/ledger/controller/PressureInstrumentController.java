@@ -120,7 +120,7 @@ public class PressureInstrumentController {
     }
 
 
-    @Operation(summary = "导入用户")
+    @Operation(summary = "导入压力")
     @PostMapping("/import")
     @PreAuthorize("@ss.hasPerm('ledger:pressure-instrument:import')")
     @Log(value = "导入压力", module = LogModuleEnum.PRESSURE_INSTRUMENT)

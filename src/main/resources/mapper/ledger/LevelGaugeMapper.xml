@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.LevelGaugeMapper">
+
+    <!-- 获取液位计分页列表 -->
+    <select id="getLevelGaugePage" resultType="com.youlai.boot.ledger.model.vo.LevelGaugeVO">
+        SELECT
+                id,
+                level_device,
+                level_tag,
+                level_location,
+                level_equip,
+                level_model,
+                level_manu,
+                level_medium,
+                level_range,
+                level_accuracy,
+                level_power,
+                level_output,
+                level_connection,
+                level_interlock,
+                level_interlock_val,
+                level_remark,
+                status,
+                dv_type
+        FROM
+            level_gauge
+        <where>
+            <if test="queryParams.levelTag != null and queryParams.levelTag != ''">
+                AND level_tag LIKE CONCAT('%', #{queryParams.levelTag}, '%')
+            </if>
+            <if test="queryParams.levelEquip != null and queryParams.levelEquip != ''">
+                AND level_equip LIKE CONCAT('%', #{queryParams.levelEquip}, '%')
+            </if>
+            <if test="queryParams.levelInterlock != null">
+                AND level_interlock = #{queryParams.levelInterlock}
+            </if>
+            <if test="queryParams.dvType != null">
+                AND dv_type LIKE CONCAT('%', #{queryParams.dvType}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="listExportLevelGauge" resultType="com.youlai.boot.ledger.model.dto.LevelGaugeExportDto">
+        SELECT
+        id,
+        level_device,
+        level_tag,
+        level_location,
+        level_equip,
+        level_model,
+        level_manu,
+        level_medium,
+        level_range,
+        level_accuracy,
+        level_power,
+        level_output,
+        level_connection,
+        level_interlock,
+        level_interlock_val,
+        level_remark,
+        status,
+        dv_type
+        FROM
+        level_gauge
+        <where>
+            <if test="levelTag != null and levelTag != ''">
+                AND level_tag LIKE CONCAT('%', #{levelTag}, '%')
+            </if>
+            <if test="levelEquip != null and levelEquip != ''">
+                AND level_equip LIKE CONCAT('%', #{levelEquip}, '%')
+            </if>
+            <if test="levelInterlock != null">
+                AND level_interlock = #{levelInterlock}
+            </if>
+            <if test="dvType != null">
+                AND dv_type LIKE CONCAT('%', #{dvType}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.UnitSpecialInstrumentsMapper">
+
+    <!-- 获取机组特殊仪分页列表 -->
+    <select id="getUnitSpecialInstrumentsPage" resultType="com.youlai.boot.ledger.model.vo.UnitSpecialInstrumentsVO">
+        SELECT
+                id,
+                tag_number,
+                instrument_name,
+                device_name,
+                device,
+                installation_location,
+                specification_model,
+                measurement_range,
+                quantity,
+                manufacturer,
+                unit_special_code,
+                status,
+                dv_type
+        FROM
+            unit_special_instruments
+        <where>
+            <if test="queryParams.tagNumber != null and queryParams.tagNumber != ''">
+                AND tag_number LIKE CONCAT('%', #{queryParams.tagNumber}, '%')
+            </if>
+            <if test="queryParams.instrumentName != null and queryParams.instrumentName != ''">
+                AND instrument_name LIKE CONCAT('%', #{queryParams.instrumentName}, '%')
+            </if>
+            <if test="queryParams.status != null">
+                AND status = #{queryParams.status}
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取机组特殊仪分页列表 -->
+    <select id="listExportUnitSpecialInstrument" resultType="com.youlai.boot.ledger.model.dto.UnitSpecialInstrumentsExportDto">
+        SELECT
+        tag_number,
+        instrument_name,
+        device_name,
+        device,
+        installation_location,
+        specification_model,
+        measurement_range,
+        quantity,
+        manufacturer,
+        unit_special_code,
+        status,
+        dv_type
+        FROM
+        unit_special_instruments
+        <where>
+            <if test="tagNumber != null and tagNumber != ''">
+                AND tag_number LIKE CONCAT('%', #{tagNumber}, '%')
+            </if>
+            <if test="instrumentName != null and instrumentName != ''">
+                AND instrument_name LIKE CONCAT('%', #{instrumentName}, '%')
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

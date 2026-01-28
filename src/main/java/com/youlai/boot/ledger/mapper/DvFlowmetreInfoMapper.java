@@ -1,11 +1,15 @@
 package com.youlai.boot.ledger.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.youlai.boot.ledger.model.dto.DvFlowmetreInfoExportDto;
 import com.youlai.boot.ledger.model.entity.DvFlowmetreInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youlai.boot.ledger.model.query.DvFlowmetreInfoQuery;
+import com.youlai.boot.ledger.model.query.DvFlowmetreInfoQueryExport;
 import com.youlai.boot.ledger.model.vo.DvFlowmetreInfoVO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 流量计Mapper接口
@@ -25,4 +29,5 @@ public interface DvFlowmetreInfoMapper extends BaseMapper<DvFlowmetreInfo> {
      */
     Page<DvFlowmetreInfoVO> getDvFlowmetreInfoPage(Page<DvFlowmetreInfoVO> page, DvFlowmetreInfoQuery queryParams);
 
+    List<DvFlowmetreInfoExportDto> listExportDvFlowmetreInfo(DvFlowmetreInfoQueryExport queryParams);
 }

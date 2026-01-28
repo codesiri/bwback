@@ -20,7 +20,8 @@ public class DvFlowmetreInfoForm implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
+    @Schema(description = "仪表位号")
+    private long id;
     @Schema(description = "仪表位号")
     @NotBlank(message = "仪表位号不能为空")
     @Size(max=255, message="仪表位号长度不能超过255个字符")

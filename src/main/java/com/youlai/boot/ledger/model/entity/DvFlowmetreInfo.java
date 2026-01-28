@@ -6,6 +6,8 @@ import lombok.Setter;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.youlai.boot.common.base.BaseEntity;
 
+import java.io.Serializable;
+
 /**
  * 流量计实体对象
  *
@@ -15,7 +17,7 @@ import com.youlai.boot.common.base.BaseEntity;
 @Getter
 @Setter
 @TableName("dv_flowmetre_info")
-public class DvFlowmetreInfo {
+public class DvFlowmetreInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @TableId

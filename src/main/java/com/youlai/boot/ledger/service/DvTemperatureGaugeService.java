@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.service;
 
+import com.youlai.boot.ledger.model.dto.DvTemperatureGaugesExportDTO;
 import com.youlai.boot.ledger.model.entity.DvTemperatureGauge;
 import com.youlai.boot.ledger.model.form.DvTemperatureGaugeForm;
 import com.youlai.boot.ledger.model.query.DvTemperatureGaugeQuery;
@@ -7,6 +8,8 @@ import com.youlai.boot.ledger.model.query.DvTemperatureGaugeQueryPlus;
 import com.youlai.boot.ledger.model.vo.DvTemperatureGaugeVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * 温度服务类
@@ -56,4 +59,5 @@ public interface DvTemperatureGaugeService extends IService<DvTemperatureGauge> 
      */
     boolean deleteDvTemperatureGauges(String ids);
 
+    List<DvTemperatureGaugesExportDTO> listExportDvTemperatureGauge(DvTemperatureGaugeQuery queryParams);
 }
