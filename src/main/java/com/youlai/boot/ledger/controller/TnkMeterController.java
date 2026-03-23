@@ -98,6 +98,7 @@ public class TnkMeterController {
     }
 
     @Operation(summary = "罐区仪导出")
+    @PreAuthorize("@ss.hasPerm('ledger:tnk-meter:query')")
     @GetMapping("/export")
     public void exportTnkMeters(TnkMeterExportQuery queryParams, HttpServletResponse response) throws IOException {
         String fileName = "罐区仪表.xlsx";
@@ -127,6 +128,7 @@ public class TnkMeterController {
     }
 
     @Operation(summary = "罐区仪导入文件")
+    @PreAuthorize("@ss.hasPerm('ledger:tnk-meter:add')")
     @PostMapping("/import")
     public Result<ExcelResult> importTnkMeters(MultipartFile file) throws IOException {
         TnkMeterImportListener tnkMeterImportListener = new TnkMeterImportListener();

@@ -99,7 +99,7 @@ public class UnitSpecialInstrumentsController  {
 
     @Operation(summary = "导出机组特殊仪表")
     @GetMapping("/export")
-    @PreAuthorize("@ss.hasPerm('ledger:unit-special-instruments:export')")
+    @PreAuthorize("@ss.hasPerm('ledger:unit-special-instruments:query')")
     public void exportUnitSpecialInstruments(UnitSpecialInstrumentsQueryExport queryParams, HttpServletResponse response) throws IOException {
         String fileName = "导出机组特殊仪表.xlsx";
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -127,6 +127,7 @@ public class UnitSpecialInstrumentsController  {
     }
 
     @Operation(summary = "导入机组特殊仪表")
+    @PreAuthorize("@ss.hasPerm('ledger:unit-special-instruments:add')")
     @PostMapping("/import")
     public Result<ExcelResult> importUnitSpecialInstrument(MultipartFile file) throws IOException {
         UnitSpecialInstrumentImportListener listener = new UnitSpecialInstrumentImportListener();

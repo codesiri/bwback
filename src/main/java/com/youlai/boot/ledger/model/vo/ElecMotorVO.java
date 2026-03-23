@@ -21,7 +21,8 @@ public class ElecMotorVO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
+    @Schema(description = "id")
+    private  long elecMotorId;
     @Schema(description = "位号")
     private String elecMotorTag;
     @Schema(description = "工艺名称")

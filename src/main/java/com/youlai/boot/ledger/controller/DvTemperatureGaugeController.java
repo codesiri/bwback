@@ -105,7 +105,7 @@ public class DvTemperatureGaugeController {
 
     @Operation(summary = "导出温度表")
     @GetMapping("/export")
-    @PreAuthorize("@ss.hasPerm('ledger:dv-temperature-gauge:export')")
+    @PreAuthorize("@ss.hasPerm('ledger:dv-temperature-gauge:query')")
     public void exportDvTemperatureGauges(DvTemperatureGaugeQuery queryParams, HttpServletResponse response) throws Exception {
         String fileName = "温度仪表.xlsx";
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -117,7 +117,7 @@ public class DvTemperatureGaugeController {
 
     @Operation(summary = "导入温度")
     @PostMapping("/import")
-    @PreAuthorize("@ss.hasPerm('ledger:dv-temperature-gauge:import')")
+    @PreAuthorize("@ss.hasPerm('ledger:dv-temperature-gauge:add')")
     @Log(value = "导入温度", module = LogModuleEnum.PRESSURE_INSTRUMENT)
     public Result<ExcelResult> importUsers(MultipartFile file) throws IOException {
 

@@ -21,7 +21,6 @@ public class SystemCodeGenerator {
 
     private static final DataSourceConfig.Builder DATA_SOURCE_CONFIG = new DataSourceConfig
             .Builder("jdbc:mysql://localhost:3306/youlai_boot?serverTimezone=Asia/Shanghai", "root", "123456");
-
     /**
      * 执行 run
      */

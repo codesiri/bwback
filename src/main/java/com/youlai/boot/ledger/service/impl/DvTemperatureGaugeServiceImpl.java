@@ -2,6 +2,7 @@ package com.youlai.boot.ledger.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youlai.boot.common.util.IDgenAdapterLeaf;
+import com.youlai.boot.common.util.NumberUtil;
 import com.youlai.boot.common.util.adapter.IDgenAdapter;
 import com.youlai.boot.ledger.constant.DvLedgerConstants;
 import com.youlai.boot.ledger.model.dto.DvTemperatureGaugesExportDTO;
@@ -78,6 +79,7 @@ public class DvTemperatureGaugeServiceImpl extends ServiceImpl<DvTemperatureGaug
         if(count > 0 ){
             return false;
         }
+        Assert.isTrue(NumberUtil.isIntNumeric(entity.getInterlockSetValue()),"联锁设定值必须为一个数字");
         IDgenAdapter iDgenAdapter = new IDgenAdapterLeaf();
         //生成id
         long id = iDgenAdapter.genID(DvLedgerConstants.DV_LEDGER_GEN_ID_URL);

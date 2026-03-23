@@ -107,7 +107,7 @@ public class PressureInstrumentController {
 
     @Operation(summary = "导出压力表")
     @GetMapping("/export")
-    @PreAuthorize("@ss.hasPerm('ledger:pressure-instrument:export')")
+    @PreAuthorize("@ss.hasPerm('ledger:pressure-instrument:query')")
     @Log(value = "导出压力表", module = LogModuleEnum.PRESSURE_INSTRUMENT)
     public void exportPressureInstrument(PressureInstrumentQueryPlus queryParams, HttpServletResponse response) throws IOException {
         String fileName = "压力列表.xlsx";
@@ -122,7 +122,7 @@ public class PressureInstrumentController {
 
     @Operation(summary = "导入压力")
     @PostMapping("/import")
-    @PreAuthorize("@ss.hasPerm('ledger:pressure-instrument:import')")
+    @PreAuthorize("@ss.hasPerm('ledger:pressure-instrument:add')")
     @Log(value = "导入压力", module = LogModuleEnum.PRESSURE_INSTRUMENT)
     public Result<ExcelResult> importUsers(MultipartFile file) throws IOException {
 

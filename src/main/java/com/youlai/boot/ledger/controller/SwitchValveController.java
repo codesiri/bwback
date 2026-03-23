@@ -90,7 +90,7 @@ public class SwitchValveController  {
 
     @Operation(summary = "导出开关阀表")
     @GetMapping("/export")
-    @PreAuthorize("@ss.hasPerm('ledger:switch-valve:export')")
+    @PreAuthorize("@ss.hasPerm('ledger:switch-valve:query')")
     public void exportSwitchValveTable(SwitchValveQuery queryParams, HttpServletResponse response) throws IOException {
         String fileName = "开关阀表.xlsx";
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

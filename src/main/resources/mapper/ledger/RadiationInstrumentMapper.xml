@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.RadiationInstrumentMapper">
+
+    <!-- 获取放射仪分页列表 -->
+    <select id="getRadiationInstrumentPage" resultType="com.youlai.boot.ledger.model.vo.RadiationInstrumentVO">
+        SELECT
+        id,
+        unit_name,
+        tag_number,
+        instrument_name,
+        source_tag_number,
+        source_form,
+        material,
+        strength,
+        power_supply,
+        output_signal,
+        measuring_range,
+        accuracy,
+        whether_interlocked,
+        interlock_setpoint,
+        installation_location_and_purpose,
+        specification_model,
+        manufacturer,
+        radioactive_status,
+        factory
+        FROM
+        radiation_instrument
+        <where>
+            <if test="queryParams.tagNumber != null and queryParams.tagNumber != ''">
+                and tag_number like CONCAT( #{queryParams.tagNumber}, '%')
+            </if>
+            <if test="queryParams.instrumentName != null and queryParams.instrumentName != ''">
+                and instrument_name = #{queryParams.instrumentName}
+            </if>
+            <if test="queryParams.radioactiveStatus != null and queryParams.radioactiveStatus != null">
+                and radioactive_status like CONCAT ('%',#{queryParams.radioactiveStatus}, '%')
+            </if>
+            <if test="queryParams.factory != null and queryParams.factory != null">
+                and factory like CONCAT ('%',#{queryParams.factory}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="listExportRadiationInstrument" resultType="com.youlai.boot.ledger.model.dto.RadiationInstrumentExportDTO">
+        SELECT
+        id,
+        unit_name,
+        tag_number,
+        instrument_name,
+        source_tag_number,
+        source_form,
+        material,
+        strength,
+        power_supply,
+        output_signal,
+        measuring_range,
+        accuracy,
+        whether_interlocked,
+        interlock_setpoint,
+        installation_location_and_purpose,
+        specification_model,
+        manufacturer,
+        radioactive_status,
+        factory
+        FROM
+        radiation_instrument
+        <where>
+            <if test="tagNumber != null and tagNumber != ''">
+                and tag_number like CONCAT( #{tagNumber}, '%')
+            </if>
+            <if test="instrumentName != null and instrumentName != ''">
+                and instrument_name = #{instrumentName}
+            </if>
+            <if test="radioactiveStatus != null and radioactiveStatus != null">
+                and radioactive_status like CONCAT ('%',#{radioactiveStatus}, '%')
+            </if>
+            <if test="factory != null and factory != null">
+                and factory like CONCAT ('%',#{factory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
+

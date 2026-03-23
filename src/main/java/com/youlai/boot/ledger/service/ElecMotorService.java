@@ -1,11 +1,15 @@
 package com.youlai.boot.ledger.service;
 
+import com.youlai.boot.ledger.model.dto.ElecMotorsExportDto;
 import com.youlai.boot.ledger.model.entity.ElecMotor;
 import com.youlai.boot.ledger.model.form.ElecMotorForm;
+import com.youlai.boot.ledger.model.query.ElecMotorExportQuery;
 import com.youlai.boot.ledger.model.query.ElecMotorQuery;
 import com.youlai.boot.ledger.model.vo.ElecMotorVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * 电器电动机服务类
@@ -55,4 +59,5 @@ public interface ElecMotorService extends IService<ElecMotor> {
      */
     boolean deleteElecMotors(String ids);
 
+    List<ElecMotorsExportDto> listExportElecMotor(ElecMotorExportQuery query);
 }

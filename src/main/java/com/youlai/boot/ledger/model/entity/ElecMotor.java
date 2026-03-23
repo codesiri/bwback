@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
@@ -15,13 +16,14 @@ import com.youlai.boot.common.base.BaseEntity;
 @Getter
 @Setter
 @TableName("elec_motor")
-public class ElecMotor extends BaseEntity {
+public class ElecMotor {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 序号
      */
+    @TableId
     private Long elecMotorId;
     /**
      * 位号

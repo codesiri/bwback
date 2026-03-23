@@ -116,6 +116,7 @@ public class AnalyInstrumentController {
 
     @Operation(summary = "导出分析仪表")
     @GetMapping("/export")
+    @PreAuthorize("@ss.hasPerm('ledger:analy-instrument:query')")
     public void exportTable(AnalyInstrumentExportQuery queryParams, HttpServletResponse response) throws IOException {
         String fileName = "分析仪表.xlsx";
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -126,6 +127,7 @@ public class AnalyInstrumentController {
     }
     @Operation(summary = "导入分析仪表")
     @PostMapping("/import")
+    @PreAuthorize("@ss.hasPerm('ledger:analy-instrument:add')")
     public Result<ExcelResult> importAnalyInstrument(MultipartFile file) throws IOException {
         AnalyInstrumentImportListener listener = new AnalyInstrumentImportListener();
         ExcelUtils.importExcel(file.getInputStream(), AnalyInstrumentExportDto.class, listener);

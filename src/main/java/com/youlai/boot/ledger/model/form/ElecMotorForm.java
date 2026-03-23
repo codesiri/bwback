@@ -23,6 +23,8 @@ public class ElecMotorForm implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @Schema(description = "id")
+    private long elecMotorId;
     @Schema(description = "位号")
     @NotBlank(message = "位号不能为空")
     @Size(max=255, message="位号长度不能超过255个字符")

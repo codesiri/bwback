@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ControlValveMapper">
+
+    <!-- 获取调节阀分页列表 -->
+    <select id="getControlValvePage" resultType="com.youlai.boot.ledger.model.vo.ControlValveVO">
+        SELECT
+        id,
+        dve_name,
+        tag_no,
+        name,
+        model_specification,
+        manufacturer,
+        installation_location_and_purpose,
+        medium_name,
+        design_temperature,
+        pressure_before_valve,
+        pressure_after_valve,
+        valve_seat_diameter,
+        valve_body_material,
+        valve_seat_serial_number,
+        valve_seat_material,
+        valve_core_material,
+        valve_stem_material,
+        flow_characteristics,
+
+        leakage_class,
+        cv_value,
+        actuator_model_specification,
+        actuator_action_form,
+        actuator_stroke,
+        spring_range,
+        air_source_pressure,
+        fault_position,
+        valve_close_time,
+        valve_open_time,
+        handwheel_mechanism,
+        dv_type,
+        status,
+        factory
+        FROM
+        control_valve
+        <where>
+            <if test="queryParams.tagNo != null and queryParams.tagNo != ''">
+                and tagNo like CONCAT( #{queryParams.tagNo}, '%')
+            </if>
+            <if test="queryParams.dvType != null and queryParams.dvType != ''">
+                and dvType = #{queryParams.dvType}
+            </if>
+            <if test="queryParams.status != null and queryParams.status != null">
+                and status like CONCAT ('%',#{queryParams.status}, '%')
+            </if>
+            <if test="queryParams.factory != null and queryParams.factory != null">
+                and factory like CONCAT ('%',#{queryParams.factory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="listExportControlValves" resultType="com.youlai.boot.ledger.model.dto.ControlValveExportDto">
+        SELECT
+        id,
+        dve_name,
+        tag_no,
+        name,
+        model_specification,
+        manufacturer,
+        installation_location_and_purpose,
+        medium_name,
+        design_temperature,
+        pressure_before_valve,
+        pressure_after_valve,
+        valve_seat_diameter,
+        valve_body_material,
+        valve_seat_serial_number,
+        valve_seat_material,
+        valve_core_material,
+        valve_stem_material,
+        flow_characteristics,
+        leakage_class,
+        cv_value,
+        actuator_model_specification,
+        actuator_action_form,
+        actuator_stroke,
+        spring_range,
+        air_source_pressure,
+        fault_position,
+        valve_close_time,
+        valve_open_time,
+        handwheel_mechanism,
+        dv_type,
+        status,
+        factory
+        FROM
+        control_valve
+        <where>
+            <if test="tagNo != null and tagNo != ''">
+                and tagNo like CONCAT( #{tagNo}, '%')
+            </if>
+            <if test="dvType != null and dvType != ''">
+                and dvType = #{dvType}
+            </if>
+            <if test="status != null and status != null">
+                and status like CONCAT ('%',#{status}, '%')
+            </if>
+            <if test="factory != null and factory != null">
+                and factory like CONCAT ('%',#{factory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+

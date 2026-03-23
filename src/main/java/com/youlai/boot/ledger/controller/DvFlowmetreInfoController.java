@@ -101,6 +101,7 @@ public class DvFlowmetreInfoController {
 
     @Operation(summary = "导出流量计")
     @GetMapping("/export")
+    @PreAuthorize("@ss.hasPerm('ledger:dv-flowmetre-info:query')")
     public void exportDvFlowmetreInfo(DvFlowmetreInfoQueryExport queryParams, HttpServletResponse response) throws IOException {
         String fileName = "流量计表.xlsx";
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -113,7 +114,7 @@ public class DvFlowmetreInfoController {
 
     @Operation(summary = "导入流量计")
     @PostMapping("/import")
-    @PreAuthorize("@ss.hasPerm('ledger:dv-temperature-gauge:import')")
+    @PreAuthorize("@ss.hasPerm('ledger:dv-temperature-gauge:add')")
     public Result<ExcelResult> importFlowMeter(MultipartFile file) throws IOException {
         DvFlowmetreInfoImportListener listener = new DvFlowmetreInfoImportListener();
         ExcelUtils.importExcel(file.getInputStream(), DvFlowmetreInfoExportDto.class, listener);

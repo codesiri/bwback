@@ -94,9 +94,10 @@ public class LevelGaugeController  {
     }
 
     @Operation(summary = "导出液位计表")
+    @PreAuthorize("@ss.hasPerm('ledger:level-gauge:query')")
     @GetMapping("/export")
     public void exportLevelGauges(LevelGaugeExportQuery queryParams, HttpServletResponse response) throws IOException {
-        String fileName = "液位计表";
+        String fileName = "液位计表.xslx";
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
         List<LevelGaugeExportDto> listExportLevelGauge = levelGaugeService.listExportLevelGauge(queryParams);
@@ -104,6 +105,7 @@ public class LevelGaugeController  {
                 .doWrite(listExportLevelGauge);
     }
     @Operation(summary = "导入液位计")
+    @PreAuthorize("@ss.hasPerm('ledger:level-gauge:add')")
     @PostMapping("/import")
     public Result<ExcelResult> importLevelGauge(MultipartFile file) throws IOException {
         LevelGaugeImportListener listener = new LevelGaugeImportListener();

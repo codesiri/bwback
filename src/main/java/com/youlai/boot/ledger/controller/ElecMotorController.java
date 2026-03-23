@@ -1,6 +1,13 @@
 package com.youlai.boot.ledger.controller;
 
+import cn.idev.excel.EasyExcel;
+import com.youlai.boot.common.util.ExcelUtils;
+import com.youlai.boot.core.web.ExcelResult;
+import com.youlai.boot.ledger.listener.ElecMotorImportListener;
+import com.youlai.boot.ledger.model.dto.ElecMotorsExportDto;
+import com.youlai.boot.ledger.model.query.ElecMotorExportQuery;
 import com.youlai.boot.ledger.service.ElecMotorService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +24,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * 电器电动机前端控制层
@@ -77,5 +90,26 @@ public class ElecMotorController  {
     ) {
         boolean result = elecMotorService.deleteElecMotors(ids);
         return Result.judge(result);
+    }
+
+    @Operation(summary = "导出电器电动机")
+    @GetMapping("/export")
+    @PreAuthorize("@ss.hasPerm('ledger:elec-motor:query')")
+    public void exportElecMotors(ElecMotorExportQuery query, HttpServletResponse response) throws IOException {
+        String fileName = "电器电动机表.xlsx";
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+        List<ElecMotorsExportDto> listExportElecMotor = this.elecMotorService.listExportElecMotor(query);
+        EasyExcel.write(response.getOutputStream(), ElecMotorsExportDto.class).sheet("导出电器电动机表")
+                .doWrite(listExportElecMotor);
+    }
+
+    @Operation(summary = "导入电器电动机")
+    @PostMapping("/import")
+    @PreAuthorize("@ss.hasPerm('ledger:elec-motor:add')")
+    public Result<ExcelResult> importElecMotors(MultipartFile file) throws IOException {
+        ElecMotorImportListener importListener = new ElecMotorImportListener();
+        ExcelUtils.importExcel(file.getInputStream(), ElecMotorsExportDto.class, importListener);
+        return Result.success(importListener.getExcelResult());
     }
 }
