@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ElectricCabinetRecordMapper">
+
+    <!-- 获取电器日常巡检记录分页列表 -->
+    <select id="getElectricCabinetRecordPage" resultType="com.youlai.boot.ledger.model.vo.ElectricCabinetRecordVO">
+        SELECT
+                id,
+                ecr_inspect_date,
+                ecr_inspect_person,
+                ecr_inspect_item,
+                ecr_inspect_result,
+                ecr_problem_desc,
+                ecr_measure,
+                ecr_handler,
+                ecr_factory,
+                ecr_reserve_1,
+                ecr_reserve_2,
+                ecr_reserve_3
+        FROM
+            electric_cabinet_record
+        <where>
+        </where>
+    </select>
+
+    <!-- 获取电器日常巡检记录分页列表 -->
+    <select id="exportElectricCabinetRecords" resultType="com.youlai.boot.ledger.model.dto.ElectricCabinetRecordExportDto">
+        SELECT
+        id,
+        ecr_inspect_date,
+        ecr_inspect_person,
+        ecr_inspect_item,
+        ecr_inspect_result,
+        ecr_problem_desc,
+        ecr_measure,
+        ecr_handler,
+        ecr_factory,
+        ecr_reserve_1,
+        ecr_reserve_2,
+        ecr_reserve_3
+        FROM
+        electric_cabinet_record
+        <where>
+        </where>
+    </select>
+
+</mapper>

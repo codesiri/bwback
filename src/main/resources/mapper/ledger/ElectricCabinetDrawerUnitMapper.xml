@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ElectricCabinetDrawerUnitMapper">
+
+    <!-- 获取抽屉柜抽屉单元明细分页列表 -->
+    <select id="getElectricCabinetDrawerUnitPage" resultType="com.youlai.boot.ledger.model.vo.ElectricCabinetDrawerUnitVO">
+        SELECT
+                id,
+                ecdu_drawer_no,
+                ecdu_unit_name,
+                ecdu_rated_current,
+                ecdu_rated_voltage,
+                ecdu_switch_model,
+                ecdu_switch_manufacturer,
+                ecdu_setting_current,
+                ecdu_corresponding_load,
+                ecdu_install_location,
+                ecdu_unit_status,
+                ecdu_factory,
+                ecdu_reserve_1,
+                ecdu_reserve_2,
+                ecdu_reserve_3
+        FROM
+            electric_cabinet_drawer_unit
+        <where>
+            <if test="queryParams.ecduUnitName != null and queryParams.ecduUnitName != ''">
+                AND ecdu_unit_name LIKE CONCAT('%', #{queryParams.ecduUnitName}, '%')
+            </if>
+            <if test="queryParams.ecduSwitchModel != null and queryParams.ecduSwitchModel != ''">
+                AND ecdu_switch_model LIKE CONCAT('%', #{queryParams.ecduSwitchModel}, '%')
+            </if>
+            <if test="queryParams.ecduUnitStatus != null and queryParams.ecduUnitStatus != ''">
+                AND ecdu_unit_status LIKE CONCAT('%', #{queryParams.ecduUnitStatus}, '%')
+            </if>
+            <if test="queryParams.ecduFactory != null and queryParams.ecduFactory != ''">
+                AND ecdu_factory LIKE CONCAT('%', #{queryParams.ecduFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 获取抽屉柜抽屉单元明细分页列表 -->
+    <select id="exportElectricCabinetDrawerUnits" resultType="com.youlai.boot.ledger.model.vo.ElectricCabinetDrawerUnitVO">
+        SELECT
+        id,
+        ecdu_drawer_no,
+        ecdu_unit_name,
+        ecdu_rated_current,
+        ecdu_rated_voltage,
+        ecdu_switch_model,
+        ecdu_switch_manufacturer,
+        ecdu_setting_current,
+        ecdu_corresponding_load,
+        ecdu_install_location,
+        ecdu_unit_status,
+        ecdu_factory,
+        ecdu_reserve_1,
+        ecdu_reserve_2,
+        ecdu_reserve_3
+        FROM
+        electric_cabinet_drawer_unit
+        <where>
+            <if test="ecduUnitName != null and ecduUnitName != ''">
+                AND ecdu_unit_name LIKE CONCAT('%', #{ecduUnitName}, '%')
+            </if>
+            <if test="ecduSwitchModel != null and ecduSwitchModel != ''">
+                AND ecdu_switch_model LIKE CONCAT('%', #{ecduSwitchModel}, '%')
+            </if>
+            <if test="ecduUnitStatus != null and ecduUnitStatus != ''">
+                AND ecdu_unit_status LIKE CONCAT('%', #{ecduUnitStatus}, '%')
+            </if>
+            <if test="ecduFactory != null and ecduFactory != ''">
+                AND ecdu_factory LIKE CONCAT('%', #{ecduFactory}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

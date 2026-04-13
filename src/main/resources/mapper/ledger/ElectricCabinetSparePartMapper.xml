@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ElectricCabinetSparePartMapper">
+
+    <!-- 获取电器备品备件管理记录分页列表 -->
+    <select id="getElectricCabinetSparePartPage" resultType="com.youlai.boot.ledger.model.vo.ElectricCabinetSparePartVO">
+        SELECT
+                id,
+                ecsp_part_name,
+                ecsp_spec_model,
+                ecsp_corresponding_cabinet,
+                ecsp_rated_parameters,
+                ecsp_manufacturer,
+                ecsp_stock_quantity,
+                ecsp_stock_date,
+                ecsp_used_quantity,
+                ecsp_used_date,
+                ecsp_used_reason,
+                ecsp_user,
+                ecsp_supplement_date,
+                ecsp_factory
+        FROM
+            electric_cabinet_spare_part
+        <where>
+            <if test="queryParams.ecspPartName != null and queryParams.ecspPartName != ''">
+                AND ecsp_part_name LIKE CONCAT('%', #{queryParams.ecspPartName}, '%')
+            </if>
+            <if test="queryParams.ecspSpecModel != null and queryParams.ecspSpecModel != ''">
+                AND ecsp_spec_model LIKE CONCAT('%', #{queryParams.ecspSpecModel}, '%')
+            </if>
+            <if test="queryParams.ecspManufacturer != null and queryParams.ecspManufacturer != ''">
+                AND ecsp_manufacturer LIKE CONCAT('%', #{queryParams.ecspManufacturer}, '%')
+            </if>
+            <if test="queryParams.ecspStockDate != null">
+                <if test="queryParams.ecspStockDate[0] != null and queryParams.ecspStockDate[0] != ''">
+                    <bind name="startDate" value="queryParams.ecspStockDate[0].length() == 10 ? queryParams.ecspStockDate[0] + ' 00:00:00' : queryParams.ecspStockDate[0]"/>
+                    AND ecsp_stock_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.ecspStockDate[1] != null and queryParams.ecspStockDate[1] != ''">
+                    <bind name="endDate" value="queryParams.ecspStockDate[1].length() == 10 ? queryParams.ecspStockDate[1] + ' 23:59:59' : queryParams.ecspStockDate[1]"/>
+                    AND ecsp_stock_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.ecspUsedDate != null">
+                <if test="queryParams.ecspUsedDate[0] != null and queryParams.ecspUsedDate[0] != ''">
+                    <bind name="startDate" value="queryParams.ecspUsedDate[0].length() == 10 ? queryParams.ecspUsedDate[0] + ' 00:00:00' : queryParams.ecspUsedDate[0]"/>
+                    AND ecsp_used_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.ecspUsedDate[1] != null and queryParams.ecspUsedDate[1] != ''">
+                    <bind name="endDate" value="queryParams.ecspUsedDate[1].length() == 10 ? queryParams.ecspUsedDate[1] + ' 23:59:59' : queryParams.ecspUsedDate[1]"/>
+                    AND ecsp_used_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.ecspUser != null and queryParams.ecspUser != ''">
+                AND ecsp_user LIKE CONCAT('%', #{queryParams.ecspUser}, '%')
+            </if>
+            <if test="queryParams.ecspFactory != null and queryParams.ecspFactory != ''">
+                AND ecsp_factory LIKE CONCAT('%', #{queryParams.ecspFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取电器备品备件管理记录分页列表 -->
+    <select id="exportElectricCabinetSpareParts" resultType="com.youlai.boot.ledger.model.dto.ElectricCabinetSparePartDto">
+        SELECT
+        id,
+        ecsp_part_name,
+        ecsp_spec_model,
+        ecsp_corresponding_cabinet,
+        ecsp_rated_parameters,
+        ecsp_manufacturer,
+        ecsp_stock_quantity,
+        ecsp_stock_date,
+        ecsp_used_quantity,
+        ecsp_used_date,
+        ecsp_used_reason,
+        ecsp_user,
+        ecsp_supplement_date,
+        ecsp_factory
+        FROM
+        electric_cabinet_spare_part
+        <where>
+            <if test="ecspPartName != null and ecspPartName != ''">
+                AND ecsp_part_name LIKE CONCAT('%', #{ecspPartName}, '%')
+            </if>
+            <if test="ecspSpecModel != null and ecspSpecModel != ''">
+                AND ecsp_spec_model LIKE CONCAT('%', #{ecspSpecModel}, '%')
+            </if>
+            <if test="ecspManufacturer != null and ecspManufacturer != ''">
+                AND ecsp_manufacturer LIKE CONCAT('%', #{queryParams.ecspManufacturer}, '%')
+            </if>
+            <if test="ecspStockDate != null">
+                <if test="ecspStockDate[0] != null and ecspStockDate[0] != ''">
+                    <bind name="startDate" value="ecspStockDate[0].length() == 10 ? ecspStockDate[0] + ' 00:00:00' : ecspStockDate[0]"/>
+                    AND ecsp_stock_date &gt;= #{startDate}
+                </if>
+                <if test="ecspStockDate[1] != null and ecspStockDate[1] != ''">
+                    <bind name="endDate" value="ecspStockDate[1].length() == 10 ? ecspStockDate[1] + ' 23:59:59' : ecspStockDate[1]"/>
+                    AND ecsp_stock_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="ecspUsedDate != null">
+                <if test="ecspUsedDate[0] != null and ecspUsedDate[0] != ''">
+                    <bind name="startDate" value="ecspUsedDate[0].length() == 10 ? ecspUsedDate[0] + ' 00:00:00' : ecspUsedDate[0]"/>
+                    AND ecsp_used_date &gt;= #{startDate}
+                </if>
+                <if test="ecspUsedDate[1] != null and ecspUsedDate[1] != ''">
+                    <bind name="endDate" value="ecspUsedDate[1].length() == 10 ? ecspUsedDate[1] + ' 23:59:59' : ecspUsedDate[1]"/>
+                    AND ecsp_used_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="ecspUser != null and ecspUser != ''">
+                AND ecsp_user LIKE CONCAT('%', #{ecspUser}, '%')
+            </if>
+            <if test="ecspFactory != null and ecspFactory != ''">
+                AND ecsp_factory LIKE CONCAT('%', #{qecspFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

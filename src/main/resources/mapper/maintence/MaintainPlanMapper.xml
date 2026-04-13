@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.maintence.mapper.MaintainPlanMapper">
+
+    <!-- 获取维修计划分页列表 -->
+    <select id="getMaintainPlanPage" resultType="com.youlai.boot.maintence.model.vo.MaintainPlanVO">
+        SELECT
+                id,
+                maintain_plan_type,
+                maintain_plan_year,
+                maintain_plan_month,
+                maintain_plan_equip_code,
+                maintain_plan_equip_name,
+                maintain_plan_equip_type,
+                maintain_plan_content,
+                maintain_plan_schedule_date,
+                maintain_plan_duration,
+                maintain_plan_dept,
+                maintain_plan_person,
+                maintain_plan_safety_level,
+                maintain_plan_safety_measure,
+                maintain_plan_status,
+                maintain_plan_actual_date
+        FROM
+            maintain_plan
+        <where>
+            <if test="queryParams.maintainPlanType != null and queryParams.maintainPlanType != ''">
+                AND maintain_plan_type LIKE CONCAT('%', #{queryParams.maintainPlanType}, '%')
+            </if>
+            <if test="queryParams.maintainPlanYear != null">
+                AND maintain_plan_year = #{queryParams.maintainPlanYear}
+            </if>
+            <if test="queryParams.maintainPlanMonth != null">
+                AND maintain_plan_month = #{queryParams.maintainPlanMonth}
+            </if>
+            <if test="queryParams.maintainPlanEquipCode != null and queryParams.maintainPlanEquipCode != ''">
+                AND maintain_plan_equip_code LIKE CONCAT('%', #{queryParams.maintainPlanEquipCode}, '%')
+            </if>
+            <if test="queryParams.maintainPlanEquipName != null and queryParams.maintainPlanEquipName != ''">
+                AND maintain_plan_equip_name LIKE CONCAT('%', #{queryParams.maintainPlanEquipName}, '%')
+            </if>
+            <if test="queryParams.maintainPlanEquipType != null and queryParams.maintainPlanEquipType != ''">
+                AND maintain_plan_equip_type LIKE CONCAT('%', #{queryParams.maintainPlanEquipType}, '%')
+            </if>
+            <if test="queryParams.maintainPlanContent != null and queryParams.maintainPlanContent != ''">
+                AND maintain_plan_content LIKE CONCAT('%', #{queryParams.maintainPlanContent}, '%')
+            </if>
+            <if test="queryParams.maintainPlanScheduleDate != null">
+                <if test="queryParams.maintainPlanScheduleDate[0] != null and queryParams.maintainPlanScheduleDate[0] != ''">
+                    <bind name="startDate" value="queryParams.maintainPlanScheduleDate[0].length() == 10 ? queryParams.maintainPlanScheduleDate[0] + ' 00:00:00' : queryParams.maintainPlanScheduleDate[0]"/>
+                    AND maintain_plan_schedule_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.maintainPlanScheduleDate[1] != null and queryParams.maintainPlanScheduleDate[1] != ''">
+                    <bind name="endDate" value="queryParams.maintainPlanScheduleDate[1].length() == 10 ? queryParams.maintainPlanScheduleDate[1] + ' 23:59:59' : queryParams.maintainPlanScheduleDate[1]"/>
+                    AND maintain_plan_schedule_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.maintainPlanDuration != null">
+                AND maintain_plan_duration = #{queryParams.maintainPlanDuration}
+            </if>
+            <if test="queryParams.maintainPlanDept != null and queryParams.maintainPlanDept != ''">
+                AND maintain_plan_dept LIKE CONCAT('%', #{queryParams.maintainPlanDept}, '%')
+            </if>
+            <if test="queryParams.maintainPlanPerson != null and queryParams.maintainPlanPerson != ''">
+                AND maintain_plan_person LIKE CONCAT('%', #{queryParams.maintainPlanPerson}, '%')
+            </if>
+            <if test="queryParams.maintainPlanSafetyLevel != null and queryParams.maintainPlanSafetyLevel != ''">
+                AND maintain_plan_safety_level LIKE CONCAT('%', #{queryParams.maintainPlanSafetyLevel}, '%')
+            </if>
+            <if test="queryParams.maintainPlanSafetyMeasure != null and queryParams.maintainPlanSafetyMeasure != ''">
+                AND maintain_plan_safety_measure = #{queryParams.maintainPlanSafetyMeasure}
+            </if>
+            <if test="queryParams.maintainPlanStatus != null and queryParams.maintainPlanStatus != ''">
+                AND maintain_plan_status = #{queryParams.maintainPlanStatus}
+            </if>
+            <if test="queryParams.maintainPlanActualDate != null">
+                <if test="queryParams.maintainPlanActualDate[0] != null and queryParams.maintainPlanActualDate[0] != ''">
+                    <bind name="startDate" value="queryParams.maintainPlanActualDate[0].length() == 10 ? queryParams.maintainPlanActualDate[0] + ' 00:00:00' : queryParams.maintainPlanActualDate[0]"/>
+                    AND maintain_plan_actual_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.maintainPlanActualDate[1] != null and queryParams.maintainPlanActualDate[1] != ''">
+                    <bind name="endDate" value="queryParams.maintainPlanActualDate[1].length() == 10 ? queryParams.maintainPlanActualDate[1] + ' 23:59:59' : queryParams.maintainPlanActualDate[1]"/>
+                    AND maintain_plan_actual_date &lt;= #{endDate}
+                </if>
+            </if>
+        </where>
+    </select>
+
+</mapper>

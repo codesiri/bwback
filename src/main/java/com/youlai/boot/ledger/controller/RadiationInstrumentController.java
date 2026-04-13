@@ -125,7 +125,6 @@ public class RadiationInstrumentController  {
 
     @Operation(summary = "放射仪表导入模板下载")
     @GetMapping("/template")
-
     public void downloadTemplateRadiationInstruments(HttpServletResponse response) {
         String fileName = "放射仪表导入模板.xlsx";
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

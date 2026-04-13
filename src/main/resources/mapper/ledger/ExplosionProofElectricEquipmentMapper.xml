@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ExplosionProofElectricEquipmentMapper">
+
+    <!-- 获取防爆电气设备分页列表 -->
+    <select id="getExplosionProofElectricEquipmentPage" resultType="com.youlai.boot.ledger.model.vo.ExplosionProofElectricEquipmentVO">
+        SELECT
+                id,
+                equipment_code,
+                equipment_name,
+                spec_model,
+                ex_mark,
+                ex_cert_no,
+                ex_cert_expire,
+                temp_class,
+                applicable_medium,
+                install_area,
+                manufacturer,
+                commissioning_date,
+                ground_resistance,
+                last_ex_check_date,
+                next_ex_check_date,
+                status,
+                factory,
+                reserve_1,
+                reserve_2,
+                reserve_3
+        FROM
+            explosion_proof_electric_equipment
+        <where>
+            <if test="queryParams.equipmentCode != null and queryParams.equipmentCode != ''">
+                AND equipment_code LIKE CONCAT('%', #{queryParams.equipmentCode}, '%')
+            </if>
+            <if test="queryParams.equipmentName != null and queryParams.equipmentName != ''">
+                AND equipment_name LIKE CONCAT('%', #{queryParams.equipmentName}, '%')
+            </if>
+            <if test="queryParams.commissioningDate != null">
+                <if test="queryParams.commissioningDate[0] != null and queryParams.commissioningDate[0] != ''">
+                    <bind name="startDate" value="queryParams.commissioningDate[0].length() == 10 ? queryParams.commissioningDate[0] + ' 00:00:00' : queryParams.commissioningDate[0]"/>
+                    AND commissioning_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.commissioningDate[1] != null and queryParams.commissioningDate[1] != ''">
+                    <bind name="endDate" value="queryParams.commissioningDate[1].length() == 10 ? queryParams.commissioningDate[1] + ' 23:59:59' : queryParams.commissioningDate[1]"/>
+                    AND commissioning_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.status != null and queryParams.status != ''">
+                AND status = #{queryParams.status}
+            </if>
+            <if test="queryParams.factory != null and queryParams.factory != ''">
+                AND factory LIKE CONCAT('%', #{queryParams.factory}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取防爆电气设备分页列表 -->
+    <select id="exportExplosionProofElectricEquipments" resultType="com.youlai.boot.ledger.model.dto.ExplosionProofElectricEquipmentExportDto">
+        SELECT
+        equipment_code,
+        equipment_name,
+        spec_model,
+        ex_mark,
+        ex_cert_no,
+        ex_cert_expire,
+        temp_class,
+        applicable_medium,
+        install_area,
+        manufacturer,
+        commissioning_date,
+        ground_resistance,
+        last_ex_check_date,
+        next_ex_check_date,
+        status,
+        factory,
+        reserve_1,
+        reserve_2,
+        reserve_3
+        FROM
+        explosion_proof_electric_equipment
+        <where>
+            <if test="equipmentCode != null and equipmentCode != ''">
+                AND equipment_code LIKE CONCAT('%', #{equipmentCode}, '%')
+            </if>
+            <if test="equipmentName != null and equipmentName != ''">
+                AND equipment_name LIKE CONCAT('%', #{equipmentName}, '%')
+            </if>
+            <if test="commissioningDate != null">
+                <if test="commissioningDate[0] != null and commissioningDate[0] != ''">
+                    <bind name="startDate" value="commissioningDate[0].length() == 10 ? commissioningDate[0] + ' 00:00:00' : commissioningDate[0]"/>
+                    AND commissioning_date &gt;= #{startDate}
+                </if>
+                <if test="commissioningDate[1] != null and commissioningDate[1] != ''">
+                    <bind name="endDate" value="commissioningDate[1].length() == 10 ? commissioningDate[1] + ' 23:59:59' : commissioningDate[1]"/>
+                    AND commissioning_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="factory != null and factory != ''">
+                AND factory LIKE CONCAT('%', #{factory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.RelayProtectionSettingMapper">
+
+    <!-- 获取继电保护定值台账分页列表 -->
+    <select id="getRelayProtectionSettingPage" resultType="com.youlai.boot.ledger.model.vo.RelayProtectionSettingVO">
+        SELECT
+                id,
+                rps_relay_code,
+                rps_relay_type,
+                rps_relay_model,
+                rps_overcurrent_setting,
+                rps_overcurrent_delay,
+                rps_instantaneous_setting,
+                rps_earth_fault_setting,
+                rps_overload_setting,
+                rps_setting_date,
+                rps_setting_person,
+                rps_last_check_date,
+                rps_next_check_date,
+                rps_change_record,
+                rps_install_position,
+                rps_factory
+        FROM
+            relay_protection_setting
+        <where>
+            <if test="queryParams.rpsRelayCode != null and queryParams.rpsRelayCode != ''">
+                AND rps_relay_code LIKE CONCAT('%', #{queryParams.rpsRelayCode}, '%')
+            </if>
+            <if test="queryParams.rpsRelayType != null and queryParams.rpsRelayType != ''">
+                AND rps_relay_type LIKE CONCAT('%', #{queryParams.rpsRelayType}, '%')
+            </if>
+            <if test="queryParams.rpsLastCheckDate != null">
+                <if test="queryParams.rpsLastCheckDate[0] != null and queryParams.rpsLastCheckDate[0] != ''">
+                    <bind name="startDate" value="queryParams.rpsLastCheckDate[0].length() == 10 ? queryParams.rpsLastCheckDate[0] + ' 00:00:00' : queryParams.rpsLastCheckDate[0]"/>
+                    AND rps_last_check_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.rpsLastCheckDate[1] != null and queryParams.rpsLastCheckDate[1] != ''">
+                    <bind name="endDate" value="queryParams.rpsLastCheckDate[1].length() == 10 ? queryParams.rpsLastCheckDate[1] + ' 23:59:59' : queryParams.rpsLastCheckDate[1]"/>
+                    AND rps_last_check_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.rpsNextCheckDate != null">
+                <if test="queryParams.rpsNextCheckDate[0] != null and queryParams.rpsNextCheckDate[0] != ''">
+                    <bind name="startDate" value="queryParams.rpsNextCheckDate[0].length() == 10 ? queryParams.rpsNextCheckDate[0] + ' 00:00:00' : queryParams.rpsNextCheckDate[0]"/>
+                    AND rps_next_check_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.rpsNextCheckDate[1] != null and queryParams.rpsNextCheckDate[1] != ''">
+                    <bind name="endDate" value="queryParams.rpsNextCheckDate[1].length() == 10 ? queryParams.rpsNextCheckDate[1] + ' 23:59:59' : queryParams.rpsNextCheckDate[1]"/>
+                    AND rps_next_check_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.rpsInstallPosition != null and queryParams.rpsInstallPosition != ''">
+                AND rps_install_position LIKE CONCAT('%', #{queryParams.rpsInstallPosition}, '%')
+            </if>
+            <if test="queryParams.rpsFactory != null and queryParams.rpsFactory != ''">
+                AND rps_factory LIKE CONCAT('%', #{queryParams.rpsFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取继电保护定值台账分页列表 -->
+    <select id="exportRelayProtectionSetting" resultType="com.youlai.boot.ledger.model.dto.RelayProtectionSettingExportDto">
+        SELECT
+        id,
+        rps_relay_code,
+        rps_relay_type,
+        rps_relay_model,
+        rps_overcurrent_setting,
+        rps_overcurrent_delay,
+        rps_instantaneous_setting,
+        rps_earth_fault_setting,
+        rps_overload_setting,
+        rps_setting_date,
+        rps_setting_person,
+        rps_last_check_date,
+        rps_next_check_date,
+        rps_change_record,
+        rps_install_position,
+        rps_factory
+        FROM
+        relay_protection_setting
+        <where>
+            <if test="rpsRelayCode != null and rpsRelayCode != ''">
+                AND rps_relay_code LIKE CONCAT('%', #{rpsRelayCode}, '%')
+            </if>
+            <if test="rpsRelayType != null and rpsRelayType != ''">
+                AND rps_relay_type LIKE CONCAT('%', #{rpsRelayType}, '%')
+            </if>
+            <if test="rpsLastCheckDate != null">
+                <if test="rpsLastCheckDate[0] != null and rpsLastCheckDate[0] != ''">
+                    <bind name="startDate" value="rpsLastCheckDate[0].length() == 10 ? rpsLastCheckDate[0] + ' 00:00:00' : rpsLastCheckDate[0]"/>
+                    AND rps_last_check_date &gt;= #{startDate}
+                </if>
+                <if test="rpsLastCheckDate[1] != null and queryParams.rpsLastCheckDate[1] != ''">
+                    <bind name="endDate" value="rpsLastCheckDate[1].length() == 10 ? rpsLastCheckDate[1] + ' 23:59:59' : rpsLastCheckDate[1]"/>
+                    AND rps_last_check_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="rpsNextCheckDate != null">
+                <if test="rpsNextCheckDate[0] != null and rpsNextCheckDate[0] != ''">
+                    <bind name="startDate" value="rpsNextCheckDate[0].length() == 10 ? rpsNextCheckDate[0] + ' 00:00:00' : rpsNextCheckDate[0]"/>
+                    AND rps_next_check_date &gt;= #{startDate}
+                </if>
+                <if test="rpsNextCheckDate[1] != null and rpsNextCheckDate[1] != ''">
+                    <bind name="endDate" value="rpsNextCheckDate[1].length() == 10 ? rpsNextCheckDate[1] + ' 23:59:59' : rpsNextCheckDate[1]"/>
+                    AND rps_next_check_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="rpsInstallPosition != null and rpsInstallPosition != ''">
+                AND rps_install_position LIKE CONCAT('%', #{rpsInstallPosition}, '%')
+            </if>
+            <if test="rpsFactory != null and rpsFactory != ''">
+                AND rps_factory LIKE CONCAT('%', #{rpsFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

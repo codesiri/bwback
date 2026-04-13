@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ElectricCabinetDocumentMapper">
+
+    <!-- 获取抽屉柜相关资料归档分页列表 -->
+    <select id="getElectricCabinetDocumentPage" resultType="com.youlai.boot.ledger.model.vo.ElectricCabinetDocumentVO">
+        SELECT
+                id,
+                ecd_doc_name,
+                ecd_doc_type,
+                ecd_doc_no,
+                ecd_archive_date,
+                ecd_custodian,
+                ecd_location,
+                ecd_factory,
+                ecd_reserve_1,
+                ecd_reserve_2,
+                ecd_reserve_3
+        FROM
+            electric_cabinet_document
+        <where>
+            <if test="queryParams.ecdDocName != null and queryParams.ecdDocName != ''">
+                AND ecd_doc_name LIKE CONCAT('%', #{queryParams.ecdDocName}, '%')
+            </if>
+            <if test="queryParams.ecdDocType != null and queryParams.ecdDocType != ''">
+                AND ecd_doc_type LIKE CONCAT('%', #{queryParams.ecdDocType}, '%')
+            </if>
+            <if test="queryParams.ecdDocNo != null and queryParams.ecdDocNo != ''">
+                AND ecd_doc_no LIKE CONCAT('%', #{queryParams.ecdDocNo}, '%')
+            </if>
+            <if test="queryParams.ecdFactory != null and queryParams.ecdFactory != ''">
+                AND ecd_factory LIKE CONCAT('%', #{queryParams.ecdFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

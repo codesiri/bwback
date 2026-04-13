@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ElectricLightEquipmentMapper">
+
+    <!-- 获取电气照明设备分页列表 -->
+    <select id="getElectricLightEquipmentPage" resultType="com.youlai.boot.ledger.model.vo.ElectricLightEquipmentVO">
+        SELECT
+                id,
+                ele_light_code,
+                ele_light_name,
+                ele_spec_model,
+                ele_ex_mark,
+                ele_ex_cert_no,
+                ele_ex_cert_expire,
+                ele_rated_power,
+                ele_rated_voltage,
+                ele_install_area,
+                ele_install_height,
+                ele_manufacturer,
+                ele_commissioning_date,
+                ele_last_maintain_date,
+                ele_next_maintain_date,
+                ele_is_emergency,
+                ele_status,
+                ele_factory,
+                ele_reserve1,
+                ele_reserve2,
+                ele_reserve3
+        FROM
+            electric_light_equipment
+        <where>
+            <if test="queryParams.eleLightName != null and queryParams.eleLightName != ''">
+                AND ele_light_name LIKE CONCAT('%', #{queryParams.eleLightName}, '%')
+            </if>
+            <if test="queryParams.eleManufacturer != null and queryParams.eleManufacturer != ''">
+                AND ele_manufacturer LIKE CONCAT('%', #{queryParams.eleManufacturer}, '%')
+            </if>
+            <if test="queryParams.eleCommissioningDate != null">
+                <if test="queryParams.eleCommissioningDate[0] != null and queryParams.eleCommissioningDate[0] != ''">
+                    <bind name="startDate" value="queryParams.eleCommissioningDate[0].length() == 10 ? queryParams.eleCommissioningDate[0] + ' 00:00:00' : queryParams.eleCommissioningDate[0]"/>
+                    AND ele_commissioning_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.eleCommissioningDate[1] != null and queryParams.eleCommissioningDate[1] != ''">
+                    <bind name="endDate" value="queryParams.eleCommissioningDate[1].length() == 10 ? queryParams.eleCommissioningDate[1] + ' 23:59:59' : queryParams.eleCommissioningDate[1]"/>
+                    AND ele_commissioning_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.eleLastMaintainDate != null">
+                <if test="queryParams.eleLastMaintainDate[0] != null and queryParams.eleLastMaintainDate[0] != ''">
+                    <bind name="startDate" value="queryParams.eleLastMaintainDate[0].length() == 10 ? queryParams.eleLastMaintainDate[0] + ' 00:00:00' : queryParams.eleLastMaintainDate[0]"/>
+                    AND ele_last_maintain_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.eleLastMaintainDate[1] != null and queryParams.eleLastMaintainDate[1] != ''">
+                    <bind name="endDate" value="queryParams.eleLastMaintainDate[1].length() == 10 ? queryParams.eleLastMaintainDate[1] + ' 23:59:59' : queryParams.eleLastMaintainDate[1]"/>
+                    AND ele_last_maintain_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.eleNextMaintainDate != null">
+                <if test="queryParams.eleNextMaintainDate[0] != null and queryParams.eleNextMaintainDate[0] != ''">
+                    <bind name="startDate" value="queryParams.eleNextMaintainDate[0].length() == 10 ? queryParams.eleNextMaintainDate[0] + ' 00:00:00' : queryParams.eleNextMaintainDate[0]"/>
+                    AND ele_next_maintain_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.eleNextMaintainDate[1] != null and queryParams.eleNextMaintainDate[1] != ''">
+                    <bind name="endDate" value="queryParams.eleNextMaintainDate[1].length() == 10 ? queryParams.eleNextMaintainDate[1] + ' 23:59:59' : queryParams.eleNextMaintainDate[1]"/>
+                    AND ele_next_maintain_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.eleStatus != null">
+                AND ele_status = #{queryParams.eleStatus}
+            </if>
+            <if test="queryParams.eleFactory != null and queryParams.eleFactory != ''">
+                AND ele_factory LIKE CONCAT('%', #{queryParams.eleFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取电气照明设备分页列表 -->
+    <select id="exportElectricLightEquipment" resultType="com.youlai.boot.ledger.model.dto.ElecMotorsExportDto">
+        SELECT
+        ele_light_code,
+        ele_light_name,
+        ele_spec_model,
+        ele_ex_mark,
+        ele_ex_cert_no,
+        ele_ex_cert_expire,
+        ele_rated_power,
+        ele_rated_voltage,
+        ele_install_area,
+        ele_install_height,
+        ele_manufacturer,
+        ele_commissioning_date,
+        ele_last_maintain_date,
+        ele_next_maintain_date,
+        ele_is_emergency,
+        ele_status,
+        ele_factory,
+        ele_reserve1,
+        ele_reserve2,
+        ele_reserve3
+        FROM
+        electric_light_equipment
+        <where>
+            <if test="eleLightName != null and eleLightName != ''">
+                AND ele_light_name LIKE CONCAT('%', #{eleLightName}, '%')
+            </if>
+            <if test="eleManufacturer != null and eleManufacturer != ''">
+                AND ele_manufacturer LIKE CONCAT('%', #{eleManufacturer}, '%')
+            </if>
+            <if test="eleCommissioningDate != null">
+                <if test="eleCommissioningDate[0] != null and eleCommissioningDate[0] != ''">
+                    <bind name="startDate" value="eleCommissioningDate[0].length() == 10 ? eleCommissioningDate[0] + ' 00:00:00' : eleCommissioningDate[0]"/>
+                    AND ele_commissioning_date &gt;= #{startDate}
+                </if>
+                <if test="eleCommissioningDate[1] != null andeleCommissioningDate[1] != ''">
+                    <bind name="endDate" value="eleCommissioningDate[1].length() == 10 ? eleCommissioningDate[1] + ' 23:59:59' : eleCommissioningDate[1]"/>
+                    AND ele_commissioning_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="eleLastMaintainDate != null">
+                <if test="eleLastMaintainDate[0] != null and eleLastMaintainDate[0] != ''">
+                    <bind name="startDate" value="eleLastMaintainDate[0].length() == 10 ? eleLastMaintainDate[0] + ' 00:00:00' : eleLastMaintainDate[0]"/>
+                    AND ele_last_maintain_date &gt;= #{startDate}
+                </if>
+                <if test="eleLastMaintainDate[1] != null and eleLastMaintainDate[1] != ''">
+                    <bind name="endDate" value="eleLastMaintainDate[1].length() == 10 ? eleLastMaintainDate[1] + ' 23:59:59' : eleLastMaintainDate[1]"/>
+                    AND ele_last_maintain_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="eleNextMaintainDate != null">
+                <if test="eleNextMaintainDate[0] != null and eleNextMaintainDate[0] != ''">
+                    <bind name="startDate" value="eleNextMaintainDate[0].length() == 10 ? eleNextMaintainDate[0] + ' 00:00:00' : eleNextMaintainDate[0]"/>
+                    AND ele_next_maintain_date &gt;= #{startDate}
+                </if>
+                <if test="eleNextMaintainDate[1] != null and eleNextMaintainDate[1] != ''">
+                    <bind name="endDate" value="eleNextMaintainDate[1].length() == 10 ? eleNextMaintainDate[1] + ' 23:59:59' : eleNextMaintainDate[1]"/>
+                    AND ele_next_maintain_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="eleStatus != null">
+                AND ele_status = #{eleStatus}
+            </if>
+            <if test="eleFactory != null and eleFactory != ''">
+                AND ele_factory LIKE CONCAT('%', #{eleFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

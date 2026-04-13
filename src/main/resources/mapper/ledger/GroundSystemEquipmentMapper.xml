@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.GroundSystemEquipmentMapper">
+
+    <!-- 获取电器接地系统分页列表 -->
+    <select id="getGroundSystemEquipmentPage" resultType="com.youlai.boot.ledger.model.vo.GroundSystemEquipmentVO">
+        SELECT
+                id,
+                gse_ground_code,
+                gse_ground_type,
+                gse_ground_struct,
+                gse_material,
+                gse_install_area,
+                gse_install_position,
+                gse_design_resistance,
+                gse_last_test_date,
+                gse_last_test_data,
+                gse_next_test_date,
+                gse_test_person,
+                gse_install_date,
+                gse_status,
+                gse_factory
+        FROM
+            ground_system_equipment
+        <where>
+            <if test="queryParams.gseGroundCode != null and queryParams.gseGroundCode != ''">
+                AND gse_ground_code LIKE CONCAT('%', #{queryParams.gseGroundCode}, '%')
+            </if>
+            <if test="queryParams.gseGroundType != null and queryParams.gseGroundType != ''">
+                AND gse_ground_type LIKE CONCAT('%', #{queryParams.gseGroundType}, '%')
+            </if>
+            <if test="queryParams.gseInstallArea != null and queryParams.gseInstallArea != ''">
+                AND gse_install_area LIKE CONCAT('%', #{queryParams.gseInstallArea}, '%')
+            </if>
+            <if test="queryParams.gseInstallPosition != null and queryParams.gseInstallPosition != ''">
+                AND gse_install_position LIKE CONCAT('%', #{queryParams.gseInstallPosition}, '%')
+            </if>
+            <if test="queryParams.gseLastTestDate != null">
+                <if test="queryParams.gseLastTestDate[0] != null and queryParams.gseLastTestDate[0] != ''">
+                    <bind name="startDate" value="queryParams.gseLastTestDate[0].length() == 10 ? queryParams.gseLastTestDate[0] + ' 00:00:00' : queryParams.gseLastTestDate[0]"/>
+                    AND gse_last_test_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.gseLastTestDate[1] != null and queryParams.gseLastTestDate[1] != ''">
+                    <bind name="endDate" value="queryParams.gseLastTestDate[1].length() == 10 ? queryParams.gseLastTestDate[1] + ' 23:59:59' : queryParams.gseLastTestDate[1]"/>
+                    AND gse_last_test_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.gseLastTestData != null and queryParams.gseLastTestData != ''">
+                AND gse_last_test_data LIKE CONCAT('%', #{queryParams.gseLastTestData}, '%')
+            </if>
+            <if test="queryParams.gseNextTestDate != null">
+                <if test="queryParams.gseNextTestDate[0] != null and queryParams.gseNextTestDate[0] != ''">
+                    <bind name="startDate" value="queryParams.gseNextTestDate[0].length() == 10 ? queryParams.gseNextTestDate[0] + ' 00:00:00' : queryParams.gseNextTestDate[0]"/>
+                    AND gse_next_test_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.gseNextTestDate[1] != null and queryParams.gseNextTestDate[1] != ''">
+                    <bind name="endDate" value="queryParams.gseNextTestDate[1].length() == 10 ? queryParams.gseNextTestDate[1] + ' 23:59:59' : queryParams.gseNextTestDate[1]"/>
+                    AND gse_next_test_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.gseTestPerson != null and queryParams.gseTestPerson != ''">
+                AND gse_test_person LIKE CONCAT('%', #{queryParams.gseTestPerson}, '%')
+            </if>
+            <if test="queryParams.gseInstallDate != null">
+                <if test="queryParams.gseInstallDate[0] != null and queryParams.gseInstallDate[0] != ''">
+                    <bind name="startDate" value="queryParams.gseInstallDate[0].length() == 10 ? queryParams.gseInstallDate[0] + ' 00:00:00' : queryParams.gseInstallDate[0]"/>
+                    AND gse_install_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.gseInstallDate[1] != null and queryParams.gseInstallDate[1] != ''">
+                    <bind name="endDate" value="queryParams.gseInstallDate[1].length() == 10 ? queryParams.gseInstallDate[1] + ' 23:59:59' : queryParams.gseInstallDate[1]"/>
+                    AND gse_install_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.gseStatus != null and queryParams.gseStatus != ''">
+                AND gse_status = #{queryParams.gseStatus}
+            </if>
+            <if test="queryParams.gseFactory != null and queryParams.gseFactory != ''">
+                AND gse_factory LIKE CONCAT('%', #{queryParams.gseFactory}, '%')
+            </if>
+        </where>
+    </select>
+    <!-- 获取电器接地系统分页列表 -->
+    <select id="exportGroundSystemEquipments" resultType="com.youlai.boot.ledger.model.dto.GroundSystemEquipmentExportDto">
+        SELECT
+        id,
+        gse_ground_code,
+        gse_ground_type,
+        gse_ground_struct,
+        gse_material,
+        gse_install_area,
+        gse_install_position,
+        gse_design_resistance,
+        gse_last_test_date,
+        gse_last_test_data,
+        gse_next_test_date,
+        gse_test_person,
+        gse_install_date,
+        gse_status,
+        gse_factory
+        FROM
+        ground_system_equipment
+        <where>
+            <if test="gseGroundCode != null and gseGroundCode != ''">
+                AND gse_ground_code LIKE CONCAT('%', #{gseGroundCode}, '%')
+            </if>
+            <if test="gseGroundType != null and gseGroundType != ''">
+                AND gse_ground_type LIKE CONCAT('%', #{gseGroundType}, '%')
+            </if>
+            <if test="gseInstallArea != null and gseInstallArea != ''">
+                AND gse_install_area LIKE CONCAT('%', #{gseInstallArea}, '%')
+            </if>
+            <if test="gseInstallPosition != null and gseInstallPosition != ''">
+                AND gse_install_position LIKE CONCAT('%', #{gseInstallPosition}, '%')
+            </if>
+            <if test="gseLastTestDate != null">
+                <if test="gseLastTestDate[0] != null and gseLastTestDate[0] != ''">
+                    <bind name="startDate" value="gseLastTestDate[0].length() == 10 ? gseLastTestDate[0] + ' 00:00:00' : gseLastTestDate[0]"/>
+                    AND gse_last_test_date &gt;= #{startDate}
+                </if>
+                <if test="gseLastTestDate[1] != null and gseLastTestDate[1] != ''">
+                    <bind name="endDate" value="gseLastTestDate[1].length() == 10 ? gseLastTestDate[1] + ' 23:59:59' : gseLastTestDate[1]"/>
+                    AND gse_last_test_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="gseLastTestData != null and gseLastTestData != ''">
+                AND gse_last_test_data LIKE CONCAT('%', #{gseLastTestData}, '%')
+            </if>
+            <if test="gseNextTestDate != null">
+                <if test="gseNextTestDate[0] != null and gseNextTestDate[0] != ''">
+                    <bind name="startDate" value="gseNextTestDate[0].length() == 10 ? gseNextTestDate[0] + ' 00:00:00' : gseNextTestDate[0]"/>
+                    AND gse_next_test_date &gt;= #{startDate}
+                </if>
+                <if test="gseNextTestDate[1] != null and gseNextTestDate[1] != ''">
+                    <bind name="endDate" value="gseNextTestDate[1].length() == 10 ? gseNextTestDate[1] + ' 23:59:59' : gseNextTestDate[1]"/>
+                    AND gse_next_test_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="gseTestPerson != null and gseTestPerson != ''">
+                AND gse_test_person LIKE CONCAT('%', #{gseTestPerson}, '%')
+            </if>
+            <if test="gseInstallDate != null">
+                <if test="gseInstallDate[0] != null and gseInstallDate[0] != ''">
+                    <bind name="startDate" value="gseInstallDate[0].length() == 10 ? gseInstallDate[0] + ' 00:00:00' : gseInstallDate[0]"/>
+                    AND gse_install_date &gt;= #{startDate}
+                </if>
+                <if test="gseInstallDate[1] != null and gseInstallDate[1] != ''">
+                    <bind name="endDate" value="gseInstallDate[1].length() == 10 ? gseInstallDate[1] + ' 23:59:59' : gseInstallDate[1]"/>
+                    AND gse_install_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="gseStatus != null and gseStatus != ''">
+                AND gse_status = #{gseStatus}
+            </if>
+            <if test="gseFactory != null and gseFactory != ''">
+                AND gse_factory LIKE CONCAT('%', #{gseFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

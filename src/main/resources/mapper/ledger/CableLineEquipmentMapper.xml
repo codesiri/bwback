@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.CableLineEquipmentMapper">
+
+    <!-- 获取电器电缆线路分页列表 -->
+    <select id="getCableLineEquipmentPage" resultType="com.youlai.boot.ledger.model.vo.CableLineEquipmentVO">
+        SELECT
+                id,
+                cle_cable_code,
+                cle_cable_name,
+                cle_spec_model,
+                cle_insulation_level,
+                cle_cable_length,
+                cle_laying_method,
+                cle_laying_path,
+                cle_install_area,
+                cle_core_number,
+                cle_core_section,
+                cle_manufacturer,
+                cle_production_date,
+                cle_install_date,
+                cle_last_test_date,
+                cle_last_test_data,
+                cle_joint_count,
+                cle_status,
+                cle_factory
+        FROM
+            cable_line_equipment
+        <where>
+            <if test="queryParams.cleCableCode != null and queryParams.cleCableCode != ''">
+                AND cle_cable_code LIKE CONCAT('%', #{queryParams.cleCableCode}, '%')
+            </if>
+            <if test="queryParams.cleCableName != null and queryParams.cleCableName != ''">
+                AND cle_cable_name LIKE CONCAT('%', #{queryParams.cleCableName}, '%')
+            </if>
+            <if test="queryParams.cleSpecModel != null and queryParams.cleSpecModel != ''">
+                AND cle_spec_model LIKE CONCAT('%', #{queryParams.cleSpecModel}, '%')
+            </if>
+            <if test="queryParams.cleManufacturer != null and queryParams.cleManufacturer != ''">
+                AND cle_manufacturer LIKE CONCAT('%', #{queryParams.cleManufacturer}, '%')
+            </if>
+            <if test="queryParams.cleFactory != null and queryParams.cleFactory != ''">
+                AND cle_factory LIKE CONCAT('%', #{queryParams.cleFactory}, '%')
+            </if>
+        </where>
+    </select>
+    <!-- 获取电器电缆线路分页列表 -->
+    <select id="exportCableLineEquipments" resultType="com.youlai.boot.ledger.model.dto.CableLineEquipmentExportDto">
+        SELECT
+        id,
+        cle_cable_code,
+        cle_cable_name,
+        cle_spec_model,
+        cle_insulation_level,
+        cle_cable_length,
+        cle_laying_method,
+        cle_laying_path,
+        cle_install_area,
+        cle_core_number,
+        cle_core_section,
+        cle_manufacturer,
+        cle_production_date,
+        cle_install_date,
+        cle_last_test_date,
+        cle_last_test_data,
+        cle_joint_count,
+        cle_status,
+        cle_factory
+        FROM
+        cable_line_equipment
+        <where>
+            <if test="cleCableCode != null and cleCableCode != ''">
+                AND cle_cable_code LIKE CONCAT('%', #{cleCableCode}, '%')
+            </if>
+            <if test="cleCableName != null and cleCableName != ''">
+                AND cle_cable_name LIKE CONCAT('%', #{cleCableName}, '%')
+            </if>
+            <if test="cleSpecModel != null and cleSpecModel != ''">
+                AND cle_spec_model LIKE CONCAT('%', #{cleSpecModel}, '%')
+            </if>
+            <if test="cleManufacturer != null and cleManufacturer != ''">
+                AND cle_manufacturer LIKE CONCAT('%', #{cleManufacturer}, '%')
+            </if>
+            <if test="cleFactory != null and cleFactory != ''">
+                AND cle_factory LIKE CONCAT('%', #{cleFactory}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

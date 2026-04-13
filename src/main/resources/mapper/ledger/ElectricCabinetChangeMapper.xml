@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ElectricCabinetChangeMapper">
+
+    <!-- 获取抽屉柜变更记录分页列表 -->
+    <select id="getElectricCabinetChangePage" resultType="com.youlai.boot.ledger.model.vo.ElectricCabinetChangeVO">
+        SELECT
+                id,
+                ecc_change_date,
+                ecc_applicant,
+                ecc_change_reason,
+                ecc_change_content,
+                ecc_implementer,
+                ecc_checker,
+                ecc_after_status,
+                ecc_data_update,
+                ecc_factory,
+                ecc_reserve_1,
+                ecc_reserve_2,
+                ecc_reserve_3
+        FROM
+            electric_cabinet_change
+        <where>
+            <if test="queryParams.eccChangeContent != null and queryParams.eccChangeContent != ''">
+                AND ecc_change_content LIKE CONCAT('%', #{queryParams.eccChangeContent}, '%')
+            </if>
+            <if test="queryParams.eccImplementer != null and queryParams.eccImplementer != ''">
+                AND ecc_implementer LIKE CONCAT('%', #{queryParams.eccImplementer}, '%')
+            </if>
+            <if test="queryParams.eccChecker != null and queryParams.eccChecker != ''">
+                AND ecc_checker LIKE CONCAT('%', #{queryParams.eccChecker}, '%')
+            </if>
+            <if test="queryParams.eccAfterStatus != null and queryParams.eccAfterStatus != ''">
+                AND ecc_after_status = #{queryParams.eccAfterStatus}
+            </if>
+            <if test="queryParams.eccFactory != null and queryParams.eccFactory != ''">
+                AND ecc_factory LIKE CONCAT('%', #{queryParams.eccFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取抽屉柜变更记录分页列表 -->
+    <select id="exportElectricCabinetChanges" resultType="com.youlai.boot.ledger.model.dto.ElectricCabinetChangeExportDto">
+        SELECT
+        id,
+        ecc_change_date,
+        ecc_applicant,
+        ecc_change_reason,
+        ecc_change_content,
+        ecc_implementer,
+        ecc_checker,
+        ecc_after_status,
+        ecc_data_update,
+        ecc_factory,
+        ecc_reserve_1,
+        ecc_reserve_2,
+        ecc_reserve_3
+        FROM
+        electric_cabinet_change
+        <where>
+            <if test="eccChangeContent != null and eccChangeContent != ''">
+                AND ecc_change_content LIKE CONCAT('%', #{eccChangeContent}, '%')
+            </if>
+            <if test="eccImplementer != null and eccImplementer != ''">
+                AND ecc_implementer LIKE CONCAT('%', #{eccImplementer}, '%')
+            </if>
+            <if test="eccChecker != null and eccChecker != ''">
+                AND ecc_checker LIKE CONCAT('%', #{eccChecker}, '%')
+            </if>
+            <if test="eccAfterStatus != null and eccAfterStatus != ''">
+                AND ecc_after_status = #{eccAfterStatus}
+            </if>
+            <if test="eccFactory != null and eccFactory != ''">
+                AND ecc_factory LIKE CONCAT('%', #{eccFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -9,7 +9,6 @@ public class PasswordGen {
 
     public static void main(String[] args){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        ;
         log.info("password encoded is : {}",passwordEncoder.encode("123456"));
     }
 }

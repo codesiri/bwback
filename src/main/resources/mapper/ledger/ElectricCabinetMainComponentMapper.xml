@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ElectricCabinetMainComponentMapper">
+
+    <!-- 获取抽屉柜主要元器件信息分页列表 -->
+    <select id="getElectricCabinetMainComponentPage" resultType="com.youlai.boot.ledger.model.vo.ElectricCabinetMainComponentVO">
+        SELECT
+                id,
+                ecm_component_name,
+                ecm_spec_model,
+                ecm_manufacturer,
+                ecm_factory_no,
+                ecm_install_location,
+                ecm_commissioning_date,
+                ecm_rated_parameters,
+                ecm_factory,
+                ecm_reserve_1,
+                ecm_reserve_2,
+                ecm_reserve_3
+        FROM
+            electric_cabinet_main_component
+        <where>
+            <if test="queryParams.ecmComponentName != null and queryParams.ecmComponentName != ''">
+                AND ecm_component_name LIKE CONCAT('%', #{queryParams.ecmComponentName}, '%')
+            </if>
+            <if test="queryParams.ecmManufacturer != null and queryParams.ecmManufacturer != ''">
+                AND ecm_manufacturer LIKE CONCAT('%', #{queryParams.ecmManufacturer}, '%')
+            </if>
+            <if test="queryParams.ecmFactoryNo != null and queryParams.ecmFactoryNo != ''">
+                AND ecm_factory_no LIKE CONCAT('%', #{queryParams.ecmFactoryNo}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

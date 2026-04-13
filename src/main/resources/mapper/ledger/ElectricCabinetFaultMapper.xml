@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ElectricCabinetFaultMapper">
+
+    <!-- 获取抽屉柜故障维修记录分页列表 -->
+    <select id="getElectricCabinetFaultPage" resultType="com.youlai.boot.ledger.model.vo.ElectricCabinetFaultVO">
+        SELECT
+                id,
+                ecf_fault_date,
+                ecf_fault_time,
+                ecf_fault_cabinet,
+                ecf_fault_phenomenon,
+                ecf_fault_reason,
+                ecf_repair_person,
+                ecf_repair_scheme,
+                ecf_replace_component,
+                ecf_repair_complete_time,
+                ecf_recover_time,
+                ecf_repair_result,
+                ecf_checker,
+                ecf_fault_type,
+                ecf_factory,
+                ecf_reserve_1,
+                ecf_reserve_2,
+                ecf_reserve_3
+        FROM
+            electric_cabinet_fault
+        <where>
+            <if test="queryParams.ecfFaultDate != null">
+                <if test="queryParams.ecfFaultDate[0] != null and queryParams.ecfFaultDate[0] != ''">
+                    <bind name="startDate" value="queryParams.ecfFaultDate[0].length() == 10 ? queryParams.ecfFaultDate[0] + ' 00:00:00' : queryParams.ecfFaultDate[0]"/>
+                    AND ecf_fault_date &gt;= #{startDate}
+                </if>
+                <if test="queryParams.ecfFaultDate[1] != null and queryParams.ecfFaultDate[1] != ''">
+                    <bind name="endDate" value="queryParams.ecfFaultDate[1].length() == 10 ? queryParams.ecfFaultDate[1] + ' 23:59:59' : queryParams.ecfFaultDate[1]"/>
+                    AND ecf_fault_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.ecfFaultTime != null">
+                <if test="queryParams.ecfFaultTime[0] != null and queryParams.ecfFaultTime[0] != ''">
+                    <bind name="startDate" value="queryParams.ecfFaultTime[0].length() == 10 ? queryParams.ecfFaultTime[0] + ' 00:00:00' : queryParams.ecfFaultTime[0]"/>
+                    AND ecf_fault_time &gt;= #{startDate}
+                </if>
+                <if test="queryParams.ecfFaultTime[1] != null and queryParams.ecfFaultTime[1] != ''">
+                    <bind name="endDate" value="queryParams.ecfFaultTime[1].length() == 10 ? queryParams.ecfFaultTime[1] + ' 23:59:59' : queryParams.ecfFaultTime[1]"/>
+                    AND ecf_fault_time &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.ecfFaultCabinet != null and queryParams.ecfFaultCabinet != ''">
+                AND ecf_fault_cabinet LIKE CONCAT('%', #{queryParams.ecfFaultCabinet}, '%')
+            </if>
+            <if test="queryParams.ecfRepairPerson != null and queryParams.ecfRepairPerson != ''">
+                AND ecf_repair_person LIKE CONCAT('%', #{queryParams.ecfRepairPerson}, '%')
+            </if>
+            <if test="queryParams.ecfRepairCompleteTime != null">
+                <if test="queryParams.ecfRepairCompleteTime[0] != null and queryParams.ecfRepairCompleteTime[0] != ''">
+                    <bind name="startDate" value="queryParams.ecfRepairCompleteTime[0].length() == 10 ? queryParams.ecfRepairCompleteTime[0] + ' 00:00:00' : queryParams.ecfRepairCompleteTime[0]"/>
+                    AND ecf_repair_complete_time &gt;= #{startDate}
+                </if>
+                <if test="queryParams.ecfRepairCompleteTime[1] != null and queryParams.ecfRepairCompleteTime[1] != ''">
+                    <bind name="endDate" value="queryParams.ecfRepairCompleteTime[1].length() == 10 ? queryParams.ecfRepairCompleteTime[1] + ' 23:59:59' : queryParams.ecfRepairCompleteTime[1]"/>
+                    AND ecf_repair_complete_time &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.ecfRecoverTime != null">
+                <if test="queryParams.ecfRecoverTime[0] != null and queryParams.ecfRecoverTime[0] != ''">
+                    <bind name="startDate" value="queryParams.ecfRecoverTime[0].length() == 10 ? queryParams.ecfRecoverTime[0] + ' 00:00:00' : queryParams.ecfRecoverTime[0]"/>
+                    AND ecf_recover_time &gt;= #{startDate}
+                </if>
+                <if test="queryParams.ecfRecoverTime[1] != null and queryParams.ecfRecoverTime[1] != ''">
+                    <bind name="endDate" value="queryParams.ecfRecoverTime[1].length() == 10 ? queryParams.ecfRecoverTime[1] + ' 23:59:59' : queryParams.ecfRecoverTime[1]"/>
+                    AND ecf_recover_time &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="queryParams.ecfChecker != null and queryParams.ecfChecker != ''">
+                AND ecf_checker LIKE CONCAT('%', #{queryParams.ecfChecker}, '%')
+            </if>
+            <if test="queryParams.ecfFaultType != null and queryParams.ecfFaultType != ''">
+                AND ecf_fault_type LIKE CONCAT('%', #{queryParams.ecfFaultType}, '%')
+            </if>
+            <if test="queryParams.ecfFactory != null and queryParams.ecfFactory != ''">
+                AND ecf_factory LIKE CONCAT('%', #{queryParams.ecfFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 获取抽屉柜故障维修记录分页列表 -->
+    <select id="exportElectricCabinetFaults" resultType="com.youlai.boot.ledger.model.dto.ElectricCabinetFaultExportDto">
+        SELECT
+        id,
+        ecf_fault_date,
+        ecf_fault_time,
+        ecf_fault_cabinet,
+        ecf_fault_phenomenon,
+        ecf_fault_reason,
+        ecf_repair_person,
+        ecf_repair_scheme,
+        ecf_replace_component,
+        ecf_repair_complete_time,
+        ecf_recover_time,
+        ecf_repair_result,
+        ecf_checker,
+        ecf_fault_type,
+        ecf_factory,
+        ecf_reserve_1,
+        ecf_reserve_2,
+        ecf_reserve_3
+        FROM
+        electric_cabinet_fault
+        <where>
+            <if test="ecfFaultDate != null">
+                <if test="ecfFaultDate[0] != null and ecfFaultDate[0] != ''">
+                    <bind name="startDate" value="ecfFaultDate[0].length() == 10 ? ecfFaultDate[0] + ' 00:00:00' : ecfFaultDate[0]"/>
+                    AND ecf_fault_date &gt;= #{startDate}
+                </if>
+                <if test="ecfFaultDate[1] != null and ecfFaultDate[1] != ''">
+                    <bind name="endDate" value="ecfFaultDate[1].length() == 10 ? ecfFaultDate[1] + ' 23:59:59' : ecfFaultDate[1]"/>
+                    AND ecf_fault_date &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="ecfFaultTime != null">
+                <if test="ecfFaultTime[0] != null and ecfFaultTime[0] != ''">
+                    <bind name="startDate" value="ecfFaultTime[0].length() == 10 ? ecfFaultTime[0] + ' 00:00:00' : ecfFaultTime[0]"/>
+                    AND ecf_fault_time &gt;= #{startDate}
+                </if>
+                <if test="ecfFaultTime[1] != null and ecfFaultTime[1] != ''">
+                    <bind name="endDate" value="ecfFaultTime[1].length() == 10 ? ecfFaultTime[1] + ' 23:59:59' : ecfFaultTime[1]"/>
+                    AND ecf_fault_time &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="ecfFaultCabinet != null and ecfFaultCabinet != ''">
+                AND ecf_fault_cabinet LIKE CONCAT('%', #{ecfFaultCabinet}, '%')
+            </if>
+            <if test="ecfRepairPerson != null and ecfRepairPerson != ''">
+                AND ecf_repair_person LIKE CONCAT('%', #{ecfRepairPerson}, '%')
+            </if>
+            <if test="ecfRepairCompleteTime != null">
+                <if test="ecfRepairCompleteTime[0] != null and ecfRepairCompleteTime[0] != ''">
+                    <bind name="startDate" value="ecfRepairCompleteTime[0].length() == 10 ? ecfRepairCompleteTime[0] + ' 00:00:00' : ecfRepairCompleteTime[0]"/>
+                    AND ecf_repair_complete_time &gt;= #{startDate}
+                </if>
+                <if test="ecfRepairCompleteTime[1] != null and ecfRepairCompleteTime[1] != ''">
+                    <bind name="endDate" value="ecfRepairCompleteTime[1].length() == 10 ? ecfRepairCompleteTime[1] + ' 23:59:59' : ecfRepairCompleteTime[1]"/>
+                    AND ecf_repair_complete_time &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="ecfRecoverTime != null">
+                <if test="ecfRecoverTime[0] != null and ecfRecoverTime[0] != ''">
+                    <bind name="startDate" value="ecfRecoverTime[0].length() == 10 ? ecfRecoverTime[0] + ' 00:00:00' : ecfRecoverTime[0]"/>
+                    AND ecf_recover_time &gt;= #{startDate}
+                </if>
+                <if test="ecfRecoverTime[1] != null and ecfRecoverTime[1] != ''">
+                    <bind name="endDate" value="ecfRecoverTime[1].length() == 10 ? ecfRecoverTime[1] + ' 23:59:59' : ecfRecoverTime[1]"/>
+                    AND ecf_recover_time &lt;= #{endDate}
+                </if>
+            </if>
+            <if test="ecfChecker != null and ecfChecker != ''">
+                AND ecf_checker LIKE CONCAT('%', #{ecfChecker}, '%')
+            </if>
+            <if test="ecfFaultType != null and ecfFaultType != ''">
+                AND ecf_fault_type LIKE CONCAT('%', #{ecfFaultType}, '%')
+            </if>
+            <if test="ecfFactory != null and ecfFactory != ''">
+                AND ecf_factory LIKE CONCAT('%', #{ecfFactory}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,14 +1,29 @@
-package com.youlai.boot.ledger.model.query;
+package com.youlai.boot.ledger.model.entity;
 
-
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.youlai.boot.common.base.BaseEntity;
 
 import java.time.LocalDate;
 
+/**
+ * 抽屉柜检修试验记录实体对象
+ *
+ * @author youlaitech
+ * @since 2026-03-18 16:19
+ */
 @Getter
 @Setter
-public class ElectricCabinetInspectionExportQuery {
+@TableName("electric_cabinet_inspection")
+public class ElectricCabinetInspection {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId
+    private  long id;
     /**
      * 报告编号
      */
@@ -57,5 +72,20 @@ public class ElectricCabinetInspectionExportQuery {
      * 所属工厂
      */
     private String eciFactory;
+    /**
+     * 备用1
+     */
+    @TableField("eci_reserve_1")
+    private String eciReserve1;
 
+    /**
+     * 备用2
+     */
+    @TableField("eci_reserve_2")
+    private String eciReserve2;
+    /**
+     * 备用3
+     */
+    @TableField("eci_reserve_3")
+    private String eciReserve3;
 }
