@@ -69,33 +69,67 @@ public class PressureInstrumentImportListener extends AnalysisEventListener<Pres
         log.info("解析到一条用户数据:{}", JSONUtil.toJsonStr(pressureInstrumentExportDTO));
 
         boolean validation = true;
-        String errorMsg = "第" + currentRow + "行数据校验失败：";
+        StringBuilder errorMsg = new StringBuilder("第" + currentRow + "行数据校验失败：");
 
-
-
+        // 校验位号
         String pressureTag = pressureInstrumentExportDTO.getPressureTag();
         if (StrUtil.isBlank(pressureTag)) {
-            errorMsg += "位号为空；";
+            errorMsg.append("位号为空；");
             validation = false;
         } else {
             long count = pressureInstrumentServices.count(new LambdaQueryWrapper<PressureInstrument>().eq(PressureInstrument::getPressureTag, pressureTag));
             if (count > 0) {
-                errorMsg += "位号已存在；";
+                errorMsg.append("位号已存在；");
                 validation = false;
             }
         }
 
+        // 校验装置名称
         String pressureDevice = pressureInstrumentExportDTO.getPressureDevice();
         if (StrUtil.isBlank(pressureDevice)) {
-            errorMsg += "装置名称为空；";
+            errorMsg.append("装置名称为空；");
             validation = false;
         }
 
+        // 校验安装位置
+        String pressureLocation = pressureInstrumentExportDTO.getPressureLocation();
+        if (StrUtil.isBlank(pressureLocation)) {
+            errorMsg.append("安装位置为空；");
+            validation = false;
+        }
 
-
+        // 校验设备名称
         String pressureEquip = pressureInstrumentExportDTO.getPressureEquip();
         if (StrUtil.isBlank(pressureEquip)) {
-            errorMsg += "设备名称为空；";
+            errorMsg.append("设备名称为空；");
+            validation = false;
+        }
+
+        // 校验生产厂家
+        String pressureManu = pressureInstrumentExportDTO.getPressureManu();
+        if (StrUtil.isBlank(pressureManu)) {
+            errorMsg.append("生产厂家为空；");
+            validation = false;
+        }
+
+        // 校验测量范围
+        String pressureRange = pressureInstrumentExportDTO.getPressureRange();
+        if (StrUtil.isBlank(pressureRange)) {
+            errorMsg.append("测量范围为空；");
+            validation = false;
+        }
+
+        // 校验是否伴热
+        String pressureHeat = pressureInstrumentExportDTO.getPressureHeat();
+        if (StrUtil.isBlank(pressureHeat)) {
+            errorMsg.append("是否伴热为空；");
+            validation = false;
+        }
+
+        // 校验是否带连锁
+        String pressureInterlock = pressureInstrumentExportDTO.getPressureInterlock();
+        if (StrUtil.isBlank(pressureInterlock)) {
+            errorMsg.append("是否带连锁为空；");
             validation = false;
         }
 
@@ -112,12 +146,12 @@ public class PressureInstrumentImportListener extends AnalysisEventListener<Pres
                 excelResult.setValidCount(excelResult.getValidCount() + 1);
             } else {
                 excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-                errorMsg += "第" + currentRow + "行数据保存失败；";
-                excelResult.getMessageList().add(errorMsg);
+                errorMsg = new StringBuilder("第" + currentRow + "行数据保存失败；");
+                excelResult.getMessageList().add(errorMsg.toString());
             }
         } else {
             excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-            excelResult.getMessageList().add(errorMsg);
+            excelResult.getMessageList().add(errorMsg.toString());
         }
         currentRow++;
     }

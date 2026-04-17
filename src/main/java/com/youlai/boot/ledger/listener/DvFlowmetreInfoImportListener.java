@@ -34,38 +34,70 @@ public class DvFlowmetreInfoImportListener extends AnalysisEventListener<DvFlowm
     public void invoke(DvFlowmetreInfoExportDto dvFlowmetreInfoExportDto, AnalysisContext analysisContext) {
         log.info("解析到一条数据");
         boolean validation = true;
-        String errorMsg = "第" + this.currentRow + "行数据校验失败：";
+        StringBuilder errorMsg = new StringBuilder("第" + this.currentRow + "行数据校验失败：");
+
+        // 校验位号
         String tagNumber = dvFlowmetreInfoExportDto.getTagNumber();
         if (StrUtil.isBlank(tagNumber)) {
             validation = false;
-            errorMsg += "位号为空";
+            errorMsg.append("位号为空；");
         } else {
             long count = dvFlowmetreInfoService
                     .count(new QueryWrapper<DvFlowmetreInfo>()
-                            .eq("tag_number",
-                                    dvFlowmetreInfoExportDto.getTagNumber()));
+                            .eq("tag_number", tagNumber));
             if (count > 0) {
                 validation = false;
-                errorMsg += "位号已经存在";
+                errorMsg.append("位号已经存在；");
             }
         }
+
+        // 校验装置
+        String device = dvFlowmetreInfoExportDto.getDevice();
+        if (StrUtil.isBlank(device)) {
+            validation = false;
+            errorMsg.append("装置为空；");
+        }
+
+        // 校验用途
+        String purpose = dvFlowmetreInfoExportDto.getPurpose();
+        if (StrUtil.isBlank(purpose)) {
+            validation = false;
+            errorMsg.append("用途为空；");
+        }
+
+        // 校验仪表名称
         String instrumentName = dvFlowmetreInfoExportDto.getInstrumentName();
         if (StrUtil.isBlank(instrumentName)) {
             validation = false;
-            errorMsg += "仪表名称为空";
+            errorMsg.append("仪表名称为空；");
         }
-        if (StrUtil.isBlank(dvFlowmetreInfoExportDto.getDevice())) {
+
+        // 校验量程
+        String measurementRange = dvFlowmetreInfoExportDto.getMeasurementRange();
+        if (StrUtil.isBlank(measurementRange)) {
             validation = false;
-            errorMsg += "装置为空";
+            errorMsg.append("量程为空；");
         }
+
+        // 校验厂家
+        String manufacturer = dvFlowmetreInfoExportDto.getManufacturer();
+        if (StrUtil.isBlank(manufacturer)) {
+            validation = false;
+            errorMsg.append("厂家为空；");
+        }
+
+        // 校验设备状态
         if (dvFlowmetreInfoExportDto.getStatus() == null) {
             validation = false;
-            errorMsg += "设备状态为空";
+            errorMsg.append("设备状态为空；");
         }
+
+        // 校验设备类型
         if (StrUtil.isBlank(dvFlowmetreInfoExportDto.getDvType())) {
             validation = false;
-            errorMsg += "设备类型为空";
+            errorMsg.append("设备类型为空；");
         }
+
         if (validation) {
             //校验通过入库
             DvFlowmetreInfo entity = this.dvFlowmetreInfoConverter.toEntity(dvFlowmetreInfoExportDto);
@@ -77,12 +109,12 @@ public class DvFlowmetreInfoImportListener extends AnalysisEventListener<DvFlowm
                 excelResult.setValidCount(excelResult.getValidCount() + 1);
             } else {
                 excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-                errorMsg += "第" + currentRow + "行数据保存失败；";
-                excelResult.getMessageList().add(errorMsg);
+                errorMsg = new StringBuilder("第" + currentRow + "行数据保存失败；");
+                excelResult.getMessageList().add(errorMsg.toString());
             }
         } else {
             excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-            excelResult.getMessageList().add(errorMsg);
+            excelResult.getMessageList().add(errorMsg.toString());
         }
         currentRow++;
     }

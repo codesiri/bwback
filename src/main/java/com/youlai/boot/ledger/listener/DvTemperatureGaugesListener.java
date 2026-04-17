@@ -54,11 +54,13 @@ public class DvTemperatureGaugesListener extends AnalysisEventListener<DvTempera
     public void invoke(DvTemperatureGaugesExportDTO dvTemperatureGaugesExportDTO, AnalysisContext analysisContext) {
         log.info("解析到一条温度数据", JSONUtil.toJsonStr(dvTemperatureGaugesExportDTO));
         boolean validation = true;
-        String errorMsg = "第" + currentRow + "行数据校验失败：";
+        StringBuilder errorMsg = new StringBuilder("第" + currentRow + "行数据校验失败：");
+
+        // 校验位号
         String tagNumber = dvTemperatureGaugesExportDTO.getTagNumber();
         log.info(tagNumber);
         if (StrUtil.isBlank(tagNumber)) {
-            errorMsg += "位号为空";
+            errorMsg.append("位号为空；");
             validation = false;
         } else {
             //检测位号是否有重复
@@ -66,15 +68,32 @@ public class DvTemperatureGaugesListener extends AnalysisEventListener<DvTempera
                     .count(new LambdaQueryWrapper<DvTemperatureGauge>()
                             .eq(DvTemperatureGauge::getTagNumber, tagNumber));
             if (count > 0) {
-                errorMsg += "位号已经存在";
+                errorMsg.append("位号已经存在；");
                 validation = false;
             }
         }
+
+        // 校验设备名称
         String dvName = dvTemperatureGaugesExportDTO.getDeviceName();
         if (StrUtil.isBlank(dvName)) {
-            errorMsg += "设备名称为空";
+            errorMsg.append("设备名称为空；");
             validation = false;
         }
+
+        // 校验装置名称(device_name_suffix)
+        String deviceNameSuffix = dvTemperatureGaugesExportDTO.getDeviceNameSuffix();
+        if (StrUtil.isBlank(deviceNameSuffix)) {
+            errorMsg.append("装置名称为空；");
+            validation = false;
+        }
+
+        // 校验设备状态
+        int status = dvTemperatureGaugesExportDTO.getStatus();
+        if (status != 0 && status != 1) {
+            errorMsg.append("设备状态必须是0或1；");
+            validation = false;
+        }
+
         if (validation) {
             //校验通过，入库
             DvTemperatureGauge entity = this.dvTemperatureGaugeConverter.toEntity(dvTemperatureGaugesExportDTO);
@@ -86,12 +105,12 @@ public class DvTemperatureGaugesListener extends AnalysisEventListener<DvTempera
                 excelResult.setValidCount(excelResult.getValidCount() + 1);
             } else {
                 excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-                errorMsg += "第" + currentRow + "行数据保存失败；";
-                excelResult.getMessageList().add(errorMsg);
+                errorMsg = new StringBuilder("第" + currentRow + "行数据保存失败；");
+                excelResult.getMessageList().add(errorMsg.toString());
             }
         } else {
             excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-            excelResult.getMessageList().add(errorMsg);
+            excelResult.getMessageList().add(errorMsg.toString());
         }
         currentRow++;
     }

@@ -20,6 +20,8 @@ import com.youlai.boot.ledger.service.ExplosionProofElectricEquipmentService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
+
 @Slf4j
 public class ExplosionProofElectricEquipmentsListener extends AnalysisEventListener<ExplosionProofElectricEquipmentExportDto> {
     @Getter
@@ -37,28 +39,96 @@ public class ExplosionProofElectricEquipmentsListener extends AnalysisEventListe
 
     @Override
     public void invoke(ExplosionProofElectricEquipmentExportDto explosionProofElectricEquipmentExportDto, AnalysisContext analysisContext) {
-        log.info("解析到一条用户数据:{}", JSONUtil.toJsonStr(explosionProofElectricEquipmentExportDto));
-        boolean validation = true;
-        String errorMsg = "第" + currentRow + "行数据校验失败：";
-        String equipmentCode = explosionProofElectricEquipmentExportDto.getEquipmentCode();
+        log.info("解析到一条防爆电气设备数据:{}", JSONUtil.toJsonStr(explosionProofElectricEquipmentExportDto));
 
+        boolean validation = true;
+        StringBuilder errorMsg = new StringBuilder("第" + currentRow + "行数据校验失败：");
+
+        // 校验设备编号
+        String equipmentCode = explosionProofElectricEquipmentExportDto.getEquipmentCode();
         if (StrUtil.isBlank(equipmentCode)) {
-            errorMsg += "编号为空";
+            errorMsg.append("设备编号为空；");
             validation = false;
         } else {
             long count = this.explosionProofElectricEquipmentService
                     .count(new QueryWrapper<ExplosionProofElectricEquipment>()
                             .eq("equipment_code", equipmentCode));
             if (count > 0) {
-                errorMsg += "编号已经存在";
+                errorMsg.append("设备编号已存在；");
                 validation = false;
             }
         }
+
+        // 校验设备名称
+        String equipmentName = explosionProofElectricEquipmentExportDto.getEquipmentName();
+        if (StrUtil.isBlank(equipmentName)) {
+            errorMsg.append("设备名称为空；");
+            validation = false;
+        }
+
+        // 校验规格型号
+        String specModel = explosionProofElectricEquipmentExportDto.getSpecModel();
+        if (StrUtil.isBlank(specModel)) {
+            errorMsg.append("规格型号为空；");
+            validation = false;
+        }
+
+        // 校验防爆标志
+        String exMark = explosionProofElectricEquipmentExportDto.getExMark();
+        if (StrUtil.isBlank(exMark)) {
+            errorMsg.append("防爆标志为空；");
+            validation = false;
+        }
+
+        // 校验防爆合格证号
+        String exCertNo = explosionProofElectricEquipmentExportDto.getExCertNo();
+        if (StrUtil.isBlank(exCertNo)) {
+            errorMsg.append("防爆合格证号为空；");
+            validation = false;
+        }
+
+        // 校验防爆合格证有效期
+        String exCertExpire = explosionProofElectricEquipmentExportDto.getExCertExpire();
+        if (StrUtil.isBlank(exCertExpire)) {
+            errorMsg.append("防爆合格证有效期为空；");
+            validation = false;
+        }
+
+        // 校验安装位置及危险区域等级
+        String installArea = explosionProofElectricEquipmentExportDto.getInstallArea();
+        if (StrUtil.isBlank(installArea)) {
+            errorMsg.append("安装位置及危险区域等级为空；");
+            validation = false;
+        }
+
+        // 校验投运日期
+        LocalDate commissioningDate = explosionProofElectricEquipmentExportDto.getCommissioningDate();
+        if (commissioningDate == null) {
+            errorMsg.append("投运日期为空；");
+            validation = false;
+        }
+
+        // 校验设备状态
+        String status = explosionProofElectricEquipmentExportDto.getStatus();
+        if (StrUtil.isBlank(status)) {
+            errorMsg.append("设备状态为空；");
+            validation = false;
+        } else if (!"0".equals(status) && !"1".equals(status)) {
+            errorMsg.append("设备状态必须是0或1；");
+            validation = false;
+        }
+
+        // 校验所属工厂
+        String factory = explosionProofElectricEquipmentExportDto.getFactory();
+        if (StrUtil.isBlank(factory)) {
+            errorMsg.append("所属工厂为空；");
+            validation = false;
+        }
+
         if (validation) {
-            com.youlai.boot.ledger.model.entity.ExplosionProofElectricEquipment explosionProofElectricEquipment
+            // 校验通过，持久化至数据库
+            ExplosionProofElectricEquipment explosionProofElectricEquipment
                     = this.explosionProofElectricEquipmentConverter.toEntity(explosionProofElectricEquipmentExportDto);
-//            IDgenAdapter iDgenAdapter = new IDgenAdapterLeaf();
-//            long id = iDgenAdapter.genID(DvLedgerConstants.DV_LEDGER_GEN_ID_URL);
             long id = idGenByJdk();
             explosionProofElectricEquipment.setId(id);
             boolean save = this.explosionProofElectricEquipmentService.save(explosionProofElectricEquipment);
@@ -66,12 +136,12 @@ public class ExplosionProofElectricEquipmentsListener extends AnalysisEventListe
                 excelResult.setValidCount(excelResult.getValidCount() + 1);
             } else {
                 excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-                errorMsg += "第" + currentRow + "行数据保存失败；";
-                excelResult.getMessageList().add(errorMsg);
+                errorMsg = new StringBuilder("第" + currentRow + "行数据保存失败；");
+                excelResult.getMessageList().add(errorMsg.toString());
             }
         } else {
             excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-            excelResult.getMessageList().add(errorMsg);
+            excelResult.getMessageList().add(errorMsg.toString());
         }
         currentRow++;
     }

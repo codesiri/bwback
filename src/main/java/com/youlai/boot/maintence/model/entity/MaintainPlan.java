@@ -1,5 +1,6 @@
 package com.youlai.boot.maintence.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
 import java.math.BigDecimal;
@@ -17,10 +18,12 @@ import com.youlai.boot.common.base.BaseEntity;
 @Getter
 @Setter
 @TableName("maintain_plan")
-public class MaintainPlan extends BaseEntity {
+public class MaintainPlan {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId
+    private Long id;
     /**
      * 计划类型
      */

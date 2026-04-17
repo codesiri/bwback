@@ -61,23 +61,99 @@ public class RadiationInstrumentsImportListener extends AnalysisEventListener<Ra
      */
     @Override
     public void invoke(RadiationInstrumentExportDTO radiationInstrumentDTO, AnalysisContext analysisContext) {
-        log.info("解析到一条用户数据:{}", JSONUtil.toJsonStr(radiationInstrumentDTO));
+        log.info("解析到一条放射仪数据:{}", JSONUtil.toJsonStr(radiationInstrumentDTO));
 
         boolean validation = true;
-        String errorMsg = "第" + currentRow + "行数据校验失败：";
+        StringBuilder errorMsg = new StringBuilder("第" + currentRow + "行数据校验失败：");
 
+        // 校验装置名称
+        String unitName = radiationInstrumentDTO.getUnitName();
+        if (StrUtil.isBlank(unitName)) {
+            errorMsg.append("装置名称为空；");
+            validation = false;
+        }
 
-
-        String pressureTag = radiationInstrumentDTO.getTagNumber();
-        if (StrUtil.isBlank(pressureTag)) {
-            errorMsg += "位号为空；";
+        // 校验位号
+        String tagNumber = radiationInstrumentDTO.getTagNumber();
+        if (StrUtil.isBlank(tagNumber)) {
+            errorMsg.append("位号为空；");
             validation = false;
         } else {
-            long count = radiationInstrumentServices.count(new LambdaQueryWrapper<RadiationInstrument>().eq(RadiationInstrument::getTagNumber, pressureTag));
+            long count = radiationInstrumentServices.count(new LambdaQueryWrapper<RadiationInstrument>().eq(RadiationInstrument::getTagNumber, tagNumber));
             if (count > 0) {
-                errorMsg += "位号已存在；";
+                errorMsg.append("位号已存在；");
                 validation = false;
             }
+        }
+
+        // 校验仪表名称
+        String instrumentName = radiationInstrumentDTO.getInstrumentName();
+        if (StrUtil.isBlank(instrumentName)) {
+            errorMsg.append("仪表名称为空；");
+            validation = false;
+        }
+
+        // 校验射源位号
+        String sourceTagNumber = radiationInstrumentDTO.getSourceTagNumber();
+        if (StrUtil.isBlank(sourceTagNumber)) {
+            errorMsg.append("射源位号为空；");
+            validation = false;
+        }
+
+        // 校验材质
+        String material = radiationInstrumentDTO.getMaterial();
+        if (StrUtil.isBlank(material)) {
+            errorMsg.append("材质为空；");
+            validation = false;
+        }
+
+        // 校验测量范围
+        String measuringRange = radiationInstrumentDTO.getMeasuringRange();
+        if (StrUtil.isBlank(measuringRange)) {
+            errorMsg.append("测量范围为空；");
+            validation = false;
+        }
+
+        // 校验精度
+        String accuracy = radiationInstrumentDTO.getAccuracy();
+        if (StrUtil.isBlank(accuracy)) {
+            errorMsg.append("精度为空；");
+            validation = false;
+        }
+
+        // 校验是否联锁
+        Integer whetherInterlocked = radiationInstrumentDTO.getWhetherInterlocked();
+        if (whetherInterlocked == null) {
+            errorMsg.append("是否联锁为空；");
+            validation = false;
+        }
+
+        // 校验安装位置及用途
+        String installationLocationAndPurpose = radiationInstrumentDTO.getInstallationLocationAndPurpose();
+        if (StrUtil.isBlank(installationLocationAndPurpose)) {
+            errorMsg.append("安装位置及用途为空；");
+            validation = false;
+        }
+
+        // 校验规格型号
+        String specificationModel = radiationInstrumentDTO.getSpecificationModel();
+        if (StrUtil.isBlank(specificationModel)) {
+            errorMsg.append("规格型号为空；");
+            validation = false;
+        }
+
+        // 校验生产厂家
+        String manufacturer = radiationInstrumentDTO.getManufacturer();
+        if (StrUtil.isBlank(manufacturer)) {
+            errorMsg.append("生产厂家为空；");
+            validation = false;
+        }
+
+        // 校验状态
+        Integer radioactiveStatus = radiationInstrumentDTO.getRadioactiveStatus();
+        if (radioactiveStatus == null) {
+            errorMsg.append("状态为空；");
+            validation = false;
         }
 
         if (validation) {
@@ -89,18 +165,17 @@ public class RadiationInstrumentsImportListener extends AnalysisEventListener<Ra
             long id = iDgenAdapter.genID(DvLedgerConstants.DV_LEDGER_GEN_ID_URL);
             entity.setId(id);
 
-
             boolean saveResult = radiationInstrumentServices.save(entity);
             if (saveResult) {
                 excelResult.setValidCount(excelResult.getValidCount() + 1);
             } else {
                 excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-                errorMsg += "第" + currentRow + "行数据保存失败；";
-                excelResult.getMessageList().add(errorMsg);
+                errorMsg = new StringBuilder("第" + currentRow + "行数据保存失败；");
+                excelResult.getMessageList().add(errorMsg.toString());
             }
         } else {
             excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-            excelResult.getMessageList().add(errorMsg);
+            excelResult.getMessageList().add(errorMsg.toString());
         }
         currentRow++;
     }

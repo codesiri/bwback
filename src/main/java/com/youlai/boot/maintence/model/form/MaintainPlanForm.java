@@ -2,6 +2,8 @@ package com.youlai.boot.maintence.model.form;
 
 import java.io.Serial;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,13 +21,12 @@ import jakarta.validation.constraints.*;
 @Getter
 @Setter
 @Schema(description = "维修计划表单对象")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MaintainPlanForm implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "序号")
-    @NotNull(message = "序号不能为空")
     private Long id;
 
     @Schema(description = "计划类型")

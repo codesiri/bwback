@@ -2,6 +2,8 @@ package com.youlai.boot.ledger.model.form;
 
 import java.io.Serial;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +18,7 @@ import jakarta.validation.constraints.*;
 @Getter
 @Setter
 @Schema(description = "温度表单对象")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DvTemperatureGaugeForm implements Serializable {
 
     @Serial

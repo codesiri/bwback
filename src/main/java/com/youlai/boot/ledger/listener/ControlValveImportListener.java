@@ -61,23 +61,71 @@ public class ControlValveImportListener extends AnalysisEventListener<ControlVal
      */
     @Override
     public void invoke(ControlValveExportDto controlValveExportDto, AnalysisContext analysisContext) {
-        log.info("解析到一条用户数据:{}", JSONUtil.toJsonStr(controlValveExportDto));
+        log.info("解析到一条调节阀数据:{}", JSONUtil.toJsonStr(controlValveExportDto));
 
         boolean validation = true;
-        String errorMsg = "第" + currentRow + "行数据校验失败：";
+        StringBuilder errorMsg = new StringBuilder("第" + currentRow + "行数据校验失败：");
 
+        // 校验装置名称
+        String dveName = controlValveExportDto.getDveName();
+        if (StrUtil.isBlank(dveName)) {
+            errorMsg.append("装置名称为空；");
+            validation = false;
+        }
 
-
-        String pressureTag = controlValveExportDto.getTagNo();
-        if (StrUtil.isBlank(pressureTag)) {
-            errorMsg += "位号为空；";
+        // 校验位号
+        String tagNo = controlValveExportDto.getTagNo();
+        if (StrUtil.isBlank(tagNo)) {
+            errorMsg.append("位号为空；");
             validation = false;
         } else {
-            long count = controlValveService.count(new LambdaQueryWrapper<ControlValve>().eq(ControlValve::getTagNo, pressureTag));
+            long count = controlValveService.count(new LambdaQueryWrapper<ControlValve>().eq(ControlValve::getTagNo, tagNo));
             if (count > 0) {
-                errorMsg += "位号已存在；";
+                errorMsg.append("位号已存在；");
                 validation = false;
             }
+        }
+
+        // 校验名称
+        String name = controlValveExportDto.getName();
+        if (StrUtil.isBlank(name)) {
+            errorMsg.append("名称为空；");
+            validation = false;
+        }
+
+        // 校验生产厂家
+        String manufacturer = controlValveExportDto.getManufacturer();
+        if (StrUtil.isBlank(manufacturer)) {
+            errorMsg.append("生产厂家为空；");
+            validation = false;
+        }
+
+        // 校验执行机构作用形式
+        String actuatorActionForm = controlValveExportDto.getActuatorActionForm();
+        if (StrUtil.isBlank(actuatorActionForm)) {
+            errorMsg.append("执行机构作用形式为空；");
+            validation = false;
+        }
+
+        // 校验执行机构行程
+        String actuatorStroke = controlValveExportDto.getActuatorStroke();
+        if (StrUtil.isBlank(actuatorStroke)) {
+            errorMsg.append("执行机构行程为空；");
+            validation = false;
+        }
+
+        // 校验设备类型
+        String dvType = controlValveExportDto.getDvType();
+        if (StrUtil.isBlank(dvType)) {
+            errorMsg.append("设备类型为空；");
+            validation = false;
+        }
+
+        // 校验设备状态
+        Integer status = controlValveExportDto.getStatus();
+        if (status == null || (status != 0 && status != 1)) {
+            errorMsg.append("设备状态必须是0或1；");
+            validation = false;
         }
 
         if (validation) {
@@ -89,18 +137,17 @@ public class ControlValveImportListener extends AnalysisEventListener<ControlVal
             long id = iDgenAdapter.genID(DvLedgerConstants.DV_LEDGER_GEN_ID_URL);
             entity.setId(id);
 
-
             boolean saveResult = controlValveService.save(entity);
             if (saveResult) {
                 excelResult.setValidCount(excelResult.getValidCount() + 1);
             } else {
                 excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-                errorMsg += "第" + currentRow + "行数据保存失败；";
-                excelResult.getMessageList().add(errorMsg);
+                errorMsg = new StringBuilder("第" + currentRow + "行数据保存失败；");
+                excelResult.getMessageList().add(errorMsg.toString());
             }
         } else {
             excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-            excelResult.getMessageList().add(errorMsg);
+            excelResult.getMessageList().add(errorMsg.toString());
         }
         currentRow++;
     }

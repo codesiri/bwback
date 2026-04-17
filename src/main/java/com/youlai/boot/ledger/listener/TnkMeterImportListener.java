@@ -46,36 +46,106 @@ public class TnkMeterImportListener extends AnalysisEventListener<TnkMeterExport
     public void invoke(TnkMeterExportDto tnkMeterExportDto, AnalysisContext analysisContext) {
         log.info("解析到一条用户数据:{}", JSONUtil.toJsonStr(tnkMeterExportDto));
         boolean validation = true;
-        String errorMsg = "第" + this.currentRow + "行数据校验失败：";
-        //校验位号是否重复
+        StringBuilder errorMsg = new StringBuilder("第" + this.currentRow + "行数据校验失败：");
+
+        // 校验仪表位号
         String tnkMeterTag = tnkMeterExportDto.getTnkMeterTag();
         if(StrUtil.isBlank(tnkMeterTag)){
-            errorMsg += "位号为空";
+            errorMsg.append("仪表位号为空；");
             validation = false;
         }else{
             long count = tnkMeterService
                     .count(new QueryWrapper<TnkMeter>()
                             .eq("tnk_meter_tag",tnkMeterTag));
             if(count > 0){
-                errorMsg += "位号已经存在";
+                errorMsg.append("仪表位号已经存在；");
                 validation = false;
             }
         }
-        String dvType = tnkMeterExportDto.getDvType();
-        if(StrUtil.isBlank(dvType)){
-            errorMsg += "设备类型为空";
+
+        // 校验装置
+        String tnkMeterDev = tnkMeterExportDto.getTnkMeterDev();
+        if(StrUtil.isBlank(tnkMeterDev)){
+            errorMsg.append("装置为空；");
             validation = false;
         }
-        Integer status = tnkMeterExportDto.getStatus();
-        if(status == null){
-            errorMsg += "设备状态为空";
-            validation = false;
-        }
+
+        // 校验用途
         String tnkMeterPurp = tnkMeterExportDto.getTnkMeterPurp();
         if(StrUtil.isBlank(tnkMeterPurp)){
-            errorMsg += "设备用途为空";
+            errorMsg.append("用途为空；");
             validation = false;
         }
+
+        // 校验仪表名称
+        String tnkMeterName = tnkMeterExportDto.getTnkMeterName();
+        if(StrUtil.isBlank(tnkMeterName)){
+            errorMsg.append("仪表名称为空；");
+            validation = false;
+        }
+
+        // 校验型号
+        String tnkMeterModel = tnkMeterExportDto.getTnkMeterModel();
+        if(StrUtil.isBlank(tnkMeterModel)){
+            errorMsg.append("型号为空；");
+            validation = false;
+        }
+
+        // 校验规格
+        String tnkMeterSpec = tnkMeterExportDto.getTnkMeterSpec();
+        if(StrUtil.isBlank(tnkMeterSpec)){
+            errorMsg.append("规格为空；");
+            validation = false;
+        }
+
+        // 校验量程
+        String tnkMeterRange = tnkMeterExportDto.getTnkMeterRange();
+        if(StrUtil.isBlank(tnkMeterRange)){
+            errorMsg.append("量程为空；");
+            validation = false;
+        }
+
+        // 校验厂家
+        String tnkMeterManu = tnkMeterExportDto.getTnkMeterManu();
+        if(StrUtil.isBlank(tnkMeterManu)){
+            errorMsg.append("厂家为空；");
+            validation = false;
+        }
+
+        // 校验泄露状态
+        Integer tnkMeterLeakStat = tnkMeterExportDto.getTnkMeterLeakStat();
+        if(tnkMeterLeakStat == null){
+            errorMsg.append("泄露状态为空；");
+            validation = false;
+        }
+
+        // 校验检查时间
+        if(tnkMeterExportDto.getTnkMeterChkTime() == null){
+            errorMsg.append("检查时间为空；");
+            validation = false;
+        }
+
+        // 校验检查周期
+        String tnkMeterChkCycle = tnkMeterExportDto.getTnkMeterChkCycle();
+        if(StrUtil.isBlank(tnkMeterChkCycle)){
+            errorMsg.append("检查周期为空；");
+            validation = false;
+        }
+
+        // 校验出厂编号
+        String tnkMeterFactoryNo = tnkMeterExportDto.getTnkMeterFactoryNo();
+        if(StrUtil.isBlank(tnkMeterFactoryNo)){
+            errorMsg.append("出厂编号为空；");
+            validation = false;
+        }
+
+        // 校验设备状态
+        Integer status = tnkMeterExportDto.getStatus();
+        if(status == null){
+            errorMsg.append("设备状态为空；");
+            validation = false;
+        }
+
         if(validation){
             //校验通过执行入库
             TnkMeter entity = tnkMeterConverter.toEntity(tnkMeterExportDto);
@@ -87,12 +157,12 @@ public class TnkMeterImportListener extends AnalysisEventListener<TnkMeterExport
                 excelResult.setValidCount(excelResult.getValidCount() + 1);
             } else {
                 excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-                errorMsg += "第" + currentRow + "行数据保存失败；";
-                excelResult.getMessageList().add(errorMsg);
+                errorMsg = new StringBuilder("第" + currentRow + "行数据保存失败；");
+                excelResult.getMessageList().add(errorMsg.toString());
             }
         }else{
             excelResult.setInvalidCount(excelResult.getInvalidCount() + 1);
-            excelResult.getMessageList().add(errorMsg);
+            excelResult.getMessageList().add(errorMsg.toString());
         }
         currentRow ++;
     }

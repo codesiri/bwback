@@ -1,0 +1,5 @@
+{
+  "id": "bigint",
+  "device_name": "varchar(255)",
+  "tag_number": ""
+}
