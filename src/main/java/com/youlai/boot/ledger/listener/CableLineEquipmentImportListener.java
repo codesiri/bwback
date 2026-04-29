@@ -108,7 +108,7 @@ public class CableLineEquipmentImportListener extends AnalysisEventListener<Cabl
 
         if (validation) {
             // 校验通过，持久化至数据库
-            long id = IDUtil.genIdByJdk();
+            long id = IDUtil.genIdByLeaf();
             CableLineEquipment entity = this.cableLineEquipmentConverter.toEntity(cableLineEquipmentExportDto);
             entity.setId(id);
             boolean saveResult = this.cableLineEquipmentService.save(entity);

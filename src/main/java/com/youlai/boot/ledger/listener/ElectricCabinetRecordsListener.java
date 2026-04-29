@@ -37,7 +37,7 @@ public class ElectricCabinetRecordsListener extends AnalysisEventListener<Electr
       //直接入库,因为没有需要强制检查的消息
         var entity = this.electricCabinetRecordConverter.toEntity(electricCabinetRecordDto);
         //TODO 之后需要换为美团leaf进行生成
-        var id = IDUtil.genIdByJdk();
+        var id = IDUtil.genIdByLeaf();
         entity.setId(id);
         boolean saveResult = this.electricCabinetRecordService.save(entity);
         if(saveResult){

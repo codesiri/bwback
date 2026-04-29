@@ -1,0 +1,91 @@
+package com.youlai.boot.ledger.model.vo;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
+import java.time.LocalDate;
+
+/**
+ * 特种设备风机台账视图对象
+ *
+ * @author youlaitech
+ * @since 2026-02-09 09:18
+ */
+@Getter
+@Setter
+@Schema( description = "特种设备风机台账视图对象")
+public class SeFanVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Schema(description = "序号")
+    private Long id;
+    @Schema(description = "风机设备编号")
+    private String seFanEquipCode;
+    @Schema(description = "风机名称")
+    private String seFanName;
+    @Schema(description = "风机类型")
+    private String seFanType;
+    @Schema(description = "设备规格")
+    private String seFanSpec;
+    @Schema(description = "额定功率（kW）")
+    private String seFanRatedPower;
+    @Schema(description = "额定转速（r/min）")
+    private String seFanRatedSpeed;
+    @Schema(description = "额定压力（kPa，正压 / 负压标注在备注）")
+    private String seFanRatedPressure;
+    @Schema(description = "额定风量（m³/h）")
+    private String seFanRatedFlow;
+    @Schema(description = "输送介质")
+    private String seFanMedium;
+    @Schema(description = "主体材质")
+    private String seFanMaterial;
+    @Schema(description = "防爆等级")
+    private String seFanExplosionProof;
+    @Schema(description = "配套电机型号")
+    private String seFanMotorModel;
+    @Schema(description = "安装位置")
+    private String seFanInstallPos;
+    @Schema(description = "投用日期")
+    private String seFanInService;
+    @Schema(description = "法定检验周期")
+    private String seFanInspectCycle;
+    @Schema(description = "上次检验日期")
+    private LocalDate seFanLastInspect;
+    @Schema(description = "下次检验日期")
+    private LocalDate seFanNextInspect;
+    @Schema(description = "检验结果")
+    private String seFanInspectResult;
+    @Schema(description = "润滑方式")
+    private String seFanLubrication;
+    @Schema(description = "上次润滑日期")
+    private LocalDate seFanLastLubricate;
+    @Schema(description = "下次润滑日期")
+    private LocalDate seFanNextLubricate;
+    @Schema(description = "运行振动值（mm/s，标准≤4.5mm/s）")
+    private String seFanVibration;
+    @Schema(description = "维保记录")
+    private String seFanMaintainRecord;
+    @Schema(description = "故障记录")
+    private String seFanFaultRecord;
+    @Schema(description = "台账录入 / 维护人员")
+    private String seFanOperator;
+    @Schema(description = "台账记录创建时间")
+    private LocalDateTime seFanCreateTime;
+    @Schema(description = "台账记录最后修改时间")
+    private LocalDateTime seFanUpdateTime;
+    @Schema(description = "设备状态")
+    private String seFanStatus;
+    @Schema(description = "所属工厂")
+    private String seFanFactory;
+    @Schema(description = "备用1")
+    private String seFanReserve1;
+    @Schema(description = "备用2")
+    private String seFanReserve2;
+    @Schema(description = "备用3")
+    private String seFanReserve3;
+}

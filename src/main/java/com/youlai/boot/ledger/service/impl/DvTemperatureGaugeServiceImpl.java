@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.service.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.youlai.boot.common.util.IDgenAdapterLeaf;
 import com.youlai.boot.common.util.NumberUtil;
@@ -8,6 +9,7 @@ import com.youlai.boot.ledger.constant.DvLedgerConstants;
 import com.youlai.boot.ledger.model.dto.DvTemperatureGaugesExportDTO;
 import com.youlai.boot.ledger.model.query.DvTemperatureGaugeQueryPlus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -35,6 +37,7 @@ import cn.hutool.core.util.StrUtil;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DvTemperatureGaugeServiceImpl extends ServiceImpl<DvTemperatureGaugeMapper, DvTemperatureGauge> implements DvTemperatureGaugeService {
 
     private final DvTemperatureGaugeConverter dvTemperatureGaugeConverter;
@@ -79,7 +82,10 @@ public class DvTemperatureGaugeServiceImpl extends ServiceImpl<DvTemperatureGaug
         if(count > 0 ){
             return false;
         }
-        Assert.isTrue(NumberUtil.isIntNumeric(entity.getInterlockSetValue()),"联锁设定值必须为一个数字");
+        if(!entity.getInterlockSetValue().isEmpty()){
+            Assert.isTrue(NumberUtil.isIntNumeric(entity.getInterlockSetValue()),"联锁设定值必须为一个数字");
+        }
+        log.info("新增温度，参数：{}", JSONUtil.toJsonStr(entity));
         IDgenAdapter iDgenAdapter = new IDgenAdapterLeaf();
         //生成id
         long id = iDgenAdapter.genID(DvLedgerConstants.DV_LEDGER_GEN_ID_URL);

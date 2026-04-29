@@ -1,7 +1,7 @@
 package com.youlai.boot.ledger.service.impl;
 
 import com.youlai.boot.common.util.IDUtil;
-import com.youlai.boot.ledger.model.dto.ElectricCabinetDocumentExportDto;
+import com.youlai.boot.ledger.model.dto.ElectricCabinetDrawerUnitsExportDto;
 import com.youlai.boot.ledger.model.query.ElectricCabinetDrawerUnitsExportQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -71,8 +71,7 @@ public class ElectricCabinetDrawerUnitServiceImpl extends ServiceImpl<ElectricCa
     @Override
     public boolean saveElectricCabinetDrawerUnit(ElectricCabinetDrawerUnitForm formData) {
         ElectricCabinetDrawerUnit entity = electricCabinetDrawerUnitConverter.toEntity(formData);
-        long genIdByJdk = IDUtil.genIdByJdk();
-        //TODO 暂时使用美团jdk，后续换为美团leaf
+        long genIdByJdk = IDUtil.genIdByLeaf();
         entity.setId(genIdByJdk);
         return this.save(entity);
     }
@@ -107,7 +106,7 @@ public class ElectricCabinetDrawerUnitServiceImpl extends ServiceImpl<ElectricCa
     }
 
     @Override
-    public List<ElectricCabinetDocumentExportDto> exportElectricCabinetDrawerUnits(ElectricCabinetDrawerUnitsExportQuery queryParams) {
+    public List<ElectricCabinetDrawerUnitsExportDto> exportElectricCabinetDrawerUnits(ElectricCabinetDrawerUnitsExportQuery queryParams) {
         return this.baseMapper.exportElectricCabinetDrawerUnits(queryParams);
     }
 

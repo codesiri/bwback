@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SpecEqpVerticalTankAccountMapper">
+
+    <!-- 获取立罐分页列表 -->
+    <select id="getSpecEqpVerticalTankAccountPage" resultType="com.youlai.boot.ledger.model.vo.SpecEqpVerticalTankAccountVO">
+        SELECT
+                id,
+                spec_eqp_vt_code,
+                spec_eqp_vt_name,
+                spec_eqp_vt_area,
+                spec_eqp_vt_model,
+                spec_eqp_vt_material,
+                spec_eqp_vt_volume,
+                spec_eqp_vt_design_pressure,
+                spec_eqp_vt_design_temp,
+                spec_eqp_vt_media,
+                spec_eqp_vt_media_property,
+                spec_eqp_vt_manufacturer,
+                spec_eqp_vt_factory_no,
+                spec_eqp_vt_produce_date,
+                spec_eqp_vt_install_company,
+                spec_eqp_vt_install_date,
+                spec_eqp_vt_acceptance_date,
+                spec_eqp_vt_usage_date,
+                spec_eqp_vt_license_no,
+                spec_eqp_vt_status,
+                spec_eqp_vt_last_inspect_date,
+                spec_eqp_vt_next_inspect_date,
+                spec_eqp_vt_inspect_company,
+                spec_eqp_vt_maintain_responsible,
+                spec_eqp_vt_maintain_record,
+                spec_eqp_vt_accident_record,
+                spec_eqp_vt_create_time,
+                spec_eqp_vt_update_time,
+                spec_eqp_vt_factory,
+                spec_eqp_vt_backup1,
+                spec_eqp_vt_backup2,
+                spec_eqp_vt_backup3
+        FROM
+            spec_eqp_vertical_tank_account
+        <where>
+        </where>
+    </select>
+
+</mapper>

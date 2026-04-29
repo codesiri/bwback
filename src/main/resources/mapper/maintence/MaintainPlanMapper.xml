@@ -86,4 +86,26 @@
         </where>
     </select>
 
+    <!-- 导出维修计划 -->
+    <select id="exportMaintainPlans" resultType="com.youlai.boot.maintence.model.dto.MaintainPlanExportDto">
+        SELECT
+                maintain_plan_type,
+                maintain_plan_year,
+                maintain_plan_month,
+                maintain_plan_equip_code,
+                maintain_plan_equip_name,
+                maintain_plan_equip_type,
+                maintain_plan_content,
+                maintain_plan_schedule_date,
+                maintain_plan_duration,
+                maintain_plan_dept,
+                maintain_plan_person,
+                maintain_plan_safety_level,
+                maintain_plan_safety_measure,
+                maintain_plan_status,
+                maintain_plan_actual_date
+        FROM
+            maintain_plan
+    </select>
+
 </mapper>

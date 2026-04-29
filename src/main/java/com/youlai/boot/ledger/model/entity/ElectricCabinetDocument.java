@@ -1,5 +1,7 @@
 package com.youlai.boot.ledger.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -16,10 +18,12 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @TableName("electric_cabinet_document")
-public class ElectricCabinetDocument extends BaseEntity {
+public class ElectricCabinetDocument  {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId
+    private long id;
     /**
      * 资料名称
      */
@@ -51,13 +55,16 @@ public class ElectricCabinetDocument extends BaseEntity {
     /**
      * 备用1
      */
+    @TableField("ecd_reserve_1")
     private String ecdReserve1;
     /**
      * 备用2
      */
+    @TableField("ecd_reserve_2")
     private String ecdReserve2;
     /**
      * 备用3
      */
+    @TableField("ecd_reserve_3")
     private String ecdReserve3;
 }

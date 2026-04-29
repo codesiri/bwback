@@ -1,13 +1,14 @@
 package com.youlai.boot.ledger.controller;
 
 import cn.idev.excel.EasyExcel;
+import cn.idev.excel.ExcelWriter;
+import com.youlai.boot.common.util.ExcelUtils;
 import com.youlai.boot.core.web.ExcelResult;
-import com.youlai.boot.ledger.model.dto.ElectricCabinetRecordExportDto;
+import com.youlai.boot.ledger.listener.ElectricCabinetSparePartImportListener;
 import com.youlai.boot.ledger.model.dto.ElectricCabinetSparePartDto;
-import com.youlai.boot.ledger.model.dto.ElectricLightEquipmentDto;
-import com.youlai.boot.ledger.model.query.ElectricCabinetRecordExportQuery;
 import com.youlai.boot.ledger.model.query.ElectricCabinetSparePartExportQuery;
 import com.youlai.boot.ledger.service.ElectricCabinetSparePartService;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,9 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -107,8 +110,28 @@ public class ElectricCabinetSparePartController  {
 
     @Operation(summary = "导入电器备品备件管理记录")
     @PostMapping("/import")
-    @PreAuthorize("@ss.hasPrem('ledger:electric-cabinet-spare-part:add')")
-    public Result<ExcelResult> importElectricCabinetSpareParts(MultipartFile file){
-        return null;
+    @PreAuthorize("@ss.hasPerm('ledger:electric-cabinet-spare-part:add')")
+    public Result<ExcelResult> importElectricCabinetSpareParts(MultipartFile file) throws IOException {
+        ElectricCabinetSparePartImportListener listener = new ElectricCabinetSparePartImportListener();
+        ExcelUtils.importExcel(file.getInputStream(), ElectricCabinetSparePartDto.class, listener);
+        return Result.success(listener.getExcelResult());
+    }
+
+    @Operation(summary = "电器备品备件管理记录导入模板下载")
+    @GetMapping("/template")
+    public void downloadTemplateElectricCabinetSpareParts(HttpServletResponse response) {
+        String fileName = "电器备品备件管理记录导入模板.xlsx";
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+
+        String fileClassPath = "templates" + File.separator + "excel" + File.separator + fileName;
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileClassPath);
+
+        try (ServletOutputStream outputStream = response.getOutputStream();
+             ExcelWriter excelWriter = EasyExcel.write(outputStream).withTemplate(inputStream).build()) {
+            excelWriter.finish();
+        } catch (IOException e) {
+            throw new RuntimeException("电器备品备件管理记录导入模板下载失败", e);
+        }
     }
 }

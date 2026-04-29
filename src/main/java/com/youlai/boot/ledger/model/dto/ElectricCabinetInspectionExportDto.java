@@ -1,9 +1,11 @@
 package com.youlai.boot.ledger.model.dto;
 
 import cn.idev.excel.annotation.ExcelProperty;
+import lombok.Data;
 
 import java.time.LocalDate;
 
+@Data
 public class ElectricCabinetInspectionExportDto {
     /**
      * 报告编号

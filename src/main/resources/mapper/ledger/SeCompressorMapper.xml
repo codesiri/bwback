@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SeCompressorMapper">
+
+    <!-- 获取特种设备压缩机台账分页列表 -->
+    <select id="getSeCompressorPage" resultType="com.youlai.boot.ledger.model.vo.SeCompressorVO">
+        SELECT
+                id,
+                se_compressor_equip_code,
+                se_compressor_name,
+                se_compressor_type,
+                se_compressor_spec,
+                se_compressor_rated_flow,
+                se_compressor_rated_pressure,
+                se_compressor_rated_power,
+                se_compressor_rated_speed,
+                se_compressor_media,
+                se_compressor_inlet_temp,
+                se_compressor_outlet_temp,
+                se_compressor_design_p,
+                se_compressor_material,
+                se_compressor_explosion_proof,
+                se_compressor_motor_model,
+                se_compressor_lubrication,
+                se_compressor_cooling_type,
+                se_compressor_install_pos,
+                se_compressor_in_service,
+                se_compressor_inspect_cycle,
+                se_compressor_last_inspect,
+                se_compressor_next_inspect,
+                se_compressor_inspect_result,
+                se_compressor_last_maintain,
+                se_compressor_next_maintain,
+                se_compressor_vibration,
+                se_compressor_pressure_ratio,
+                se_compressor_maintain_record,
+                se_compressor_fault_record,
+                se_compressor_operator,
+                se_compressor_create_time,
+                se_compressor_update_time,
+                se_compressor_status,
+                se_compressor_factory,
+                se_compressor_reserve1,
+                se_compressor_reserve2,
+                se_compressor_reserve3
+        FROM
+            se_compressor
+        <where>
+            <if test="queryParams.seCompressorEquipCode != null and queryParams.seCompressorEquipCode != ''">
+                and se_compressor_equip_code like CONCAT( #{queryParams.seCompressorEquipCode}, '%')
+            </if>
+            <if test="queryParams.seCompressorName != null and queryParams.seCompressorName != ''">
+                and se_compressor_name = #{queryParams.seCompressorName}
+            </if>
+            <if test="queryParams.seCompressorStatus != null and queryParams.seCompressorStatus != null">
+                and se_compressor_status like CONCAT ('%',#{queryParams.seCompressorStatus}, '%')
+            </if>
+            <if test="queryParams.seCompressorFactory != null and queryParams.seCompressorFactory != null">
+                and se_compressor_factory like CONCAT ('%',#{queryParams.seCompressorFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+
+    <select id="listExportSeCompressor" resultType="com.youlai.boot.ledger.model.dto.SeCompressorExportDto">
+        SELECT
+        id,
+        se_compressor_equip_code,
+        se_compressor_name,
+        se_compressor_type,
+        se_compressor_spec,
+        se_compressor_rated_flow,
+        se_compressor_rated_pressure,
+        se_compressor_rated_power,
+        se_compressor_rated_speed,
+        se_compressor_media,
+        se_compressor_inlet_temp,
+        se_compressor_outlet_temp,
+        se_compressor_design_p,
+        se_compressor_material,
+        se_compressor_explosion_proof,
+        se_compressor_motor_model,
+        se_compressor_lubrication,
+        se_compressor_cooling_type,
+        se_compressor_install_pos,
+        se_compressor_in_service,
+        se_compressor_inspect_cycle,
+        se_compressor_last_inspect,
+        se_compressor_next_inspect,
+        se_compressor_inspect_result,
+        se_compressor_last_maintain,
+        se_compressor_next_maintain,
+        se_compressor_vibration,
+        se_compressor_pressure_ratio,
+        se_compressor_maintain_record,
+        se_compressor_fault_record,
+        se_compressor_operator,
+        se_compressor_create_time,
+        se_compressor_update_time,
+        se_compressor_status,
+        se_compressor_factory,
+        se_compressor_reserve1,
+        se_compressor_reserve2,
+        se_compressor_reserve3
+        FROM
+        se_compressor
+        <where>
+            <if test="seCompressorEquipCode != null and seCompressorEquipCode != ''">
+                and se_compressor_equip_code like CONCAT( #{seCompressorEquipCode}, '%')
+            </if>
+            <if test="seCompressorName != null and seCompressorName != ''">
+                and se_compressor_name = #{queryParams.seCompressorName}
+            </if>
+            <if test="seCompressorStatus != null and seCompressorStatus != null">
+                and se_compressor_status like CONCAT ('%',#{seCompressorStatus}, '%')
+            </if>
+            <if test="seCompressorFactory != null and seCompressorFactory != null">
+                and se_compressor_factory like CONCAT ('%',#{seCompressorFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

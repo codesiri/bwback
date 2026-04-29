@@ -120,8 +120,8 @@ public class PressureInstrumentServiceImpl extends ServiceImpl<PressureInstrumen
      */
     @Override
     public List<PressureInstrumentExportDTO> listExportPressureInstrument(PressureInstrumentQueryPlus queryParams) {
-        List<PressureInstrumentExportDTO> exportPressureInstrument = this.baseMapper.listExportPressureInstruments(queryParams);
-        return exportPressureInstrument;
+        return this.baseMapper.listExportPressureInstruments(queryParams);
+
     }
 
 }

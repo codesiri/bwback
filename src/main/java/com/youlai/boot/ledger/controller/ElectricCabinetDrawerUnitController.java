@@ -1,11 +1,14 @@
 package com.youlai.boot.ledger.controller;
 
 import cn.idev.excel.EasyExcel;
+import cn.idev.excel.ExcelWriter;
+import com.youlai.boot.common.util.ExcelUtils;
 import com.youlai.boot.core.web.ExcelResult;
-import com.youlai.boot.ledger.model.dto.ElectricCabinetDocumentExportDto;
+import com.youlai.boot.ledger.listener.ElectricCabinetDrawerUnitImportListener;
 import com.youlai.boot.ledger.model.dto.ElectricCabinetDrawerUnitsExportDto;
 import com.youlai.boot.ledger.model.query.ElectricCabinetDrawerUnitsExportQuery;
 import com.youlai.boot.ledger.service.ElectricCabinetDrawerUnitService;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +28,9 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -98,17 +103,38 @@ public class ElectricCabinetDrawerUnitController  {
         String fileName = "抽屉柜抽屉单元明细.xlsx";
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
-        List<ElectricCabinetDocumentExportDto> exportElectricCabinetDrawerUnits =
+        List<ElectricCabinetDrawerUnitsExportDto> exportElectricCabinetDrawerUnits =
                 this.electricCabinetDrawerUnitService.exportElectricCabinetDrawerUnits(queryParams);
         EasyExcel.write(response.getOutputStream(),
                 ElectricCabinetDrawerUnitsExportDto.class)
                 .sheet("抽屉柜抽屉单元明细")
                 .doWrite(exportElectricCabinetDrawerUnits);
     }
+
     @Operation(summary = "导入抽屉柜抽屉单元明细")
     @PostMapping("/import")
     @PreAuthorize("@ss.hasPerm('ledger:electric-cabinet-drawer-unit:add')")
-    public Result<ExcelResult> importElectricCabinetDrawerUnits(MultipartFile file){
-        return null;
+    public Result<ExcelResult> importElectricCabinetDrawerUnits(MultipartFile file) throws IOException {
+        ElectricCabinetDrawerUnitImportListener listener = new ElectricCabinetDrawerUnitImportListener();
+        ExcelUtils.importExcel(file.getInputStream(), ElectricCabinetDrawerUnitsExportDto.class, listener);
+        return Result.success(listener.getExcelResult());
+    }
+
+    @Operation(summary = "抽屉柜抽屉单元明细导入模板下载")
+    @GetMapping("/template")
+    public void downloadTemplateElectricCabinetDrawerUnits(HttpServletResponse response) {
+        String fileName = "抽屉柜抽屉单元明细导入模板.xlsx";
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+
+        String fileClassPath = "templates" + File.separator + "excel" + File.separator + fileName;
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileClassPath);
+
+        try (ServletOutputStream outputStream = response.getOutputStream();
+             ExcelWriter excelWriter = EasyExcel.write(outputStream).withTemplate(inputStream).build()) {
+            excelWriter.finish();
+        } catch (IOException e) {
+            throw new RuntimeException("抽屉柜抽屉单元明细导入模板下载失败", e);
+        }
     }
 }

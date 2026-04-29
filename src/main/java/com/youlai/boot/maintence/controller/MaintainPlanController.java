@@ -1,6 +1,14 @@
 package com.youlai.boot.maintence.controller;
 
+import cn.idev.excel.EasyExcel;
+import cn.idev.excel.ExcelWriter;
+import com.youlai.boot.common.util.ExcelUtils;
+import com.youlai.boot.core.web.ExcelResult;
+import com.youlai.boot.maintence.listener.MaintainPlanImportListener;
+import com.youlai.boot.maintence.model.dto.MaintainPlanExportDto;
 import com.youlai.boot.maintence.service.MaintainPlanService;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +25,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * 维修计划前端控制层
@@ -77,5 +93,45 @@ public class MaintainPlanController  {
     ) {
         boolean result = maintainPlanService.deleteMaintainPlans(ids);
         return Result.judge(result);
+    }
+
+    @Operation(summary = "导出维修计划")
+    @GetMapping("/export")
+    @PreAuthorize("@ss.hasPerm('maintence:maintain-plan:query')")
+    public void exportMaintainPlans(HttpServletResponse response) throws IOException {
+        String fileName = "维修计划.xlsx";
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+        List<MaintainPlanExportDto> exportMaintainPlans = this.maintainPlanService.exportMaintainPlans();
+        EasyExcel.write(response.getOutputStream(), MaintainPlanExportDto.class)
+                .sheet("维修计划")
+                .doWrite(exportMaintainPlans);
+    }
+
+    @Operation(summary = "导入维修计划")
+    @PostMapping("/import")
+    @PreAuthorize("@ss.hasPerm('maintence:maintain-plan:add')")
+    public Result<ExcelResult> importMaintainPlans(MultipartFile file) throws IOException {
+        MaintainPlanImportListener listener = new MaintainPlanImportListener();
+        ExcelUtils.importExcel(file.getInputStream(), MaintainPlanExportDto.class, listener);
+        return Result.success(listener.getExcelResult());
+    }
+
+    @Operation(summary = "维修计划导入模板下载")
+    @GetMapping("/template")
+    public void downloadTemplateMaintainPlans(HttpServletResponse response) {
+        String fileName = "维修计划导入模板.xlsx";
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+
+        String fileClassPath = "templates" + File.separator + "excel" + File.separator + fileName;
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileClassPath);
+
+        try (ServletOutputStream outputStream = response.getOutputStream();
+             ExcelWriter excelWriter = EasyExcel.write(outputStream).withTemplate(inputStream).build()) {
+            excelWriter.finish();
+        } catch (IOException e) {
+            throw new RuntimeException("维修计划导入模板下载失败", e);
+        }
     }
 }

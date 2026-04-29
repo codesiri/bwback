@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.service.impl;
 
+import com.youlai.boot.common.util.IDUtil;
 import com.youlai.boot.ledger.model.dto.ElectricCabinetRecordExportDto;
 import com.youlai.boot.ledger.model.dto.ElectricCabinetSparePartDto;
 import com.youlai.boot.ledger.model.query.ElectricCabinetRecordExportQuery;
@@ -72,6 +73,8 @@ public class ElectricCabinetSparePartServiceImpl extends ServiceImpl<ElectricCab
     @Override
     public boolean saveElectricCabinetSparePart(ElectricCabinetSparePartForm formData) {
         ElectricCabinetSparePart entity = electricCabinetSparePartConverter.toEntity(formData);
+        long idByLeaf = IDUtil.genIdByLeaf();
+        entity.setId(idByLeaf);
         return this.save(entity);
     }
     

@@ -32,7 +32,7 @@ public class ElectricCabinetFaultListener extends AnalysisEventListener<Electric
         //直接入库
         var entity = electricCabinetFaultConverter.toEntity(electricCabinetFaultExportDto);
         //TODO 上线切换为美团leaf
-        var id = IDUtil.genIdByJdk();
+        var id = IDUtil.genIdByLeaf();
         entity.setId(id);
         boolean saveResult = this.electricCabinetFaultService.save(entity);
         if(saveResult){

@@ -71,7 +71,7 @@ public class ElectricCabinetInspectionServiceImpl extends ServiceImpl<ElectricCa
     @Override
     public boolean saveElectricCabinetInspection(ElectricCabinetInspectionForm formData) {
         ElectricCabinetInspection entity = electricCabinetInspectionConverter.toEntity(formData);
-        long genIdByJdk = IDUtil.genIdByJdk();
+        long genIdByJdk = IDUtil.genIdByLeaf();
         entity.setId(genIdByJdk);
         return this.save(entity);
     }

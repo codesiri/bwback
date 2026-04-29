@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SpecEqpCraneTransAccountMapper">
+
+    <!-- 获取起重运输类分页列表 -->
+    <select id="getSpecEqpCraneTransAccountPage" resultType="com.youlai.boot.ledger.model.vo.SpecEqpCraneTransAccountVO">
+        SELECT
+                id,
+                spec_eqp_ct_code,
+                spec_eqp_ct_name,
+                spec_eqp_ct_area,
+                spec_eqp_ct_model,
+                spec_eqp_ct_type,
+                spec_eqp_ct_lifting_capacity,
+                spec_eqp_ct_lifting_height,
+                spec_eqp_ct_span,
+                spec_eqp_ct_design_pressure,
+                spec_eqp_ct_manufacturer,
+                spec_eqp_ct_factory_no,
+                spec_eqp_ct_produce_date,
+                spec_eqp_ct_install_company,
+                spec_eqp_ct_install_date,
+                spec_eqp_ct_acceptance_date,
+                spec_eqp_ct_usage_date,
+                spec_eqp_ct_license_no,
+                spec_eqp_ct_status,
+                spec_eqp_ct_last_inspect_date,
+                spec_eqp_ct_next_inspect_date,
+                spec_eqp_ct_inspect_company,
+                spec_eqp_ct_maintain_responsible,
+                spec_eqp_ct_maintain_record,
+                spec_eqp_ct_accident_record,
+                spec_eqp_ct_create_time,
+                spec_eqp_ct_update_time,
+                spec_eqp_ct_factory,
+                spec_eqp_ct_backup1,
+                spec_eqp_ct_backup2,
+                spec_eqp_ct_backup3
+        FROM
+            spec_eqp_crane_trans_account
+        <where>
+            <if test="queryParams.specEqpCtName != null and queryParams.specEqpCtName != ''">
+                and spec_eqp_ct_name like CONCAT( #{queryParams.specEqpCtName}, '%')
+            </if>
+            <if test="queryParams.specEqpCtType != null and queryParams.specEqpCtType != ''">
+                and spec_eqp_ct_type = #{queryParams.specEqpCtType}
+            </if>
+            <if test="queryParams.specEqpCtStatus != null and queryParams.specEqpCtStatus != null">
+                and spec_eqp_ct_status like CONCAT ('%',#{queryParams.specEqpCtStatus}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="listExportSpecEqpCraneTransAccounts" resultType="com.youlai.boot.ledger.model.dto.SpecEqpCraneTransAccountsExportDto">
+        SELECT
+        id,
+        spec_eqp_ct_code,
+        spec_eqp_ct_name,
+        spec_eqp_ct_area,
+        spec_eqp_ct_model,
+        spec_eqp_ct_type,
+        spec_eqp_ct_lifting_capacity,
+        spec_eqp_ct_lifting_height,
+        spec_eqp_ct_span,
+        spec_eqp_ct_design_pressure,
+        spec_eqp_ct_manufacturer,
+        spec_eqp_ct_factory_no,
+        spec_eqp_ct_produce_date,
+        spec_eqp_ct_install_company,
+        spec_eqp_ct_install_date,
+        spec_eqp_ct_acceptance_date,
+        spec_eqp_ct_usage_date,
+        spec_eqp_ct_license_no,
+        spec_eqp_ct_status,
+        spec_eqp_ct_last_inspect_date,
+        spec_eqp_ct_next_inspect_date,
+        spec_eqp_ct_inspect_company,
+        spec_eqp_ct_maintain_responsible,
+        spec_eqp_ct_maintain_record,
+        spec_eqp_ct_accident_record,
+        spec_eqp_ct_create_time,
+        spec_eqp_ct_update_time,
+        spec_eqp_ct_factory,
+        spec_eqp_ct_backup1,
+        spec_eqp_ct_backup2,
+        spec_eqp_ct_backup3
+        FROM
+        spec_eqp_crane_trans_account
+        <where>
+            <if test="specEqpCtName != null and specEqpCtName != ''">
+                and spec_eqp_ct_name like CONCAT( #{specEqpCtName}, '%')
+            </if>
+            <if test="specEqpCtType != null and specEqpCtType != ''">
+                and spec_eqp_ct_type = #{specEqpCtType}
+            </if>
+            <if test="specEqpCtStatus != null and specEqpCtStatus != null">
+                and spec_eqp_ct_status like CONCAT ('%',#{specEqpCtStatus}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SeFanMapper">
+
+    <!-- 获取特种设备风机台账分页列表 -->
+    <select id="getSeFanPage" resultType="com.youlai.boot.ledger.model.vo.SeFanVO">
+        SELECT
+        id,
+        se_fan_equip_code,
+        se_fan_name,
+        se_fan_type,
+        se_fan_spec,
+        se_fan_rated_power,
+        se_fan_rated_speed,
+        se_fan_rated_pressure,
+        se_fan_rated_flow,
+        se_fan_medium,
+        se_fan_material,
+        se_fan_explosion_proof,
+        se_fan_motor_model,
+        se_fan_install_pos,
+        se_fan_in_service,
+        se_fan_inspect_cycle,
+        se_fan_last_inspect,
+        se_fan_next_inspect,
+        se_fan_inspect_result,
+        se_fan_lubrication,
+        se_fan_last_lubricate,
+        se_fan_next_lubricate,
+        se_fan_vibration,
+        se_fan_maintain_record,
+        se_fan_fault_record,
+        se_fan_operator,
+        se_fan_create_time,
+        se_fan_update_time,
+        se_fan_status,
+        se_fan_factory,
+        se_fan_reserve1,
+        se_fan_reserve2,
+        se_fan_reserve3
+        FROM
+        se_fan
+        <where>
+            <if test="queryParams.seFanEquipCode != null and queryParams.seFanEquipCode != ''">
+                and se_fan_equip_code like CONCAT( #{queryParams.seFanEquipCode}, '%')
+            </if>
+            <if test="queryParams.seFanName != null and queryParams.seFanName != ''">
+                and se_fan_name = #{queryParams.seFanName}
+            </if>
+            <if test="queryParams.seFanStatus != null and queryParams.seFanStatus != null">
+                and se_fan_status like CONCAT ('%',#{queryParams.seFanStatus}, '%')
+            </if>
+            <if test="queryParams.seFanFactory != null and queryParams.seFanFactory != null">
+                and se_fan_factory like CONCAT ('%',#{queryParams.seFanFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="listExportSeFan" resultType="com.youlai.boot.ledger.model.dto.SeFanExportDto">
+        SELECT
+        id,
+        se_fan_equip_code,
+        se_fan_name,
+        se_fan_type,
+        se_fan_spec,
+        se_fan_rated_power,
+        se_fan_rated_speed,
+        se_fan_rated_pressure,
+        se_fan_rated_flow,
+        se_fan_medium,
+        se_fan_material,
+        se_fan_explosion_proof,
+        se_fan_motor_model,
+        se_fan_install_pos,
+        se_fan_in_service,
+        se_fan_inspect_cycle,
+        se_fan_last_inspect,
+        se_fan_next_inspect,
+        se_fan_inspect_result,
+        se_fan_lubrication,
+        se_fan_last_lubricate,
+        se_fan_next_lubricate,
+        se_fan_vibration,
+        se_fan_maintain_record,
+        se_fan_fault_record,
+        se_fan_operator,
+        se_fan_create_time,
+        se_fan_update_time,
+        se_fan_status,
+        se_fan_factory,
+        se_fan_reserve1,
+        se_fan_reserve2,
+        se_fan_reserve3
+        FROM
+        se_fan
+        <where>
+            <if test="seFanEquipCode != null and seFanEquipCode != ''">
+                and se_fan_equip_code like CONCAT( #{seFanEquipCode}, '%')
+            </if>
+            <if test="seFanName != null and seFanName != ''">
+                and se_fan_name = #{seFanName}
+            </if>
+            <if test="seFanStatus != null and seFanStatus != null">
+                and se_fan_status like CONCAT ('%',#{seFanStatus}, '%')
+            </if>
+            <if test="seFanFactory != null and seFanFactory != null">
+                and se_fan_factory like CONCAT ('%',#{seFanFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

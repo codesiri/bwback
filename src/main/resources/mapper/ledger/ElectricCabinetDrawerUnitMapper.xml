@@ -40,7 +40,7 @@
 
 
     <!-- 获取抽屉柜抽屉单元明细分页列表 -->
-    <select id="exportElectricCabinetDrawerUnits" resultType="com.youlai.boot.ledger.model.vo.ElectricCabinetDrawerUnitVO">
+    <select id="exportElectricCabinetDrawerUnits" resultType="com.youlai.boot.ledger.model.dto.ElectricCabinetDrawerUnitsExportDto">
         SELECT
         id,
         ecdu_drawer_no,

@@ -1,5 +1,7 @@
 package com.youlai.boot.ledger.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -16,10 +18,12 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @TableName("cable_line_equipment")
-public class CableLineEquipment extends BaseEntity {
+public class CableLineEquipment  {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId
+    private long id;
     /**
      * 电缆编号
      */
@@ -95,13 +99,16 @@ public class CableLineEquipment extends BaseEntity {
     /**
      * 备用1
      */
+    @TableField("cle_reserve_1")
     private String cleReserve1;
     /**
      * 备用2
      */
+    @TableField("cle_reserve_2")
     private String cleReserve2;
     /**
      * 备用3
      */
+    @TableField("cle_reserve_3")
     private String cleReserve3;
 }

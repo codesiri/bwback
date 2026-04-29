@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SpecEqpTowerAccountMapper">
+
+    <!-- 获取塔类分页列表 -->
+    <select id="getSpecEqpTowerAccountPage" resultType="com.youlai.boot.ledger.model.vo.SpecEqpTowerAccountVO">
+        SELECT
+                id,
+                spec_eqp_tower_code,
+                spec_eqp_tower_name,
+                spec_eqp_tower_area,
+                spec_eqp_tower_model,
+                spec_eqp_tower_type,
+                spec_eqp_tower_material,
+                spec_eqp_tower_height,
+                spec_eqp_tower_diameter,
+                spec_eqp_tower_layer,
+                spec_eqp_tower_design_pressure,
+                spec_eqp_tower_design_temp,
+                spec_eqp_tower_media,
+                spec_eqp_tower_media_property,
+                spec_eqp_tower_manufacturer,
+                spec_eqp_tower_factory_no,
+                spec_eqp_tower_produce_date,
+                spec_eqp_tower_install_company,
+                spec_eqp_tower_install_date,
+                spec_eqp_tower_acceptance_date,
+                spec_eqp_tower_usage_date,
+                spec_eqp_tower_license_no,
+                spec_eqp_tower_status,
+                spec_eqp_tower_last_inspect_date,
+                spec_eqp_tower_next_inspect_date,
+                spec_eqp_tower_inspect_company,
+                spec_eqp_tower_maintain_responsible,
+                spec_eqp_tower_maintain_record,
+                spec_eqp_tower_accident_record,
+                spec_eqp_tower_create_time,
+                spec_eqp_tower_update_time,
+                spec_eqp_tower_factory,
+                spec_eqp_tower_backup1,
+                spec_eqp_tower_backup2,
+                spec_eqp_tower_backup3
+        FROM
+            spec_eqp_tower_account
+        <where>
+        </where>
+    </select>
+
+</mapper>

@@ -32,4 +32,19 @@
         </where>
     </select>
 
+    <!-- 导出抽屉柜主要元器件信息 -->
+    <select id="exportElectricCabinetMainComponents" resultType="com.youlai.boot.ledger.model.dto.ElectricCabinetMainComponentDto">
+        SELECT
+                ecm_component_name,
+                ecm_spec_model,
+                ecm_manufacturer,
+                ecm_factory_no,
+                ecm_install_location,
+                ecm_commissioning_date,
+                ecm_rated_parameters,
+                ecm_factory
+        FROM
+            electric_cabinet_main_component
+    </select>
+
 </mapper>

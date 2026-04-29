@@ -82,7 +82,6 @@ public class DvTemperatureGaugeForm implements Serializable {
     private int interlocked;
 
     @Schema(description = "联锁设定值")
-    @Size(max=255, message="联锁设定值长度不能超过255个字符")
     private String interlockSetValue;
 
     @Schema(description = "备注")

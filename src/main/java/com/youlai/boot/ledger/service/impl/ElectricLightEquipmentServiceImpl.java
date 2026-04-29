@@ -113,8 +113,7 @@ public class ElectricLightEquipmentServiceImpl extends ServiceImpl<ElectricLight
 
     @Override
     public List<ElectricLightEquipmentDto> exportElectricLightEquipment(ElectricLightEquipmentExportQuery queryParams) {
-        List<ElectricLightEquipmentDto> electricLightEquipmentDtoList=this.baseMapper.exportElectricLightEquipment(queryParams);
-        return electricLightEquipmentDtoList;
+        return this.baseMapper.exportElectricLightEquipment(queryParams);
     }
 
 }

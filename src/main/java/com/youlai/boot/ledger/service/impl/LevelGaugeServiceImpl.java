@@ -119,7 +119,6 @@ public class LevelGaugeServiceImpl extends ServiceImpl<LevelGaugeMapper, LevelGa
 
     @Override
     public List<LevelGaugeExportDto> listExportLevelGauge(LevelGaugeExportQuery queryParams) {
-
         return this.baseMapper.listExportLevelGauge(queryParams);
     }
 

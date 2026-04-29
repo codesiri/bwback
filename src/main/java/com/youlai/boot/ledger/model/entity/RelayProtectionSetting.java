@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -16,10 +17,12 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @TableName("relay_protection_setting")
-public class RelayProtectionSetting extends BaseEntity {
+public class RelayProtectionSetting  {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId
+    private long id;
     /**
      * 继电器编号
      */

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SeRefrigeratorMapper">
+
+    <!-- 获取特种设备制冷机台账分页列表 -->
+    <select id="getSeRefrigeratorPage" resultType="com.youlai.boot.ledger.model.vo.SeRefrigeratorVO">
+        SELECT
+                id,
+                se_refrigerator_equip_code,
+                se_refrigerator_name,
+                se_refrigerator_type,
+                se_refrigerator_spec,
+                se_refrigerator_cooling_capacity,
+                se_refrigerator_rated_power,
+                se_refrigerator_evap_temp,
+                se_refrigerator_cond_temp,
+                se_refrigerator_refrigerant,
+                se_refrigerator_oil_type,
+                se_refrigerator_material,
+                se_refrigerator_explosion_proof,
+                se_refrigerator_motor_model,
+                se_refrigerator_cooling_type,
+                se_refrigerator_install_pos,
+                se_refrigerator_in_service,
+                se_refrigerator_inspect_cycle,
+                se_refrigerator_last_inspect,
+                se_refrigerator_next_inspect,
+                se_refrigerator_inspect_result,
+                se_refrigerator_last_maintain,
+                se_refrigerator_next_maintain,
+                se_refrigerator_leak_test,
+                se_refrigerator_coeff,
+                se_refrigerator_maintain_record,
+                se_refrigerator_fault_record,
+                se_refrigerator_operator,
+                se_refrigerator_create_time,
+                se_refrigerator_update_time,
+                se_refrigerator_factory,
+                se_refrigerator_status,
+                se_refrigerator_reserve1,
+                se_refrigerator_reserve2,
+                se_refrigerator_reserve3
+        FROM
+            se_refrigerator
+        <where>
+            <if test="queryParams.seRefrigeratorEquipCode != null and queryParams.seRefrigeratorEquipCode != ''">
+                and se_refrigerator_equip_code like CONCAT( #{queryParams.seRefrigeratorEquipCode}, '%')
+            </if>
+            <if test="queryParams.seRefrigeratorName != null and queryParams.seRefrigeratorName != ''">
+                and se_refrigerator_name like CONCAT ('%',#{queryParams.seRefrigeratorName}, '%')
+            </if>
+            <if test="queryParams.seRefrigeratorStatus != null and queryParams.seRefrigeratorStatus != null">
+                and se_refrigerator_status like CONCAT ('%',#{queryParams.seRefrigeratorStatus}, '%')
+            </if>
+            <if test="queryParams.seRefrigeratorFactory != null and queryParams.seRefrigeratorFactory != null">
+                and se_refrigerator_factory like CONCAT ('%',#{queryParams.seRefrigeratorFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 获取特种设备制冷机台账导出列表 -->
+    <select id="listExportSeRefrigerator" resultType="com.youlai.boot.ledger.model.dto.SeRefrigeratorExportDto">
+        SELECT
+        id,
+        se_refrigerator_equip_code,
+        se_refrigerator_name,
+        se_refrigerator_type,
+        se_refrigerator_spec,
+        se_refrigerator_cooling_capacity,
+        se_refrigerator_rated_power,
+        se_refrigerator_evap_temp,
+        se_refrigerator_cond_temp,
+        se_refrigerator_refrigerant,
+        se_refrigerator_oil_type,
+        se_refrigerator_material,
+        se_refrigerator_explosion_proof,
+        se_refrigerator_motor_model,
+        se_refrigerator_cooling_type,
+        se_refrigerator_install_pos,
+        se_refrigerator_in_service,
+        se_refrigerator_inspect_cycle,
+        se_refrigerator_last_inspect,
+        se_refrigerator_next_inspect,
+        se_refrigerator_inspect_result,
+        se_refrigerator_last_maintain,
+        se_refrigerator_next_maintain,
+        se_refrigerator_leak_test,
+        se_refrigerator_coeff,
+        se_refrigerator_maintain_record,
+        se_refrigerator_fault_record,
+        se_refrigerator_operator,
+        se_refrigerator_create_time,
+        se_refrigerator_update_time,
+        se_refrigerator_factory,
+        se_refrigerator_status,
+        se_refrigerator_reserve1,
+        se_refrigerator_reserve2,
+        se_refrigerator_reserve3
+        FROM
+        se_refrigerator
+        <where>
+            <if test="seRefrigeratorEquipCode != null and seRefrigeratorEquipCode != ''">
+                and se_refrigerator_equip_code like CONCAT( #{seRefrigeratorEquipCode}, '%')
+            </if>
+            <if test="seRefrigeratorName != null and seRefrigeratorName != ''">
+                and se_refrigerator_name like CONCAT ('%',#{seRefrigeratorName}, '%')
+            </if>
+            <if test="seRefrigeratorStatus != null and seRefrigeratorStatus != null">
+                and se_refrigerator_status like CONCAT ('%',#{seRefrigeratorStatus}, '%')
+            </if>
+            <if test="seRefrigeratorFactory != null and seRefrigeratorFactory != null">
+                and se_refrigerator_factory like CONCAT ('%',#{seRefrigeratorFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

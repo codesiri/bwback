@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SeSphericalTankMapper">
+
+    <!-- 获取球罐分页列表 -->
+    <select id="getSeSphericalTankPage" resultType="com.youlai.boot.ledger.model.vo.SeSphericalTankVO">
+        SELECT
+                id,
+                se_tank_equip_code,
+                se_tank_name,
+                se_tank_spec,
+                se_tank_design_volume,
+                se_tank_operating_volume,
+                se_tank_design_p,
+                se_tank_operating_p,
+                se_tank_design_t,
+                se_tank_operating_t,
+                se_tank_media,
+                se_tank_material,
+                se_tank_thickness,
+                se_tank_seal_type,
+                se_tank_anti_corrosion,
+                se_tank_safety_valve_model,
+                se_tank_install_pos,
+                se_tank_in_service,
+                se_tank_inspect_cycle,
+                se_tank_last_inspect,
+                se_tank_next_inspect,
+                se_tank_inspect_result,
+                se_tank_last_pressure_test,
+                se_tank_level_gauge_model,
+                se_tank_corrosion_status,
+                se_tank_maintain_record,
+                se_tank_fault_record,
+                se_tank_operator,
+                se_tank_create_time,
+                se_tank_update_time,
+                se_tank_status,
+                se_tank_factory,
+                se_tank_reserve1,
+                se_tank_reserve2,
+                se_tank_reserve3
+        FROM
+            se_spherical_tank
+        <where>
+        </where>
+    </select>
+
+</mapper>

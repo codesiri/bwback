@@ -2,6 +2,7 @@ package com.youlai.boot.maintence.converter;
 
 import org.mapstruct.Mapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.youlai.boot.maintence.model.dto.MaintainPlanExportDto;
 import com.youlai.boot.maintence.model.entity.MaintainPlan;
 import com.youlai.boot.maintence.model.form.MaintainPlanForm;
 
@@ -17,4 +18,6 @@ public interface MaintainPlanConverter{
     MaintainPlanForm toForm(MaintainPlan entity);
 
     MaintainPlan toEntity(MaintainPlanForm formData);
+
+    MaintainPlan toEntity(MaintainPlanExportDto dto);
 }

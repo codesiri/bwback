@@ -139,6 +139,6 @@ public class AnalyInstrumentImportListener extends AnalysisEventListener<AnalyIn
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-
+        log.info("所有数据解析完成");
     }
 }

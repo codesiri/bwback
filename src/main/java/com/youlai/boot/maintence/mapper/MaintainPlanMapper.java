@@ -1,11 +1,14 @@
 package com.youlai.boot.maintence.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.youlai.boot.maintence.model.dto.MaintainPlanExportDto;
 import com.youlai.boot.maintence.model.entity.MaintainPlan;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youlai.boot.maintence.model.query.MaintainPlanQuery;
 import com.youlai.boot.maintence.model.vo.MaintainPlanVO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 维修计划Mapper接口
@@ -24,5 +27,7 @@ public interface MaintainPlanMapper extends BaseMapper<MaintainPlan> {
      * @return {@link Page<MaintainPlanVO>} 维修计划分页列表
      */
     Page<MaintainPlanVO> getMaintainPlanPage(Page<MaintainPlanVO> page, MaintainPlanQuery queryParams);
+
+    List<MaintainPlanExportDto> exportMaintainPlans();
 
 }

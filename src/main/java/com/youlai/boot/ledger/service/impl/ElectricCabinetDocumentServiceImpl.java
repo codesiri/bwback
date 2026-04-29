@@ -109,8 +109,7 @@ public class ElectricCabinetDocumentServiceImpl extends ServiceImpl<ElectricCabi
 
     @Override
     public List<ElectricCabinetDocumentExportDto> exportElectricCabinetDocuments(ElectricCabinetDocumentsExportQuery queryParams) {
-        var electricCabinetDocumentExportDtoList = this.baseMapper.exportElectricCabinetDocuments(queryParams);
-        return List.of();
+        return this.baseMapper.exportElectricCabinetDocuments(queryParams);
     }
 
 }

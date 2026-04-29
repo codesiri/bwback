@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.service.impl;
 
+import com.youlai.boot.common.util.IDUtil;
 import com.youlai.boot.ledger.model.dto.GroundSystemEquipmentExportDto;
 import com.youlai.boot.ledger.model.query.GroundSystemEquipmentExportQuery;
 import lombok.RequiredArgsConstructor;
@@ -70,6 +71,8 @@ public class GroundSystemEquipmentServiceImpl extends ServiceImpl<GroundSystemEq
     @Override
     public boolean saveGroundSystemEquipment(GroundSystemEquipmentForm formData) {
         GroundSystemEquipment entity = groundSystemEquipmentConverter.toEntity(formData);
+        long idByLeaf = IDUtil.genIdByLeaf();
+        entity.setId(idByLeaf);
         return this.save(entity);
     }
     
@@ -104,8 +107,7 @@ public class GroundSystemEquipmentServiceImpl extends ServiceImpl<GroundSystemEq
 
     @Override
     public List<GroundSystemEquipmentExportDto> exportGroundSystemEquipments(GroundSystemEquipmentExportQuery queryParams) {
-        List<GroundSystemEquipmentExportDto> groundSystemEquipmentExportDtoList = this.baseMapper.exportGroundSystemEquipments(queryParams);
-        return groundSystemEquipmentExportDtoList;
+        return this.baseMapper.exportGroundSystemEquipments(queryParams);
     }
 
 }

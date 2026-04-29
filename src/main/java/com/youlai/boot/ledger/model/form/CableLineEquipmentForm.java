@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class CableLineEquipmentForm implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @TableId
     private Long id;
 
     @Schema(description = "电缆编号")

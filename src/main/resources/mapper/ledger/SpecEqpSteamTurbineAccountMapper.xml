@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SpecEqpSteamTurbineAccountMapper">
+
+    <!-- 获取汽轮机分页列表 -->
+    <select id="getSpecEqpSteamTurbineAccountPage" resultType="com.youlai.boot.ledger.model.vo.SpecEqpSteamTurbineAccountVO">
+        SELECT
+                id,
+                spec_eqp_st_code,
+                spec_eqp_st_name,
+                spec_eqp_st_area,
+                spec_eqp_st_model,
+                spec_eqp_st_manufacturer,
+                spec_eqp_st_factory_no,
+                spec_eqp_st_produce_date,
+                spec_eqp_st_install_company,
+                spec_eqp_st_install_date,
+                spec_eqp_st_acceptance_date,
+                spec_eqp_st_usage_date,
+                spec_eqp_st_license_no,
+                spec_eqp_st_power_rating,
+                spec_eqp_st_speed_rating,
+                spec_eqp_st_steam_pressure,
+                spec_eqp_st_steam_temp,
+                spec_eqp_st_exhaust_pressure,
+                spec_eqp_st_rotor_material,
+                spec_eqp_st_casing_material,
+                spec_eqp_st_media,
+                spec_eqp_st_media_property,
+                spec_eqp_st_status,
+                spec_eqp_st_last_inspect_date,
+                spec_eqp_st_next_inspect_date,
+                spec_eqp_st_inspect_company,
+                spec_eqp_st_maintain_responsible,
+                spec_eqp_st_maintain_record,
+                spec_eqp_st_accident_record,
+                spec_eqp_st_create_time,
+                spec_eqp_st_update_time,
+                spec_eqp_st_factory,
+                spec_eqp_st_backup1,
+                spec_eqp_st_backup2,
+                spec_eqp_st_backup3
+        FROM
+            spec_eqp_steam_turbine_account
+        <where>
+            <if test="queryParams.specEqpStName != null and queryParams.specEqpStName != ''">
+                and spec_eqp_st_name like CONCAT( #{queryParams.specEqpStName}, '%')
+            </if>
+            <if test="queryParams.specEqpStStatus != null and queryParams.specEqpStStatus != ''">
+                and spec_eqp_st_status = #{queryParams.specEqpStStatus}
+            </if>
+            <if test="queryParams.specEqpStFactory != null and queryParams.specEqpStFactory != null">
+                and spec_eqp_st_factory like CONCAT ('%',#{queryParams.specEqpStFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="listExportSpecEqpCraneTransAccounts" resultType="com.youlai.boot.ledger.model.dto.SpecEqpSteamTurbineAccountExportDto">
+        SELECT
+        id,
+        spec_eqp_st_code,
+        spec_eqp_st_name,
+        spec_eqp_st_area,
+        spec_eqp_st_model,
+        spec_eqp_st_manufacturer,
+        spec_eqp_st_factory_no,
+        spec_eqp_st_produce_date,
+        spec_eqp_st_install_company,
+        spec_eqp_st_install_date,
+        spec_eqp_st_acceptance_date,
+        spec_eqp_st_usage_date,
+        spec_eqp_st_license_no,
+        spec_eqp_st_power_rating,
+        spec_eqp_st_speed_rating,
+        spec_eqp_st_steam_pressure,
+        spec_eqp_st_steam_temp,
+        spec_eqp_st_exhaust_pressure,
+        spec_eqp_st_rotor_material,
+        spec_eqp_st_casing_material,
+        spec_eqp_st_media,
+        spec_eqp_st_media_property,
+        spec_eqp_st_status,
+        spec_eqp_st_last_inspect_date,
+        spec_eqp_st_next_inspect_date,
+        spec_eqp_st_inspect_company,
+        spec_eqp_st_maintain_responsible,
+        spec_eqp_st_maintain_record,
+        spec_eqp_st_accident_record,
+        spec_eqp_st_create_time,
+        spec_eqp_st_update_time,
+        spec_eqp_st_factory,
+        spec_eqp_st_backup1,
+        spec_eqp_st_backup2,
+        spec_eqp_st_backup3
+        FROM
+        spec_eqp_steam_turbine_account
+        <where>
+            <if test="specEqpStName != null and specEqpStName != ''">
+                and spec_eqp_st_name like CONCAT( #{specEqpStName}, '%')
+            </if>
+            <if test="specEqpStStatus != null and specEqpStStatus != ''">
+                and spec_eqp_st_status = #{specEqpStStatus}
+            </if>
+            <if test="specEqpStFactory != null and specEqpStFactory != null">
+                and spec_eqp_st_factory like CONCAT ('%',#{specEqpStFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

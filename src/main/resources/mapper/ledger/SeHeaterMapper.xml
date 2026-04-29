@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SeHeaterMapper">
+
+    <!-- 获取换热器分页列表 -->
+    <select id="getSeHeaterPage" resultType="com.youlai.boot.ledger.model.vo.SeHeaterVO">
+        SELECT
+                id,
+                se_heater_equip_code,
+                se_heater_name,
+                se_heater_type,
+                se_heater_spec,
+                se_heater_area,
+                se_heater_design_p,
+                se_heater_design_t,
+                se_heater_medium,
+                se_heater_material,
+                se_heater_install_pos,
+                se_heater_in_service,
+                se_heater_inspect_cycle,
+                se_heater_last_inspect,
+                se_heater_next_inspect,
+                se_heater_inspect_result,
+                se_heater_clean_cycle,
+                se_heater_last_clean,
+                se_heater_next_clean,
+                se_heater_fouling_rate,
+                se_heater_energy_eff,
+                se_heater_maintain_record,
+                se_heater_fault_record,
+                se_heater_operator,
+                se_heater_create_time,
+                se_heater_update_time,
+                se_heater_status,
+                se_heater_factory,
+                se_heater_reserve1,
+                se_heater_reserve2,
+                se_heater_reserve3
+        FROM
+            se_heater
+        <where>
+            <if test="queryParams.seHeaterEquipCode != null and queryParams.seHeaterEquipCode != ''">
+                and se_heater_equip_code like CONCAT( #{queryParams.seHeaterEquipCode}, '%')
+            </if>
+            <if test="queryParams.seHeaterName != null and queryParams.seHeaterName != ''">
+                and se_heater_name like CONCAT ('%',#{queryParams.seHeaterName}, '%')
+            </if>
+            <if test="queryParams.seHeaterStatus != null and queryParams.seHeaterStatus != null">
+                and se_heater_status like CONCAT ('%',#{queryParams.seHeaterStatus}, '%')
+            </if>
+            <if test="queryParams.seHeaterFactory != null and queryParams.seHeaterFactory != null">
+                and se_heater_factory like CONCAT ('%',#{queryParams.seHeaterFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+
+    <select id="getSeHeaterPage" resultType="com.youlai.boot.ledger.model.dto.SeHeaterExportDto">
+        SELECT
+        id,
+        se_heater_equip_code,
+        se_heater_name,
+        se_heater_type,
+        se_heater_spec,
+        se_heater_area,
+        se_heater_design_p,
+        se_heater_design_t,
+        se_heater_medium,
+        se_heater_material,
+        se_heater_install_pos,
+        se_heater_in_service,
+        se_heater_inspect_cycle,
+        se_heater_last_inspect,
+        se_heater_next_inspect,
+        se_heater_inspect_result,
+        se_heater_clean_cycle,
+        se_heater_last_clean,
+        se_heater_next_clean,
+        se_heater_fouling_rate,
+        se_heater_energy_eff,
+        se_heater_maintain_record,
+        se_heater_fault_record,
+        se_heater_operator,
+        se_heater_create_time,
+        se_heater_update_time,
+        se_heater_status,
+        se_heater_factory,
+        se_heater_reserve1,
+        se_heater_reserve2,
+        se_heater_reserve3
+        FROM
+        se_heater
+        <where>
+            <if test="seHeaterEquipCode != null and seHeaterEquipCode != ''">
+                and se_heater_equip_code like CONCAT( #{seHeaterEquipCode}, '%')
+            </if>
+            <if test="seHeaterName != null and seHeaterName != ''">
+                and se_heater_name like CONCAT ('%',#{seHeaterName}, '%')
+            </if>
+            <if test="seHeaterStatus != null and seHeaterStatus != null">
+                and se_heater_status like CONCAT ('%',#{seHeaterStatus}, '%')
+            </if>
+            <if test="seHeaterFactory != null and seHeaterFactory != null">
+                and se_heater_factory like CONCAT ('%',#{seHeaterFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+
+</mapper>

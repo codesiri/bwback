@@ -71,8 +71,7 @@ public class ElectricCabinetFaultServiceImpl extends ServiceImpl<ElectricCabinet
     @Override
     public boolean saveElectricCabinetFault(ElectricCabinetFaultForm formData) {
         ElectricCabinetFault entity = electricCabinetFaultConverter.toEntity(formData);
-        //TODO 之后换为美团leaf生成id
-        long genIdByJdk = IDUtil.genIdByJdk();
+        long genIdByJdk = IDUtil.genIdByLeaf();
         entity.setId(genIdByJdk);
         return this.save(entity);
     }

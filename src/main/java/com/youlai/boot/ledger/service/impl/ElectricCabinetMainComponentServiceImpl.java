@@ -70,8 +70,7 @@ public class ElectricCabinetMainComponentServiceImpl extends ServiceImpl<Electri
     @Override
     public boolean saveElectricCabinetMainComponent(ElectricCabinetMainComponentForm formData) {
         ElectricCabinetMainComponent entity = electricCabinetMainComponentConverter.toEntity(formData);
-        //TODO 后续换位美团leaf
-        var id = IDUtil.genIdByJdk();
+        var id = IDUtil.genIdByLeaf();
         entity.setId(id);
         return this.save(entity);
     }
@@ -107,7 +106,7 @@ public class ElectricCabinetMainComponentServiceImpl extends ServiceImpl<Electri
 
     @Override
     public List<ElectricCabinetMainComponentDto> exportElectricCabinetMainComponents() {
-        return List.of();
+        return this.baseMapper.exportElectricCabinetMainComponents();
     }
 
 }

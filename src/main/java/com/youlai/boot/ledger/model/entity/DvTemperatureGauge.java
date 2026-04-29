@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
@@ -66,6 +67,7 @@ public class DvTemperatureGauge {
     /**
      * 精度
      */
+    @TableField("`precision`")
     private String precision;
     /**
      * 套管规格和及材质

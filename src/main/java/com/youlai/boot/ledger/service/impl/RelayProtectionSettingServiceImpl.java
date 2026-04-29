@@ -116,7 +116,6 @@ public class RelayProtectionSettingServiceImpl extends ServiceImpl<RelayProtecti
 
     @Override
     public List<RelayProtectionSettingExportDto> exportRelayProtectionSettings(RelayProtectionSettingExportQuery queryParams) {
-        List<RelayProtectionSettingExportDto> relayProtectionSettingVOS = this.baseMapper.exportRelayProtectionSetting(queryParams);
-        return relayProtectionSettingVOS;
+        return this.baseMapper.exportRelayProtectionSetting(queryParams);
     }
 }

@@ -1,6 +1,7 @@
 package com.youlai.boot.maintence.service.impl;
 
 import com.youlai.boot.common.util.IDUtil;
+import com.youlai.boot.maintence.model.dto.MaintainPlanExportDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -47,7 +48,7 @@ public class MaintainPlanServiceImpl extends ServiceImpl<MaintainPlanMapper, Mai
         );
         return pageVO;
     }
-    
+
     /**
      * 获取维修计划表单数据
      *
@@ -59,7 +60,7 @@ public class MaintainPlanServiceImpl extends ServiceImpl<MaintainPlanMapper, Mai
         MaintainPlan entity = this.getById(id);
         return maintainPlanConverter.toForm(entity);
     }
-    
+
     /**
      * 新增维修计划
      *
@@ -70,11 +71,11 @@ public class MaintainPlanServiceImpl extends ServiceImpl<MaintainPlanMapper, Mai
     public boolean saveMaintainPlan(MaintainPlanForm formData) {
         MaintainPlan entity = maintainPlanConverter.toEntity(formData);
         //TODO 先用jdk生成，后边记得改成美团leaf
-        long genIdByJdk = IDUtil.genIdByJdk();
+        long genIdByJdk = IDUtil.genIdByLeaf();
         entity.setId(genIdByJdk);
         return this.save(entity);
     }
-    
+
     /**
      * 更新维修计划
      *
@@ -87,7 +88,7 @@ public class MaintainPlanServiceImpl extends ServiceImpl<MaintainPlanMapper, Mai
         MaintainPlan entity = maintainPlanConverter.toEntity(formData);
         return this.updateById(entity);
     }
-    
+
     /**
      * 删除维修计划
      *
@@ -102,6 +103,11 @@ public class MaintainPlanServiceImpl extends ServiceImpl<MaintainPlanMapper, Mai
                 .map(Long::parseLong)
                 .toList();
         return this.removeByIds(idList);
+    }
+
+    @Override
+    public List<MaintainPlanExportDto> exportMaintainPlans() {
+        return this.baseMapper.exportMaintainPlans();
     }
 
 }

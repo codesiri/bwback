@@ -1,11 +1,14 @@
 package com.youlai.boot.maintence.service;
 
+import com.youlai.boot.maintence.model.dto.MaintainPlanExportDto;
 import com.youlai.boot.maintence.model.entity.MaintainPlan;
 import com.youlai.boot.maintence.model.form.MaintainPlanForm;
 import com.youlai.boot.maintence.model.query.MaintainPlanQuery;
 import com.youlai.boot.maintence.model.vo.MaintainPlanVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * 维修计划服务类
@@ -54,5 +57,12 @@ public interface MaintainPlanService extends IService<MaintainPlan> {
      * @return 是否删除成功
      */
     boolean deleteMaintainPlans(String ids);
+
+    /**
+     * 导出维修计划
+     *
+     * @return {@link List<MaintainPlanExportDto>} 维修计划导出列表
+     */
+    List<MaintainPlanExportDto> exportMaintainPlans();
 
 }

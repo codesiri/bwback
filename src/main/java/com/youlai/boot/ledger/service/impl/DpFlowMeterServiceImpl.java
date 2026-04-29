@@ -1,6 +1,7 @@
 package com.youlai.boot.ledger.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.youlai.boot.common.util.IDUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -70,6 +71,8 @@ public class DpFlowMeterServiceImpl extends ServiceImpl<DpFlowMeterMapper, DpFlo
     public boolean saveDpFlowMeter(DpFlowMeterForm formData) {
         DpFlowMeter entity = dpFlowMeterConverter.toEntity(formData);
 //        this.baseMapper.selectCount(new QueryWrapper<DpFlowMeter>().eq("tag_number",entity.get))
+        long idByLeaf = IDUtil.genIdByLeaf();
+        entity.setId(idByLeaf);
         return this.save(entity);
     }
     

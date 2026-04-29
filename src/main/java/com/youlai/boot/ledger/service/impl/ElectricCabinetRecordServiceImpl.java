@@ -71,8 +71,7 @@ public class ElectricCabinetRecordServiceImpl extends ServiceImpl<ElectricCabine
     @Override
     public boolean saveElectricCabinetRecord(ElectricCabinetRecordForm formData) {
         ElectricCabinetRecord entity = electricCabinetRecordConverter.toEntity(formData);
-        //TODO 后续换成leaf生成id
-        long id = IDUtil.genIdByJdk();
+        long id = IDUtil.genIdByLeaf();
         entity.setId(id);
         return this.save(entity);
     }

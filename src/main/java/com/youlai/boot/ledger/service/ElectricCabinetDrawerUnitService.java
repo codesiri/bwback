@@ -1,6 +1,6 @@
 package com.youlai.boot.ledger.service;
 
-import com.youlai.boot.ledger.model.dto.ElectricCabinetDocumentExportDto;
+import com.youlai.boot.ledger.model.dto.ElectricCabinetDrawerUnitsExportDto;
 import com.youlai.boot.ledger.model.entity.ElectricCabinetDrawerUnit;
 import com.youlai.boot.ledger.model.form.ElectricCabinetDrawerUnitForm;
 import com.youlai.boot.ledger.model.query.ElectricCabinetDrawerUnitQuery;
@@ -59,5 +59,5 @@ public interface ElectricCabinetDrawerUnitService extends IService<ElectricCabin
      */
     boolean deleteElectricCabinetDrawerUnits(String ids);
 
-    List<ElectricCabinetDocumentExportDto> exportElectricCabinetDrawerUnits(ElectricCabinetDrawerUnitsExportQuery queryParams);
+    List<ElectricCabinetDrawerUnitsExportDto> exportElectricCabinetDrawerUnits(ElectricCabinetDrawerUnitsExportQuery queryParams);
 }

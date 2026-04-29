@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.controller;
 
+import cn.hutool.json.JSONUtil;
 import cn.idev.excel.EasyExcel;
 import cn.idev.excel.ExcelWriter;
 import com.youlai.boot.common.annotation.Log;
@@ -16,6 +17,7 @@ import com.youlai.boot.ledger.service.DvTemperatureGaugeService;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.youlai.boot.ledger.model.form.DvTemperatureGaugeForm;
@@ -50,6 +52,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/dv-temperature-gauge")
 @RequiredArgsConstructor
+@Slf4j
 public class DvTemperatureGaugeController {
 
     private final DvTemperatureGaugeService dvTemperatureGaugeService;
@@ -68,6 +71,7 @@ public class DvTemperatureGaugeController {
     @PostMapping
     @PreAuthorize("@ss.hasPerm('ledger:dv-temperature-gauge:add')")
     public Result<Void> saveDvTemperatureGauge(@RequestBody @Valid DvTemperatureGaugeForm formData) {
+        log.info("传入的温度对象:{}", JSONUtil.toJsonStr(formData));
         boolean result = dvTemperatureGaugeService.saveDvTemperatureGauge(formData);
         return Result.judge(result);
     }

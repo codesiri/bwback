@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SeHorizontalTankMapper">
+
+    <!-- 获取卧罐分页列表 -->
+    <select id="getSeHorizontalTankPage" resultType="com.youlai.boot.ledger.model.vo.SeHorizontalTankVO">
+        SELECT
+                id,
+                se_htank_equip_code,
+                se_htank_name,
+                se_htank_spec,
+                se_htank_design_volume,
+                se_htank_operating_volume,
+                se_htank_design_p,
+                se_htank_operating_p,
+                se_htank_design_t,
+                se_htank_operating_t,
+                se_htank_media,
+                se_htank_material,
+                se_htank_thickness,
+                se_htank_seal_type,
+                se_htank_anti_corrosion,
+                se_htank_support_type,
+                se_htank_safety_valve_model,
+                se_htank_install_pos,
+                se_htank_in_service,
+                se_htank_inspect_cycle,
+                se_htank_last_inspect,
+                se_htank_next_inspect,
+                se_htank_inspect_result,
+                se_htank_last_pressure_test,
+                se_htank_level_gauge_model,
+                se_htank_corrosion_status,
+                se_htank_maintain_record,
+                se_htank_fault_record,
+                se_htank_operator,
+                se_htank_create_time,
+                se_htank_update_time,
+                se_htank_status,
+                se_htank_factory,
+                se_htank_reserve1,
+                se_htank_reserve2,
+                se_htank_reserve3
+        FROM
+            se_horizontal_tank
+        <where>
+            <if test="queryParams.seHtankEquipCode != null and queryParams.seHtankEquipCode != ''">
+                and se_htank_equip_code like CONCAT( #{queryParams.seHtankEquipCode}, '%')
+            </if>
+            <if test="queryParams.seHtankName != null and queryParams.seHtankName != ''">
+                and se_htank_name like CONCAT ('%',#{queryParams.seHtankName}, '%')
+            </if>
+            <if test="queryParams.seHtankStatus != null and queryParams.seHtankStatus != null">
+                and se_htank_status like CONCAT ('%',#{queryParams.seHtankStatus}, '%')
+            </if>
+            <if test="queryParams.seHtankFactory != null and queryParams.seHtankFactory != null">
+                and se_htank_factory like CONCAT ('%',#{queryParams.seHtankFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="listExportSeHorizontalTank" resultType="com.youlai.boot.ledger.model.dto.SeHorizontalTankExportDto">
+        SELECT
+        id,
+        se_htank_equip_code,
+        se_htank_name,
+        se_htank_spec,
+        se_htank_design_volume,
+        se_htank_operating_volume,
+        se_htank_design_p,
+        se_htank_operating_p,
+        se_htank_design_t,
+        se_htank_operating_t,
+        se_htank_media,
+        se_htank_material,
+        se_htank_thickness,
+        se_htank_seal_type,
+        se_htank_anti_corrosion,
+        se_htank_support_type,
+        se_htank_safety_valve_model,
+        se_htank_install_pos,
+        se_htank_in_service,
+        se_htank_inspect_cycle,
+        se_htank_last_inspect,
+        se_htank_next_inspect,
+        se_htank_inspect_result,
+        se_htank_last_pressure_test,
+        se_htank_level_gauge_model,
+        se_htank_corrosion_status,
+        se_htank_maintain_record,
+        se_htank_fault_record,
+        se_htank_operator,
+        se_htank_create_time,
+        se_htank_update_time,
+        se_htank_status,
+        se_htank_factory,
+        se_htank_reserve1,
+        se_htank_reserve2,
+        se_htank_reserve3
+        FROM
+        se_horizontal_tank
+        <where>
+            <if test="seHtankEquipCode != null and seHtankEquipCode != ''">
+                and se_htank_equip_code like CONCAT( #{seHtankEquipCode}, '%')
+            </if>
+            <if test="seHtankName != null and seHtankName != ''">
+                and se_htank_name like CONCAT ('%',#{seHtankName}, '%')
+            </if>
+            <if test="seHtankStatus != null and seHtankStatus != null">
+                and se_htank_status like CONCAT ('%',#{seHtankStatus}, '%')
+            </if>
+            <if test="seHtankFactory != null and seHtankFactory != null">
+                and se_htank_factory like CONCAT ('%',#{seHtankFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

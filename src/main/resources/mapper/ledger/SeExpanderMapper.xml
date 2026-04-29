@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SeExpanderMapper">
+
+    <!-- 获取特种设备膨胀机台账分页列表 -->
+    <select id="getSeExpanderPage" resultType="com.youlai.boot.ledger.model.vo.SeExpanderVO">
+        SELECT
+                id,
+                se_expander_equip_code,
+                se_expander_name,
+                se_expander_type,
+                se_expander_spec,
+                se_expander_rated_power,
+                se_expander_rated_speed,
+                se_expander_inlet_p,
+                se_expander_inlet_t,
+                se_expander_outlet_p,
+                se_expander_outlet_t,
+                se_expander_media,
+                se_expander_material,
+                se_expander_explosion_proof,
+                se_expander_coupling_type,
+                se_expander_bearing_type,
+                se_expander_lubrication,
+                se_expander_install_pos,
+                se_expander_in_service,
+                se_expander_inspect_cycle,
+                se_expander_last_inspect,
+                se_expander_next_inspect,
+                se_expander_inspect_result,
+                se_expander_last_lubricate,
+                se_expander_next_lubricate,
+                se_expander_vibration,
+                se_expander_efficiency,
+                se_expander_maintain_record,
+                se_expander_fault_record,
+                se_expander_operator,
+                se_expander_create_time,
+                se_expander_update_time,
+                se_expander_status,
+                se_expander_factory,
+                se_expander_reserve1,
+                se_expander_reserve2,
+                se_expander_reserve3
+        FROM
+            se_expander
+        <where>
+            <if test="queryParams.seExpanderEquipCode != null and queryParams.seExpanderEquipCode != ''">
+                and se_expander_equip_code like CONCAT( #{queryParams.seExpanderEquipCode}, '%')
+            </if>
+            <if test="queryParams.seExpanderName != null and queryParams.seExpanderName != ''">
+                and se_expander_name = #{queryParams.seExpanderName}
+            </if>
+            <if test="queryParams.seExpanderStatus != null and queryParams.seExpanderStatus != null">
+                and se_expander_status like CONCAT ('%',#{queryParams.seExpanderStatus}, '%')
+            </if>
+            <if test="queryParams.seExpanderFactory != null and queryParams.seExpanderFactory != null">
+                and se_expander_factory like CONCAT ('%',#{queryParams.seExpanderFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+    <select id="listExportSeExpander" resultType="com.youlai.boot.ledger.model.dto.SeExpanderExportDto">
+        SELECT
+        id,
+        se_expander_equip_code,
+        se_expander_name,
+        se_expander_type,
+        se_expander_spec,
+        se_expander_rated_power,
+        se_expander_rated_speed,
+        se_expander_inlet_p,
+        se_expander_inlet_t,
+        se_expander_outlet_p,
+        se_expander_outlet_t,
+        se_expander_media,
+        se_expander_material,
+        se_expander_explosion_proof,
+        se_expander_coupling_type,
+        se_expander_bearing_type,
+        se_expander_lubrication,
+        se_expander_install_pos,
+        se_expander_in_service,
+        se_expander_inspect_cycle,
+        se_expander_last_inspect,
+        se_expander_next_inspect,
+        se_expander_inspect_result,
+        se_expander_last_lubricate,
+        se_expander_next_lubricate,
+        se_expander_vibration,
+        se_expander_efficiency,
+        se_expander_maintain_record,
+        se_expander_fault_record,
+        se_expander_operator,
+        se_expander_create_time,
+        se_expander_update_time,
+        se_expander_status,
+        se_expander_factory,
+        se_expander_reserve1,
+        se_expander_reserve2,
+        se_expander_reserve3
+        FROM
+        se_expander
+        <where>
+            <if test="seExpanderEquipCode != null and seExpanderEquipCode != ''">
+                and se_expander_equip_code like CONCAT( #{seExpanderEquipCode}, '%')
+            </if>
+            <if test="seExpanderName != null and seExpanderName != ''">
+                and se_expander_name = #{seExpanderName}
+            </if>
+            <if test="seExpanderStatus != null and seExpanderStatus != null">
+                and se_expander_status like CONCAT ('%',#{seExpanderStatus}, '%')
+            </if>
+            <if test="seExpanderFactory != null and seExpanderFactory != null">
+                and se_expander_factory like CONCAT ('%',#{seExpanderFactory}, '%')
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

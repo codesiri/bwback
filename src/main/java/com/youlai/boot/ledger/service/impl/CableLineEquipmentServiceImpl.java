@@ -1,6 +1,7 @@
 package com.youlai.boot.ledger.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.youlai.boot.common.util.IDUtil;
 import com.youlai.boot.ledger.model.dto.CableLineEquipmentExportDto;
 import com.youlai.boot.ledger.model.query.CableLineEquipmentExportQuery;
 import lombok.RequiredArgsConstructor;
@@ -74,6 +75,8 @@ public class CableLineEquipmentServiceImpl extends ServiceImpl<CableLineEquipmen
         String cleCableCode = formData.getCleCableCode();
         long count = this.count(new QueryWrapper<CableLineEquipment>().eq("cle_cable_code", cleCableCode));
         Assert.isTrue(count == 0 , "电器电缆线路编号已经存在");
+        long idByLeaf = IDUtil.genIdByLeaf();
+        entity.setId(idByLeaf);
         return this.save(entity);
     }
     

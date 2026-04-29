@@ -1,5 +1,6 @@
 package com.youlai.boot.ledger.service.impl;
 
+import com.youlai.boot.common.util.IDUtil;
 import com.youlai.boot.ledger.model.dto.ElectricCabinetChangeExportDto;
 import com.youlai.boot.ledger.model.query.ElectricCabinetChangeExportQuery;
 import lombok.RequiredArgsConstructor;
@@ -70,6 +71,8 @@ public class ElectricCabinetChangeServiceImpl extends ServiceImpl<ElectricCabine
     @Override
     public boolean saveElectricCabinetChange(ElectricCabinetChangeForm formData) {
         ElectricCabinetChange entity = electricCabinetChangeConverter.toEntity(formData);
+        long idByLeaf = IDUtil.genIdByLeaf();
+        entity.setId(idByLeaf);
         return this.save(entity);
     }
     

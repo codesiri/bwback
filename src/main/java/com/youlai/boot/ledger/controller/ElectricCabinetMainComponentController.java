@@ -1,9 +1,13 @@
 package com.youlai.boot.ledger.controller;
 
 import cn.idev.excel.EasyExcel;
+import cn.idev.excel.ExcelWriter;
+import com.youlai.boot.common.util.ExcelUtils;
+import com.youlai.boot.core.web.ExcelResult;
+import com.youlai.boot.ledger.listener.ElectricCabinetMainComponentImportListener;
 import com.youlai.boot.ledger.model.dto.ElectricCabinetMainComponentDto;
-import com.youlai.boot.ledger.model.dto.ElectricCabinetRecordExportDto;
 import com.youlai.boot.ledger.service.ElectricCabinetMainComponentService;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +25,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -98,8 +105,35 @@ public class ElectricCabinetMainComponentController  {
         List<ElectricCabinetMainComponentDto> exportElectricCabinetMainComponents =
                 this.electricCabinetMainComponentService.exportElectricCabinetMainComponents();
         EasyExcel.write(response.getOutputStream(),
-                        ElectricCabinetRecordExportDto.class)
-                .sheet("电器日常巡检记录表")
+                        ElectricCabinetMainComponentDto.class)
+                .sheet("抽屉柜主要元器件信息")
                 .doWrite(exportElectricCabinetMainComponents);
+    }
+
+    @Operation(summary = "导入抽屉柜主要元器件信息")
+    @PostMapping("/import")
+    @PreAuthorize("@ss.hasPerm('ledger:electric-cabinet-main-component:add')")
+    public Result<ExcelResult> importElectricCabinetMainComponents(MultipartFile file) throws IOException {
+        ElectricCabinetMainComponentImportListener listener = new ElectricCabinetMainComponentImportListener();
+        ExcelUtils.importExcel(file.getInputStream(), ElectricCabinetMainComponentDto.class, listener);
+        return Result.success(listener.getExcelResult());
+    }
+
+    @Operation(summary = "抽屉柜主要元器件信息导入模板下载")
+    @GetMapping("/template")
+    public void downloadTemplateElectricCabinetMainComponents(HttpServletResponse response) {
+        String fileName = "抽屉柜主要元器件信息导入模板.xlsx";
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+
+        String fileClassPath = "templates" + File.separator + "excel" + File.separator + fileName;
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileClassPath);
+
+        try (ServletOutputStream outputStream = response.getOutputStream();
+             ExcelWriter excelWriter = EasyExcel.write(outputStream).withTemplate(inputStream).build()) {
+            excelWriter.finish();
+        } catch (IOException e) {
+            throw new RuntimeException("抽屉柜主要元器件信息导入模板下载失败", e);
+        }
     }
 }

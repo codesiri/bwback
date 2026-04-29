@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.SePumpMapper">
+
+    <!-- 获取泵分页列表 -->
+    <select id="getSePumpPage" resultType="com.youlai.boot.ledger.model.vo.SePumpVO">
+        SELECT
+                id,
+                se_pump_equip_code,
+                se_pump_name,
+                se_pump_type,
+                se_pump_status,
+                se_pump_spec,
+                se_pump_flow,
+                se_pump_head,
+                se_pump_rated_power,
+                se_pump_rated_speed,
+                se_pump_medium,
+                se_pump_medium_temp,
+                se_pump_design_p,
+                se_pump_material,
+                se_pump_seal_type,
+                se_pump_explosion_proof,
+                se_pump_motor_model,
+                se_pump_install_pos,
+                se_pump_in_service,
+                se_pump_inspect_cycle,
+                se_pump_last_inspect,
+                se_pump_next_inspect,
+                se_pump_inspect_result,
+                se_pump_last_maintain,
+                se_pump_next_maintain,
+                se_pump_vibration,
+                se_pump_leak_status,
+                se_pump_maintain_record,
+                se_pump_fault_record,
+                se_pump_operator,
+                se_pump_create_time,
+                se_pump_update_time,
+                se_pump_factory,
+                se_pump_reserve1,
+                se_pump_reserve2,
+                se_pump_reserve3
+        FROM
+            se_pump
+        <where>
+            <if test="queryParams.sePumpEquipCode != null and queryParams.sePumpEquipCode != ''">
+                and se_pump_equip_code like CONCAT( #{queryParams.sePumpEquipCode}, '%')
+            </if>
+            <if test="queryParams.sePumpName != null and queryParams.sePumpName != ''">
+                and se_pump_name like CONCAT ('%',#{queryParams.sePumpName}, '%')
+            </if>
+            <if test="queryParams.sePumpType != null and queryParams.sePumpType != null">
+                and se_pump_type like CONCAT ('%',#{queryParams.sePumpType}, '%')
+            </if>
+            <if test="queryParams.sePumpStatus != null and queryParams.sePumpStatus != null">
+                and se_pump_status like CONCAT ('%',#{queryParams.sePumpStatus}, '%')
+            </if>
+        </where>
+    </select>
+
+
+
+    <select id="listExportSePump" resultType="com.youlai.boot.ledger.model.dto.SePumpExportDto">
+        SELECT
+        id,
+        se_pump_equip_code,
+        se_pump_name,
+        se_pump_type,
+        se_pump_status,
+        se_pump_spec,
+        se_pump_flow,
+        se_pump_head,
+        se_pump_rated_power,
+        se_pump_rated_speed,
+        se_pump_medium,
+        se_pump_medium_temp,
+        se_pump_design_p,
+        se_pump_material,
+        se_pump_seal_type,
+        se_pump_explosion_proof,
+        se_pump_motor_model,
+        se_pump_install_pos,
+        se_pump_in_service,
+        se_pump_inspect_cycle,
+        se_pump_last_inspect,
+        se_pump_next_inspect,
+        se_pump_inspect_result,
+        se_pump_last_maintain,
+        se_pump_next_maintain,
+        se_pump_vibration,
+        se_pump_leak_status,
+        se_pump_maintain_record,
+        se_pump_fault_record,
+        se_pump_operator,
+        se_pump_create_time,
+        se_pump_update_time,
+        se_pump_factory,
+        se_pump_reserve1,
+        se_pump_reserve2,
+        se_pump_reserve3
+        FROM
+        se_pump
+        <where>
+            <if test="sePumpEquipCode != null and sePumpEquipCode != ''">
+                and se_pump_equip_code like CONCAT( #{sePumpEquipCode}, '%')
+            </if>
+            <if test="sePumpName != null and sePumpName != ''">
+                and se_pump_name like CONCAT ('%',#{sePumpName}, '%')
+            </if>
+            <if test="sePumpType != null and sePumpType != null">
+                and se_pump_type like CONCAT ('%',#{sePumpType}, '%')
+            </if>
+            <if test="sePumpStatus != null and sePumpStatus != null">
+                and se_pump_status like CONCAT ('%',#{sePumpStatus}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

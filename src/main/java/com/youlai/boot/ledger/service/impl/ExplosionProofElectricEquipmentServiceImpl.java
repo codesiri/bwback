@@ -114,10 +114,10 @@ public class ExplosionProofElectricEquipmentServiceImpl extends ServiceImpl<Expl
 
     @Override
     public List<ExplosionProofElectricEquipmentExportDto> exportExplosionProofElectricEquipments(ExplosionProofElectricEquipmentExportQuery queryParams) {
-        java.util.List<ExplosionProofElectricEquipmentExportDto> exportExplosionProofElectricEquipments = this
+        return this
                 .baseMapper
                 .exportExplosionProofElectricEquipments(queryParams);
-        return exportExplosionProofElectricEquipments;
+
     }
 
 }

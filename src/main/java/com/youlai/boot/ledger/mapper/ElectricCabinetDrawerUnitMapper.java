@@ -1,7 +1,7 @@
 package com.youlai.boot.ledger.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.youlai.boot.ledger.model.dto.ElectricCabinetDocumentExportDto;
+import com.youlai.boot.ledger.model.dto.ElectricCabinetDrawerUnitsExportDto;
 import com.youlai.boot.ledger.model.entity.ElectricCabinetDrawerUnit;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.youlai.boot.ledger.model.query.ElectricCabinetDrawerUnitQuery;
@@ -29,5 +29,5 @@ public interface ElectricCabinetDrawerUnitMapper extends BaseMapper<ElectricCabi
      */
     Page<ElectricCabinetDrawerUnitVO> getElectricCabinetDrawerUnitPage(Page<ElectricCabinetDrawerUnitVO> page, ElectricCabinetDrawerUnitQuery queryParams);
 
-    List<ElectricCabinetDocumentExportDto> exportElectricCabinetDrawerUnits(ElectricCabinetDrawerUnitsExportQuery queryParams);
+    List<ElectricCabinetDrawerUnitsExportDto> exportElectricCabinetDrawerUnits(ElectricCabinetDrawerUnitsExportQuery queryParams);
 }

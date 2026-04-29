@@ -2,6 +2,7 @@ package com.youlai.boot.ledger.converter;
 
 import org.mapstruct.Mapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.youlai.boot.ledger.model.dto.ElectricCabinetSparePartDto;
 import com.youlai.boot.ledger.model.entity.ElectricCabinetSparePart;
 import com.youlai.boot.ledger.model.form.ElectricCabinetSparePartForm;
 
@@ -17,4 +18,6 @@ public interface ElectricCabinetSparePartConverter{
     ElectricCabinetSparePartForm toForm(ElectricCabinetSparePart entity);
 
     ElectricCabinetSparePart toEntity(ElectricCabinetSparePartForm formData);
+
+    ElectricCabinetSparePart toEntity(ElectricCabinetSparePartDto dto);
 }
