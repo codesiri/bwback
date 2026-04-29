@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youlai.boot.ledger.mapper.ElectricCabinetMaintenanceMapper">
+
+    <!-- 获取抽屉柜维护保养记录分页列表 -->
+    <select id="getElectricCabinetMaintenancePage" resultType="com.youlai.boot.ledger.model.vo.ElectricCabinetMaintenanceVO">
+        SELECT
+                id,
+                ecm_maintain_date,
+                ecm_maintain_person,
+                ecm_maintain_level,
+                ecm_maintain_item,
+                ecm_maintain_content,
+                ecm_replace_component,
+                ecm_maintain_result,
+                ecm_checker,
+                ecm_next_maintain_date,
+                ecm_factory,
+                ecm_reserve_1,
+                ecm_reserve_2,
+                ecm_reserve_3
+        FROM
+            electric_cabinet_maintenance
+        <where>
+        </where>
+    </select>
+
+</mapper>

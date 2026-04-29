@@ -74,7 +74,7 @@ public class TnkMeterServiceImpl extends ServiceImpl<TnkMeterMapper, TnkMeter> i
     @Override
     public boolean saveTnkMeter(TnkMeterForm formData) {
         TnkMeter entity = tnkMeterConverter.toEntity(formData);
-        Long tnMeterTag = this.baseMapper.selectCount(new QueryWrapper<TnkMeter>().eq("tn_meter_tag", entity.getTnkMeterTag()));
+        Long tnMeterTag = this.baseMapper.selectCount(new QueryWrapper<TnkMeter>().eq("tnk_meter_tag", entity.getTnkMeterTag()));
         Assert.isTrue(tnMeterTag == 0, "位号已经存在");
         IDgenAdapter iDgenAdapter = new IDgenAdapterLeaf();
         long id = iDgenAdapter.genID(DvLedgerConstants.DV_LEDGER_GEN_ID_URL);

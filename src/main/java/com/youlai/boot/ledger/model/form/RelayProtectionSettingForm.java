@@ -24,7 +24,6 @@ public class RelayProtectionSettingForm implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "序号")
-    @NotNull(message = "序号不能为空")
     private Long id;
 
     @Schema(description = "继电器编号")
